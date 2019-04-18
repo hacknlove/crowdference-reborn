@@ -1,0 +1,53 @@
+#portada {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 300px;
+    cursor: pointer;
+  }
+  p {
+    position: relative;
+    height: 0;
+    margin: 0;
+    top: -40px;
+    font-family: 'The Girl Next Door', cursive;
+    color: var(--color-fondo-f2);
+    font-weight: bold;
+    cursor: pointer;
+    i {
+      color: var(--color-fondo);
+      width: 0;
+      position: relative;
+      top: 10px;
+      left: 3px;
+    }
+  }
+  img:hover+p, p:hover {
+    color: var(--color-fondo);
+    i {
+      opacity: 0;
+    }
+  }
+  &>input {
+    width: 255px;
+    max-width: 90vw;
+    border-radius: 30px!important;
+    padding-left: 20px;
+    padding-right: 20px;
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder,
+    &:-moz-placeholder {
+      text-align: center;
+    }
+  }
+  div.botonera {
+    z-index: 1000;
+    text-align: center;
+  }
+  .crecer {
+    flex-grow: 1
+  }
+}

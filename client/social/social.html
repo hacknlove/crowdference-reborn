@@ -1,0 +1,18 @@
+<template name="youtube">
+  {{#if youtubeId}}
+    <div class="youtube">
+      <iframe src="https://www.youtube.com/embed/{{youtubeId}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  {{/if}}
+</template>
+<head>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v3.2&appId=236348870374490"></script>
+</head>
+<template name="twitter">
+  <div class="twitter">
+  </div>
+</template>
+<template name="facebook">
+  <div class="facebook"></div>
+</template>
