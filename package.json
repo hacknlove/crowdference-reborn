@@ -1,0 +1,11 @@
+{
+  "name": "crowdference-reborn",
+  "private": false,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.3.4",
+    "meteor-node-stubs": "^0.4.1"
+  }
+}
