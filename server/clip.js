@@ -8,13 +8,22 @@ import Joi from 'joi'
 
 const validaciones = {
   editarClipPublish: Joi.object().keys({
-    _id: Joi.string().required(),
-    secret: Joi.string().required()
-  })
+    clipId: Joi.string().required(),
+    secreto: Joi.string().required()
+  }),
+  titulo: Joi.string()
 }
 
 Meteor.methods({
-  'crearClip' (titulo) {
+  crearClip (titulo) {
+    salirValidacion({
+      data: titulo,
+      schema: validaciones.titulo,
+      debug: {
+        donde: 'method crearClip'
+      }
+    })
+
     if (clips.find({
       titulo
     }, {
@@ -31,24 +40,49 @@ Meteor.methods({
       throw new Meteor.Error(400, 'url repetida')
     }
 
-    const secret = Random.secret()
-    const root = Random.secret()
+    const secreto = Random.secret()
+    const seguridad = Random.secret()
     const clipId = clips.insert({
       titulo,
       url,
-      secret,
-      root
+      secreto,
+      seguridad
     })
 
     return {
-      secret,
-      root,
+      secreto,
+      seguridad,
       clipId
+    }
+  },
+  testTitulo (titulo) {
+    salirValidacion({
+      data: titulo,
+      schema: validaciones.titulo,
+      debug: {
+        donde: 'method testTitulo'
+      }
+    })
+    // if (clips.find({
+    //   titulo
+    // }, {
+    //   limit: 1
+    // }).count()) {
+    //   console.log('titulo repetido')
+    //   throw new Meteor.Error(400, 'titulo repetido')
+    // }
+    const url = tituloAUrl(titulo)
+    if (clips.find({
+      url
+    }, {
+      limit: 1
+    }).count()) {
+      throw new Meteor.Error(400, 'url repetida')
     }
   }
 })
 
-Meteor.publish('editarClip', function (opciones) {
+Meteor.publish('administrarClip', function (opciones) {
   salirValidacion({
     data: opciones,
     schema: validaciones.editarClipPublish,
@@ -56,5 +90,12 @@ Meteor.publish('editarClip', function (opciones) {
       donde: 'publish salirValidacion'
     }
   })
-  return clips.find(opciones)
+  return clips.find({
+    _id: opciones.clipId,
+    secreto: opciones.secreto
+  }, {
+    fields: {
+      seguridad: 0
+    }
+  })
 })

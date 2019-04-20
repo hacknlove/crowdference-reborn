@@ -6,8 +6,11 @@
       <i class="fas fa-times cancelar close"></i>
     </div>
     <div class="cuerpo">
+      <p class="informacion">
+        Una vez creado el clip, no se podrá modificar su título.
+      </p>
       <label>Escribe un título para el clip </label>
-      <input type="text" name="titulo" value="{{c 'titulo'}}" placeholder="titulo" data-validacion="vacio">
+      <input type="text" value="{{c 'titulo'}}" placeholder="titulo" class="{{tituloVacio}}">
       <div class="errores">
         <p class="vacio">
           Tienes que indicar un título para poder continuar
@@ -17,53 +20,48 @@
         </p>
       </div>
       <label>url</label>
-      <input type="text" readonly value="{{ROOT_URL}}{{url}}">
+      <input type="text" readonly value="{{ROOT_URL}}{{url}}" class="{{urlRepetida}}">
       <div class="errores">
         <p class="noValido">
           Ya hay un clip con esa url
         </p>
       </div>
-
-      <p class="informacion">
-        Un clip une un conjunto de tweets, posts de facebook, videos de youtube, textos y cartas abiertas que forman parte de una misma campaña.
-      </p>
-
-
     </div>
     <div class="botonera">
       <button type="button" class="close secundario cancelar">Cancelar</button>
-      <button>Siguiente</button>
+      <button class="ocultable {{oculto}}">Crear</button>
     </div>
   </form>
 </template>
 
-<template name="editarClip">
-  <div class="fondo fade close"></div>
+<template name="mostrarSecreto">
+  <div class="fondo fade"></div>
   <div class="ventana fade">
     <div class="cabecero">
-      Nueva pregunta
-      <i class="fas fa-times close"></i>
+      Conserva esta información
     </div>
     <div class="cuerpo">
-      <label> Titulo:</label>
-      <input type="text" name="titulo" value="{{c 'titulo'}}" placeholder="titulo de la pregunta">
-
-      <label>Youtube</label>
-      <input type="text" name="youtube" value="{{c 'youtube'}}" placeholder="enlace a youtube">
-      {{> youtube link=(c 'youtube') youtubeId=youtubeId}}
-
-      <label>Twitter</label>
-      <input type="text" name="twitter" value="{{c 'twitter'}}" placeholder="enlace a twitter">
-      {{> twitter link=(c 'twitter')}}
-
-      <label>Facebook</label>
-      <input type="text" name="facebook" value="{{c 'facebook'}}" placeholder="enlace a facebook">
-      {{> facebook link=(c 'facebook')}}
-
+      <div class="informacion">
+        <div>
+          <label>Url de administración</label>
+          <input title="La url de administración" value="{{ROOT_URL}}admin/{{secreto}}" readonly>
+          <p>
+             Cualquier persona que tenga esta url podrá administración el clip.
+          </p>
+        </div>
+      </div><br>
+      <div class="informacion">
+        <div>
+          <label>Secreto de seguridad</label>
+          <input title="El secreto de seguridad" value="{{seguridad}}" readonly>
+          <p>
+            Si la url de administración se hace pública necesitarás este secreto para revocarla.
+          </p>
+        </div>
+      </div>
     </div>
     <div class="botonera">
-      <button class="close secundario">Cancelar</button>
-      <button>Siguiente</button>
+      <button class="ocultable {{oculto}}">Hecho</button>
     </div>
   </div>
 </template>

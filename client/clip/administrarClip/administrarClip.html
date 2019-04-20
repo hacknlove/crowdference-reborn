@@ -1,0 +1,38 @@
+<template name="agregarMenu">
+  <div class="fondo fondoDeMenu fade close"></div>
+  <div class="menu fade close">
+    <div class="close openWindow" data-_id="agregarSocial" data-rrss="facebook" data-link=""><i class="fab fa-facebook-f"></i> facebook</div>
+    <div class="close openWindow" data-_id="agregarSocial" data-rrss="twitter" data-link=""><i class="fab fa-twitter"></i> twitter</div>
+    <div class="close openWindow" data-_id="agregarSocial" data-rrss="instagram" data-link=""><i class="fab fa-instagram"></i> instagram</div>
+    <div class="close openWindow" data-_id="agregarSocial" data-rrss="youtube" data-link=""><i class="fab fa-youtube"></i> youtube</div>
+  </div>
+</template>
+<template name="administrarClipMenu">
+  <div class="fondo fondoDeMenu fade close"></div>
+  <div class="menu fade close">
+    <div class="close openWindow" data-_id="agregarMenu"><i class="fas fa-plus"></i> agregar</div>
+    <hr>
+    <div><i class="fas fa-save"></i> Guardar</div>
+  </div>
+</template>
+
+<template name="administrarClip">
+  <div class="fondo fade close"></div>
+  <div class="ventana fade">
+    <div class="cabecero">
+      {{clip.titulo}}
+      <i class="fas fa-times close"></i>
+    </div>
+    <div class="cuerpo">
+      {{#each clips}}
+      {{else}}
+      <p class="informacion">
+        Agrega contenido a tu clip
+      </p>
+      {{/each}}
+    </div>
+    <div class="botonera">
+      <button class="agregar openWindow" data-_id="agregarMenu"><i class="fas fa-plus"></i> Agregar</button>
+    </div>
+  </div>
+</template>

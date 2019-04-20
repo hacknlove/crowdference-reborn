@@ -1,3 +1,35 @@
+<template name="agregarSocial">
+  <div class="fondo fade close"></div>
+  <div class="ventana fade">
+    <div class="cabecero">
+      {{rrss.agregarSocialTitulo}}
+      <i class="fas fa-times close"></i>
+    </div>
+    <div class="cuerpo">
+      <input name="link" placeholder="{{rrss.placeholder}}" value="{{link}}">
+    </div>
+    <div class="botonera">
+      <button class="close secundario">Cancelar</button>
+      <button class="siguiente ocultable {{oculto}}">Siguiente</button>
+    </div>
+  </div>
+</template>
+<template name="previsualizarSocial">
+  <div class="fondo fade close"></div>
+  <div class="ventana fade">
+    <div class="cabecero">
+      {{rrss.previsualizarSocialTitulo}}
+      <i class="fas fa-times close"></i>
+    </div>
+    <div class="cuerpo">
+    </div>
+    <div class="botonera">
+      <button class="close secundario">Cancelar</button>
+      <button class="siguiente ocultable {{oculto}}">Siguiente</button>
+    </div>
+  </div>
+</template>
+
 <template name="youtube">
   {{#if youtubeId}}
     <div class="youtube">
@@ -6,6 +38,7 @@
   {{/if}}
 </template>
 <head>
+  <script async src="//www.instagram.com/embed.js"></script>
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v3.2&appId=236348870374490"></script>
 </head>
