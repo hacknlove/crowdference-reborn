@@ -65,34 +65,3 @@
     </div>
   </div>
 </template>
-
-<template name="clip">
-  <div class="fondo fade close"></div>
-  <div class="ventana fade">
-    <div class="cabecero">
-      Nueva pregunta
-      <i class="fas fa-times close"></i>
-    </div>
-    <div class="cuerpo">
-      <label> Titulo:</label>
-      <input type="text" name="titulo" value="{{c 'titulo'}}" placeholder="titulo de la pregunta">
-
-      <label>Youtube</label>
-      <input type="text" name="youtube" value="{{c 'youtube'}}" placeholder="enlace a youtube">
-      {{> youtube link=(c 'youtube') youtubeId=youtubeId}}
-
-      <label>Twitter</label>
-      <input type="text" name="twitter" value="{{c 'twitter'}}" placeholder="enlace a twitter">
-      {{> twitter link=(c 'twitter')}}
-
-      <label>Facebook</label>
-      <input type="text" name="facebook" value="{{c 'facebook'}}" placeholder="enlace a facebook">
-      {{> facebook link=(c 'facebook')}}
-
-    </div>
-    <div class="botonera">
-      <button class="close secundario">Cancelar</button>
-      <button>Siguiente</button>
-    </div>
-  </div>
-</template>

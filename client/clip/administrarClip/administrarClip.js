@@ -1,23 +1,32 @@
 import { Template } from 'meteor/templating'
 import { Meteor } from 'meteor/meteor'
 import { clips } from '/common/baseDeDatos'
+import { ventanas } from 'meteor/hacknlove:ventanas'
 
 Template.administrarClip.onCreated(function () {
   Meteor.subscribe('administrarClip', {
-    clipId: this.data.clipId,
+    url: this.data.url,
     secreto: this.data.secreto
   })
-})
-Template.administrarClip.onRendered(function () {
-  Template.hamburguesa.openWindow('administrarClipMenu')
+  ventanas.close('portada')
 })
 Template.administrarClip.helpers({
   clip () {
-    console.log(clips.findOne({
-      _id: this.clipId
-    }))
     return clips.findOne({
-      _id: this.clipId
+      url: this.url
     })
   }
+})
+Template.administrarClip.onDestroyed(function () {
+  ventanas.close('menu')
+  ventanas.insert({
+    _id: 'portada'
+  })
+})
+ventanas.use('/admin/:url/:secreto', function (match, v) {
+  return v.push({
+    url: match.url,
+    _id: 'administrarClip',
+    secreto: match.secreto
+  })
 })

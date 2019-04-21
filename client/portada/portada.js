@@ -1,7 +1,9 @@
 import { ventanas } from 'meteor/hacknlove:ventanas'
-import { Tracker } from 'meteor/tracker'
 import { Template } from 'meteor/templating'
 
+Template.portada.onCreated(function () {
+  ventanas.conf('path', '/')
+})
 Template.portada.events({
   'input input' (event) {
     ventanas.conf('buscar', event.currentTarget.value)
@@ -13,20 +15,19 @@ Template.portada.helpers({
   }
 })
 
-Tracker.autorun(function () {
-  if (ventanas.findOne('portada')) {
-    return
-  }
-  if (ventanas.find({
-    _id: {
-      $nin: ['c', 'hamburguesa']
-    }
-  }).count()) {
-    return
-  }
-  ventanas.insert({
-    _id: 'portada',
-    nourl: 1
+ventanas.use('/', function (match, v) {
+  return v.push({
+    _id: 'portada'
   })
-  ventanas.close('hamburguesa')
 })
+
+ventanas.options.notFound = function (match, v) {
+  v.push({
+    _id: 'portada'
+  })
+  return v.push({
+    template: 'alerta',
+    titulo: 'No entrontrado',
+    contenido: 'La url que busca no se encuentra'
+  })
+}

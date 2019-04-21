@@ -66,13 +66,12 @@ Template.crearClip.events({
   },
   'submit form' (event, template) {
     event.preventDefault()
+    const titulo = ventanas.conf('titulo')
     ventanas.wait('crearClip')
     template.$('form').validarFormulario()
-    Meteor.call('crearClip', ventanas.conf('titulo'), (e, r) => {
+    Meteor.call('crearClip', titulo, (e, r) => {
       if (!e) {
         ventanas.close('crearClip')
-        r._id = 'mostrarSecreto'
-        r.copiado = []
         ventanas.insert(r)
         r.copiado = [true, true]
         return ventanas.conf('path', `/?v=${ventanas.createUrl([r])}`)
@@ -91,6 +90,7 @@ Template.crearClip.events({
 })
 
 Template.mostrarSecreto.onRendered(function () {
+  ventanas.close('portada')
   this.clipboard = new ClipboardJS('input[readonly]', {
     text (element) {
       return element.value
@@ -123,10 +123,6 @@ Template.mostrarSecreto.events({
       secreto: this.secreto,
       clipId: this.clipId
     })
-    return ventanas.conf('path', `/?v=${ventanas.createUrl([{
-      _id: 'administrarClip',
-      secreto: this.secreto,
-      clipId: this.clipId
-    }])}`)
+    return ventanas.conf('path', `/admin/${this.url}/${this.secreto}`)
   }
 })

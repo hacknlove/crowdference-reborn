@@ -8,7 +8,7 @@ import Joi from 'joi'
 
 const validaciones = {
   editarClipPublish: Joi.object().keys({
-    clipId: Joi.string().required(),
+    url: Joi.string().regex(/^[a-z-]+$/).required(),
     secreto: Joi.string().required()
   }),
   titulo: Joi.string()
@@ -42,7 +42,7 @@ Meteor.methods({
 
     const secreto = Random.secret()
     const seguridad = Random.secret()
-    const clipId = clips.insert({
+    clips.insert({
       titulo,
       url,
       secreto,
@@ -50,9 +50,11 @@ Meteor.methods({
     })
 
     return {
+      _id: 'mostrarSecreto',
       secreto,
       seguridad,
-      clipId
+      url,
+      copiado: []
     }
   },
   testTitulo (titulo) {
@@ -91,7 +93,7 @@ Meteor.publish('administrarClip', function (opciones) {
     }
   })
   return clips.find({
-    _id: opciones.clipId,
+    url: opciones.url,
     secreto: opciones.secreto
   }, {
     fields: {
