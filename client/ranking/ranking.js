@@ -24,6 +24,11 @@ Template.ranking.helpers({
       posts: {
         $gt: 0
       }
+    }, {
+      sort: {
+        apoyos: -1,
+        creacion: -1
+      }
     })
   }
 })

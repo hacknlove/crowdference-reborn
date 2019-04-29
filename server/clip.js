@@ -99,7 +99,7 @@ Meteor.methods({
         _id: clip._id
       }, {
         $inc: {
-          post: 1
+          posts: 1
         }
       })
     }
