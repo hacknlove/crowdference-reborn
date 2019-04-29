@@ -1,0 +1,42 @@
+<template name="ranking">
+  <div class="fade lista">
+    <div class="cabecero">
+      <h2>
+        Ranking
+      </h2>
+      {{>hamburguesa menu="menu"}}
+    </div>
+    <div class="cuerpo">
+      {{#each clip in clips}}
+        {{> vistaPrevia clip}}
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="vistaPrevia">
+    <div class="ventana">
+      <div class="cabecero">
+        <span>{{titulo}}</span>
+        {{fecha creacion}}
+      </div>
+      <div class="cuerpo">
+        {{#if post}}
+          {{>social post}}
+        {{/if}}
+      </div>
+      <div class="botonera">
+        <div class="status">
+          <div>
+            <i class="fas fa-paperclip"></i> {{posts}}
+          </div>
+          {{#if apoyos}}
+            <div>
+              <i class="fas fa-thumbs-up"></i> {{apoyos}}
+            </div>
+          {{/if}}
+        </div>
+        <button>Ver clip</button>
+      </div>
+    </div>
+</template>

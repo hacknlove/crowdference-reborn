@@ -1,0 +1,48 @@
+#ventanas>.fade.lista {
+  position: absolute;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  width: 100%;
+  top: 0;
+  &>.cabecero {
+    width: 100%;
+    background: var(--color-basico);
+    color: var(--color-fondo);
+    margin-bottom: var(--margin);
+    h2 {
+      font-size: 1rem;
+      min-width: var(--min-width-ventana);
+      max-width: var(--max-width-ventana);
+      width: 100%;
+      margin: 0 auto;
+      padding: var(--margin);
+      box-sizing: border-box;
+      text-transform: uppercase;
+      font-family: var(--titulos);
+    }
+    #hamburguesa {
+      filter: none;
+    }
+  }
+  .ventana {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--margin);
+  }
+
+}
+
+.ventana .status {
+  flex-grow: 1;
+  display: flex;
+  color: var(--color-basico);
+  align-items: flex-end;
+  margin-bottom: ~"calc(var(--margin) / 2)";
+  div {
+    margin-right: var(--margin);
+  }
+}

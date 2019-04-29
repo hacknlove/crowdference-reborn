@@ -1,8 +1,8 @@
 <template name="portada">
   <div id="portada">
     <div class="crecer"></div>
-    <img id="logo" src="/logoletrasConClip.png">
-    <p>Ver ranking de<i class="fas fa-mouse-pointer"></i> CLIPS</p>
+    <img class="close openWindow" data-_id="ranking" data-pagina="1" id="logo" src="/logoletrasConClip.png">
+    <p class="close openWindow" data-_id="ranking" data-pagina="1">Ver ranking de<i class="fas fa-mouse-pointer"></i> CLIPS</p>
     <input placeholder="¿Qué quieres?" value="{{c 'buscar'}}">
     <div class="botonera">
       <button class="openWindow ocultable {{oculto}}" data-_id="crearClip"><i class="fas fa-paperclip"></i> Agregar clip</button>
