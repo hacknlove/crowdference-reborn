@@ -16,7 +16,7 @@ Template.portada.helpers({
 })
 
 ventanas.use('/', function (match, v) {
-  return v.push({
+  return v.length || v.push({
     _id: 'portada'
   })
 })

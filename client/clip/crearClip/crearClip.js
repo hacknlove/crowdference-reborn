@@ -72,6 +72,7 @@ Template.crearClip.events({
     Meteor.call('crearClip', titulo, (e, r) => {
       if (!e) {
         ventanas.close('crearClip')
+        console.log(r)
         ventanas.insert(r)
         r.copiado = [true, true]
         return ventanas.conf('path', `/?v=${ventanas.createUrl([r])}`)
@@ -121,7 +122,7 @@ Template.mostrarSecreto.events({
     ventanas.insert({
       _id: 'administrarClip',
       secreto: this.secreto,
-      clipId: this.clipId
+      url: this.url
     })
     return ventanas.conf('path', `/admin/${this.url}/${this.secreto}`)
   }

@@ -25,14 +25,18 @@
       <i class="fas fa-times close"></i>
     </div>
     <div class="cuerpo">
-      <div class="social">
-
-      </div>
+      {{> social this}}
     </div>
     <div class="botonera">
       <button class="close secundario openWindow" data-_id="agregarSocial" data-link="">atras</button>
       <button class="siguiente">Agregar</button>
     </div>
+  </div>
+</template>
+
+<template name="social">
+  <div class="social">
+
   </div>
 </template>
 
@@ -44,9 +48,9 @@
   {{/if}}
 </template>
 <head>
-  <script async src="//www.instagram.com/embed.js"></script>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v3.2&appId=236348870374490"></script>
+  <script src="//www.instagram.com/embed.js"></script>
+  <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v3.2&appId=236348870374490"></script>
 </head>
 <template name="twitter">
   <div class="twitter">

@@ -25,7 +25,8 @@
       <i class="fas fa-times close"></i>
     </div>
     <div class="cuerpo">
-      {{#each clips}}
+      {{#each p in posts}}
+        {{> Template.dynamic template=(postTemplate p) data=p}}
       {{else}}
       <p class="informacion">
         Agrega contenido a tu clip

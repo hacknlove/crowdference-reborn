@@ -1,10 +1,10 @@
 import { Template } from 'meteor/templating'
 import { Meteor } from 'meteor/meteor'
-import { clips } from '/common/baseDeDatos'
+import { clips, posts } from '/common/baseDeDatos'
 import { ventanas } from 'meteor/hacknlove:ventanas'
 
 Template.administrarClip.onCreated(function () {
-  Meteor.subscribe('administrarClip', {
+  Meteor.subscribe('clip', {
     url: this.data.url,
     secreto: this.data.secreto
   })
@@ -15,6 +15,15 @@ Template.administrarClip.helpers({
     return clips.findOne({
       url: this.url
     })
+  },
+  posts () {
+    return posts.find()
+  },
+  postTemplate (post) {
+    console.log(post)
+    if (post.rrss) {
+      return 'social'
+    }
   }
 })
 Template.administrarClip.onDestroyed(function () {

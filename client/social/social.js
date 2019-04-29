@@ -1,6 +1,7 @@
 /* global twttr FB instgrm */
 import { Template } from 'meteor/templating'
 import { ventanas } from 'meteor/hacknlove:ventanas'
+import { Meteor } from 'meteor/meteor'
 
 const rrss = {
   instagram: {
@@ -77,11 +78,25 @@ Template.agregarSocial.events({
   }
 })
 
-Template.previsualizarSocial.helpers({
-  rrss () {
-    return rrss[this.rrss]
+Template.previsualizarSocial.events({
+  'click .siguiente' () {
+    const clip = ventanas.findOne('administrarClip')
+    ventanas.wait('previsualizarSocial')
+    Meteor.call('agregarPost', {
+      url: clip.url,
+      secreto: clip.secreto,
+      rrss: this.rrss,
+      link: this.link
+    }, (e, r) => {
+      if (e) {
+        ventanas.unwait('previsualizarSocial')
+        return ventanas.error(e)
+      }
+      ventanas.close('previsualizarSocial')
+    })
   }
 })
-Template.previsualizarSocial.onRendered(function () {
+
+Template.social.onRendered(function () {
   rrss[this.data.rrss].renderizar(this)
 })
