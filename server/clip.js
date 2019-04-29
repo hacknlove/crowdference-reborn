@@ -80,6 +80,13 @@ Meteor.methods({
     }) || salir(404, 'Clip no encontrado', {
       donde: 'method agregarPost'
     })
+
+    if (posts.findOne({
+      clipId: clip._id,
+      link: opciones.link
+    })) {
+      return
+    }
     posts.insert({
       clipId: clip._id,
       rrss: opciones.rrss,
@@ -143,7 +150,6 @@ Meteor.publish('clip', function (opciones) {
       status: opciones.secreto ? {
         $exists: 1
       } : 'VISIBLE'
-
     })
   ]
 })

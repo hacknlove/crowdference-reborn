@@ -35,6 +35,11 @@ Template.verClip.helpers({
   }
 })
 
+Template.menuVerClip.helpers({
+  url () {
+    return (ventanas.findOne('verClip') || {}).url
+  }
+})
 Template.menuVerClip.events({
   'click .salir' () {
     ventanas.close('verClip')

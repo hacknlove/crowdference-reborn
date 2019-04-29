@@ -73,24 +73,32 @@ Template.agregarSocial.events({
     ventanas.insert({
       _id: 'previsualizarSocial',
       link: this.link,
-      rrss: detectarRRSS(this.link)
+      rrss: detectarRRSS(this.link),
+      url: this.url,
+      secreto: this.secreto
     })
   }
 })
 
 Template.previsualizarSocial.events({
   'click .siguiente' () {
-    const clip = ventanas.findOne('administrarClip')
     ventanas.wait('previsualizarSocial')
     Meteor.call('agregarPost', {
-      url: clip.url,
-      secreto: clip.secreto,
+      url: this.url,
+      secreto: this.secreto,
       rrss: this.rrss,
       link: this.link
     }, (e, r) => {
       if (e) {
         ventanas.unwait('previsualizarSocial')
         return ventanas.error(e)
+      }
+      if (!this.secreto) {
+        ventanas.insert({
+          template: 'alerta',
+          titulo: 'Publicación agregada',
+          contenido: 'La publicación ha sido agregada y será visible en cuanto sea aprobada por los moderadores del clip.'
+        })
       }
       ventanas.close('previsualizarSocial')
     })

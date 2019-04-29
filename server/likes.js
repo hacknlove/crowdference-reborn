@@ -57,7 +57,8 @@ Meteor.methods({
     }
     var apoyos = 0
     posts.find({
-      clipId
+      clipId,
+      status: 'VISIBLE'
     }).forEach(post => {
       const misApoyos = obtenerApoyos(post)
       posts.update({
