@@ -25,7 +25,6 @@ Template.crearClip.testUrl = _.debounce(function testUrl (titulo) {
   })
 }, 200)
 Template.crearClip.onRendered(function () {
-  ventanas.close('portada')
   ventanas.conf('titulo',
     ventanas.conf('titulo') ||
     ventanas.conf('buscar') ||
@@ -52,13 +51,18 @@ Template.crearClip.helpers({
   },
   urlRepetida () {
     Template.currentData()
-    console.log(this.error)
     return this.error ? 'error noValido' : ''
   }
 })
 Template.crearClip.events({
   'click .cancelar' () {
-    ventanas.conf('titulo', false)
+    ventanas.update({
+      _id: 'c'
+    }, {
+      un$set: {
+        titulo: 1
+      }
+    })
   },
   'input input' (event) {
     ventanas.conf('titulo', event.currentTarget.value)

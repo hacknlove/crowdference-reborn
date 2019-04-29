@@ -1,0 +1,23 @@
+<template name="menuBusqueda">
+  <div class="fondo fondoDeMenu fade close"></div>
+  <div class="menu fade close closeBusqueda">
+    <div class="openWindow" data-_id="crearClip"><i class="fas fa-paperclip"></i> Agregar clip</div>
+    <div class="openWindow" data-_id="portada"><i class="fas fa-search"></i> buscar</div>
+  </div>
+</template>
+
+<template name="busqueda">
+  <div class="fade lista">
+    <div class="cabecero">
+      <h2>
+        busqueda: {{busqueda}}
+      </h2>
+      {{>hamburguesa menu="menuBusqueda"}}
+    </div>
+    <div class="cuerpo">
+      {{#each clip in clips}}
+        {{> vistaPrevia clip}}
+      {{/each}}
+    </div>
+  </div>
+</template>
