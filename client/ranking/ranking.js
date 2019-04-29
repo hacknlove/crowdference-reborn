@@ -3,6 +3,7 @@ import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Meteor } from 'meteor/meteor'
 import { clips, posts } from '/common/baseDeDatos'
 import moment from 'moment'
+
 ventanas.use('/ranking/:pagina', function (match, v) {
   return v.push({
     _id: 'ranking',
@@ -29,6 +30,7 @@ Template.ranking.helpers({
 
 Template.vistaPrevia.onCreated(function () {
   this.subscribe('primerPost', this.data._id)
+  Meteor.call('actualizarApoyos', this.data._id)
 })
 Template.vistaPrevia.helpers({
   post () {

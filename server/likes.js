@@ -2,10 +2,11 @@ import cheerio from 'cheerio'
 import { HTTP } from 'meteor/http'
 import { Meteor } from 'meteor/meteor'
 import { clips, posts } from '/common/baseDeDatos'
+import moment from 'moment'
 
 const rrss = {
   instagram: {
-    obtenerLikes (url) {
+    obtenerApoyos (url) {
       const html = HTTP.get(url)
       const $ = cheerio.load(html.content)
       return JSON.parse($('script[type="application/ld+json"]').html()).interactionStatistic.userInteractionCount
@@ -13,7 +14,7 @@ const rrss = {
   },
   youtube: {
     regex: /(^|=|\/)([0-9A-Za-z_-]{11})(\/|&|$|\?|#)/,
-    obtenerLikes (url) {
+    obtenerApoyos (url) {
       const youtube = url.match(rrss.youtube.regex)
       if (!youtube) {
         return
@@ -24,7 +25,7 @@ const rrss = {
     }
   },
   twitter: {
-    obtenerLikes (url) {
+    obtenerApoyos (url) {
       const html = HTTP.get(url)
       const $ = cheerio.load(html.content)
       var stats = $('ul.stats')
@@ -34,26 +35,47 @@ const rrss = {
     }
   },
   facebook: {
-    obtenerLikes (url) {
+    obtenerApoyos (url) {
       return 0
     }
   }
 }
 
-const obtenerLikes = function obtenerLikes (post) {
-  return rrss[post.rrss].obtenerLikes(post.url)
+const obtenerApoyos = function obtenerApoyos (post) {
+  return (rrss[post.rrss].obtenerApoyos(post.link) || 0) * 1
 }
 
 Meteor.methods({
-  actualizarLikes (clipId) {
-    const clip = clips.findOne({
-      clipId
-    })
+  actualizarApoyos (clipId, forzar) {
+    if (!forzar && clips.findOne({
+      _id: clipId,
+      actualizacion: {
+        $gt: moment().subtract(1, 'hour').toDate()
+      }
+    })) {
+      return
+    }
+    var apoyos = 0
     posts.find({
       clipId
     }).forEach(post => {
-
-      console.log(post)
+      const misApoyos = obtenerApoyos(post)
+      posts.update({
+        _id: post._id
+      }, {
+        $set: {
+          apoyos: misApoyos
+        }
+      })
+      apoyos += misApoyos
+    })
+    clips.update({
+      _id: clipId
+    }, {
+      $set: {
+        apoyos,
+        actualizacion: new Date()
+      }
     })
   }
 })
