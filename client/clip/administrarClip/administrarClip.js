@@ -39,3 +39,12 @@ ventanas.use('/admin/:url/:secreto', function (match, v) {
     secreto: match.secreto
   })
 })
+
+Template.agregarMenu.helpers({
+  url () {
+    return (ventanas.findOne('administrarClip') || {}).url
+  },
+  secreto () {
+    return (ventanas.findOne('administrarClip') || {}).secreto
+  }
+})

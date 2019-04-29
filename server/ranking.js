@@ -6,8 +6,8 @@ Meteor.publish('ranking', function (pagina = 0) {
     sort: {
       apoyos: -1
     },
-    skip: 10 * pagina,
-    limit: 10
+    // skip: 10 * pagina,
+    // limit: 10
   })
 })
 

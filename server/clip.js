@@ -94,6 +94,15 @@ Meteor.methods({
       timestamp: new Date(),
       status: opciones.secreto ? 'VISIBLE' : 'PENDIENTE'
     })
+    if (opciones.secreto) {
+      clips.update({
+        _id: clip._id
+      }, {
+        $inc: {
+          post: 1
+        }
+      })
+    }
   },
   testTitulo (titulo) {
     salirValidacion({
