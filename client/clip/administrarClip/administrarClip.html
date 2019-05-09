@@ -1,16 +1,7 @@
-<template name="agregarMenu">
-  <div class="fondo fondoDeMenu fade close"></div>
-  <div class="menu fade close">
-    <div class="close openWindow" data-_id="agregarSocial" data-link="" data-url="{{url}}" data-secreto="{{secreto}}"><i class="fas fa-share-alt-square"></i> Publicación</div>
-    <div class="close openWindow" data-_id="agregarSocial" data-link=""><i class="fas fa-font"></i> Texto</div>
-    <div class="close openWindow" data-_id="agregarSocial" data-link=""><i class="far fa-envelope-open"></i> Carta abierta</div>
-    <div class="close openWindow" data-_id="agregarSocial" data-link=""><i class="fas fa-external-link-alt"></i> Enlace</div>
-  </div>
-</template>
 <template name="administrarClipMenu">
   <div class="fondo fondoDeMenu fade close"></div>
   <div class="menu fade close">
-    <div class="close openWindow" data-_id="agregarSocial" data-link="" data-url="{{url}}"><i class="fas fa-plus"></i> Agregar</div>
+    <div class="close openWindow" data-_id="agregarSocial" data-link="" data-url="{{url}}" data-secreto="{{secreto}}"><i class="fas fa-plus"></i> Agregar</div>
     <div class="compartir"><i class="fas fa-user-cog"></i> Compartir</div>
 
     <div class="salir"><i class="fas fa-times"></i> Salir de clip</div>
@@ -30,7 +21,7 @@
       {{#each post in posts}}
         {{> adminPost post}}
       {{/each}}
-      <button class="agregar openWindow" data-_id="agregarMenu"><i class="fas fa-plus"></i> Agregar</button>
+      <button class="agregar openWindow" data-_id="agregarMenu" data-url="{{url}}" data-secreto="{{secreto}}"><i class="fas fa-plus"></i> Agregar</button>
     </div>
   </div>
 </template>

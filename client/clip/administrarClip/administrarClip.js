@@ -40,7 +40,7 @@ ventanas.use('/admin/:url/:secreto', function (match, v) {
   })
 })
 
-Template.agregarMenu.helpers({
+Template.administrarClipMenu.helpers({
   url () {
     return (ventanas.findOne('administrarClip') || {}).url
   },
