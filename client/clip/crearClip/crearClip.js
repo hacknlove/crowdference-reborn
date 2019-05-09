@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating'
 import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Meteor } from 'meteor/meteor'
 import { tituloAUrl } from '/common/varios'
-import ClipboardJS from 'clipboard'
+import { misClips } from '/common/baseDeDatos'
 
 Template.crearClip.testUrl = _.debounce(function testUrl (titulo) {
   if (!titulo) {
@@ -76,10 +76,19 @@ Template.crearClip.events({
     Meteor.call('crearClip', titulo, (e, r) => {
       if (!e) {
         ventanas.close('crearClip')
-        console.log(r)
-        ventanas.insert(r)
-        r.copiado = [true, true]
-        return ventanas.conf('path', `/?v=${ventanas.createUrl([r])}`)
+        misClips.insert({
+          _id: r.clipId,
+          titulo,
+          url: tituloAUrl(titulo),
+          secreto: r.secreto,
+          seguridad: r.seguridad,
+          ultimoAcceso: new Date()
+        })
+        ventanas.insert({
+          _id: 'verClip',
+          url: tituloAUrl(titulo)
+        })
+        return
       }
       ventanas.unwait('crearClip')
       switch (e.reason) {
@@ -91,43 +100,5 @@ Template.crearClip.events({
           ventanas.error(e)
       }
     })
-  }
-})
-
-Template.mostrarSecreto.onRendered(function () {
-  ventanas.close('portada')
-  this.clipboard = new ClipboardJS('input[readonly]', {
-    text (element) {
-      return element.value
-    }
-  })
-  this.clipboard.on('success', (event) => {
-    ventanas.insert({
-      template: 'alerta',
-      titulo: 'copiado',
-      contenido: `${event.trigger.title} se ha copiado al portapapeles`
-    })
-    ventanas.update('mostrarSecreto', {
-      $addToSet: {
-        copiado: event.trigger.title
-      }
-    })
-  })
-})
-Template.mostrarSecreto.helpers({
-  oculto () {
-    Template.currentData()
-    return this.copiado.length === 2 ? '' : 'oculto'
-  }
-})
-Template.mostrarSecreto.events({
-  'click button' () {
-    ventanas.close('mostrarSecreto')
-    ventanas.insert({
-      _id: 'administrarClip',
-      secreto: this.secreto,
-      url: this.url
-    })
-    return ventanas.conf('path', `/admin/${this.url}/${this.secreto}`)
   }
 })

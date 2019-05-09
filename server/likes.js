@@ -29,8 +29,8 @@ const rrss = {
       const html = HTTP.get(url)
       const $ = cheerio.load(html.content)
       var stats = $('ul.stats')
-      const retweeted = stats.find('.request-retweeted-popup').data().tweetStatCount * 1
-      const favorited = stats.find('.request-favorited-popup').data().tweetStatCount * 1
+      const retweeted = (stats.find('.request-retweeted-popup').data() || { tweetStatCount: 0 }).tweetStatCount * 1
+      const favorited = (stats.find('.request-favorited-popup').data() || { tweetStatCount: 0 }).tweetStatCount * 1
       return retweeted + favorited
     }
   },

@@ -33,35 +33,3 @@
     </div>
   </form>
 </template>
-
-<template name="mostrarSecreto">
-  <div class="fondo fade"></div>
-  <div class="ventana fade">
-    <div class="cabecero">
-      Conserva esta información
-    </div>
-    <div class="cuerpo">
-      <div class="informacion">
-        <div>
-          <label>Url de administración</label>
-          <input title="La url de administración" value="{{ROOT_URL}}admin/{{url}}/{{secreto}}" readonly>
-          <p>
-             Cualquier persona que tenga esta url podrá administración el clip.
-          </p>
-        </div>
-      </div><br>
-      <div class="informacion">
-        <div>
-          <label>Secreto de seguridad</label>
-          <input title="El secreto de seguridad" value="{{seguridad}}" readonly>
-          <p>
-            Si la url de administración se hace pública necesitarás este secreto para revocarla.
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="botonera">
-      <button class="ocultable {{oculto}}">Hecho</button>
-    </div>
-  </div>
-</template>

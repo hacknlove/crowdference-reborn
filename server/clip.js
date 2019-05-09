@@ -7,6 +7,11 @@ import { tituloAUrl } from '/common/varios'
 import Joi from 'joi'
 
 const validaciones = {
+  revocar: Joi.object().keys({
+    clipId: Joi.string().required(),
+    seguridad: Joi.string().required(),
+    llave: Joi.string().valid(['seguridad', 'secreto']).required()
+  }),
   establecerStatus: Joi.object().keys({
     clipId: Joi.string().required(),
     postId: Joi.string().required(),
@@ -20,7 +25,7 @@ const validaciones = {
   }),
   clipPublish: Joi.object().keys({
     url: Joi.string().regex(/^[a-z-]+$/).required(),
-    secreto: Joi.string().required()
+    secreto: Joi.string()
   }),
   agregarPost: Joi.object().keys({
     url: Joi.string().regex(/^[a-z-]+$/).required(),
@@ -59,7 +64,7 @@ Meteor.methods({
 
     const secreto = Random.secret()
     const seguridad = Random.secret()
-    clips.insert({
+    const clipId = clips.insert({
       creacion: new Date(),
       titulo,
       url,
@@ -68,11 +73,9 @@ Meteor.methods({
     })
 
     return {
-      _id: 'mostrarSecreto',
+      clipId,
       secreto,
-      seguridad,
-      url,
-      copiado: []
+      seguridad
     }
   },
   agregarPost (opciones) {
@@ -158,7 +161,7 @@ Meteor.methods({
     clips.find({
       _id: opciones.clipId,
       secreto: opciones.secreto
-    }).count() || salir(400, 'No tienes permiso para administrar el clip', {
+    }).count() || salir(401, 'No tienes permiso para administrar el clip', {
       donde: 'method establecerStatus'
     })
 
@@ -191,7 +194,7 @@ Meteor.methods({
     clips.find({
       _id: opciones.clipId,
       secreto: opciones.secreto
-    }).count() || salir(400, 'No tienes permiso para administrar el clip', {
+    }).count() || salir(401, 'No tienes permiso para administrar el clip', {
       donde: 'method establecerStatus'
     })
 
@@ -201,6 +204,37 @@ Meteor.methods({
     }).count() || salir(404, 'Post no encontrado')
 
     posts.remove(opciones.postId)
+  },
+  revocar (opciones) {
+    salirValidacion({
+      data: opciones,
+      schema: validaciones.revocar,
+      debug: {
+        donde: 'method revocar'
+      }
+    })
+
+    clips.find({
+      _id: opciones.clipId
+    }).count() || salir(404, 'Clip no encontrado', {
+      donde: 'method revocar'
+    })
+
+    clips.find({
+      _id: opciones.clipId,
+      seguridad: opciones.seguridad
+    }).count() || salir(400, 'No tienes permiso para revocar llaves', {
+      donde: 'method revocar'
+    })
+
+    const llave = Random.secret()
+
+    clips.update(opciones.clipId, {
+      $set: {
+        [opciones.llave]: llave
+      }
+    })
+    return llave
   }
 })
 
@@ -213,13 +247,23 @@ Meteor.publish('clip', function (opciones) {
     }
   })
   const clip = clips.findOne({
-    url: opciones.url,
-    secreto: opciones.secreto || {
-      $exists: 1
-    }
+    url: opciones.url
   }) || salir(404, 'Clip no encontrado', {
     donde: 'method agregarPost'
   })
+
+  opciones.secreto && clip.secreto !== opciones.secreto && salir(401, 'No tienes permiso', {
+    donde: 'method agregarPost'
+  })
+
+  const postsQuery = {
+    clipId: clip._id
+  }
+
+  if (!opciones.secreto) {
+    postsQuery.status = 'VISIBLE'
+  }
+
   return [
     clips.find(clip._id, {
       fields: {
@@ -227,11 +271,6 @@ Meteor.publish('clip', function (opciones) {
         secreto: 0
       }
     }),
-    posts.find({
-      clipId: clip._id,
-      status: opciones.secreto ? {
-        $exists: 1
-      } : 'VISIBLE'
-    })
+    posts.find(postsQuery)
   ]
 })

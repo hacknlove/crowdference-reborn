@@ -1,5 +1,10 @@
 <template name="portada">
   <div id="portada">
+    <div class="botonera">
+      {{#if tengoClips}}
+        <button class="close openWindow" data-_id="misClips"><i class="fas fa-paperclip"></i> mis clips</button>
+      {{/if}}
+    </div>
     <div class="crecer"></div>
     <img class="close openWindow" data-_id="ranking" data-pagina="0" id="logo" src="/logoletrasConClip.png">
     <p class="close openWindow" data-_id="ranking" data-pagina="0">Ver ranking de<i class="fas fa-mouse-pointer"></i> CLIPS</p>
