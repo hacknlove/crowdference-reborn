@@ -17,24 +17,52 @@
 </template>
 
 <template name="administrarClip">
-  <div class="fondo fade close"></div>
-  {{> hamburguesa menu="administrarClipMenu"}}
-  <div class="ventana fade">
+  <div class="fade lista">
     <div class="cabecero">
-      {{clip.titulo}}
-      <i class="fas fa-times close"></i>
+      <h2>
+        Adeministrar: {{clip.titulo}}
+      </h2>
+      {{> hamburguesa menu="administrarClipMenu"}}
+    </div>
+
+    <div class="cuerpo">
+      {{#each post in posts}}
+        {{> adminPost post}}
+      {{/each}}
+      <button class="agregar openWindow" data-_id="agregarMenu"><i class="fas fa-plus"></i> Agregar</button>
+    </div>
+  </div>
+</template>
+
+<template name="adminPost">
+  <div class="ventana">
+    <div class="cabecero">
+      {{fecha timestamp}} - {{status}}
+
+      <i class="fas fa-bars"></i>
     </div>
     <div class="cuerpo">
-      {{#each p in posts}}
-        {{> Template.dynamic template=(postTemplate p) data=p}}
-      {{else}}
-      <p class="informacion">
-        Agrega contenido a tu clip
-      </p>
-      {{/each}}
+      {{>social this}}
     </div>
-    <div class="botonera">
-      <button class="agregar openWindow" data-_id="agregarMenu"><i class="fas fa-plus"></i> Agregar</button>
+    <div class="miniFondo">
+      <div class="menu">
+        {{#if comprobarStatus 'PENDIENTE'}}
+          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> Aprobar</div>
+          <div class="establecerStatus" data-status="RECHAZADO"><i class="fas fa-ban"></i> Rechazar</div>
+        {{/if}}
+        {{#if comprobarStatus 'RECHAZADO'}}
+          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> Aprobar</div>
+          <div class="eliminar"><i class="fas fa-trash"></i> Eliminar</div>
+        {{/if}}
+        {{#if comprobarStatus 'VISIBLE'}}
+          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-eye-slash"></i> Ocultar</div>
+        {{/if}}
+        {{#if comprobarStatus 'OCULTO'}}
+          <div class="establecerStatus" data-status="VISIBLE"><i class="fas fa-eye"></i> Mostrar</div>
+          <div class="eliminar"><i class="fas fa-trash"></i> Eliminar</div>
+        {{/if}}
+        <div><i class="fas fa-sort"></i> Prioridad</div>
+      </div>
     </div>
   </div>
 </template>

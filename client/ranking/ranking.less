@@ -26,15 +26,32 @@
       filter: none;
     }
   }
-  .ventana {
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: var(--margin);
+  .cuerpo {
+    &>.ventana, button{
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: var(--margin);
+    }
+    & > button {
+      &.estrecha {
+        width: auto;
+      }
+      flex-direction: row;
+      justify-content: center;
+      i {
+        margin-right: 1ex;
+      }
+      min-width: var(--min-width-ventana);
+      max-width: 100%;
+      @media (max-width: 500px) {
+        max-width: 100%;
+      }
+      width: 500px;
+    }
   }
-
 }
 
 .ventana .status {
