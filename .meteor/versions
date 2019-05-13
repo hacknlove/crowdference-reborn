@@ -28,9 +28,9 @@ es5-shim@4.8.0
 fetch@0.1.1
 frozeman:persistent-minimongo2@0.4.1
 geojson-utils@1.0.10
-hacknlove:estilo@1.2.1
+hacknlove:estilo@1.0.0
 hacknlove:validarformulario@0.0.1
-hacknlove:ventanas@1.2.1
+hacknlove:ventanas@1.3.0
 hot-code-push@1.0.4
 html-tools@1.0.11
 htmljs@1.0.11
