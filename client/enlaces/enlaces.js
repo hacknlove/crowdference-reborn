@@ -63,12 +63,21 @@ Template.previsualizarEnlace.events({
 
 Template.previsualizacion.onRendered(function () {
 })
+
+const iconos = {
+  YouTube: 'fab fa-youtube',
+  Vimeo: 'fab fa-vimeo',
+  Facebook: 'fab fa-facebook',
+  Twitter: 'fab fa-twitter',
+  Instagram: 'fab fa-instagram',
+  Reddit: 'fab fa-reddit'
+}
+
 Template.previsualizacion.helpers({
   icono () {
-    switch (this.OG.ogSiteName) {
-      case 'YouTube':
-        return 'centrar fab fa-youtube'
-      default:
-    }
+    return iconos[this.OG.ogSiteName] || 'fas fa-external-link-alt'
+  },
+  favicon () {
+    return this.link.replace(/^(.*:\/\/.*?)\/(.*)$/, '$1/favicon.ico')
   }
 })

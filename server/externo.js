@@ -96,6 +96,10 @@ const actualizar = function actualizar (url) {
   }
   [response, html] = meteorOGS(opciones)
 
+  if (url.match(/https:\/\/www.facebook/)) {
+    response.data.ogSiteName = 'Facebook'
+  }
+
   if (rrss[response.data.ogSiteName || response.data.twitterSite]) {
     return rrss[response.data.ogSiteName || response.data.twitterSite].obtenerApoyos(html, response)
   }

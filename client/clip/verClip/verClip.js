@@ -103,7 +103,7 @@ Template.verClip.onCreated(function () {
       }
     })
   })
-  // ventanas.conf('path', `/${this.data.url}`)
+  ventanas.conf('path', `/${this.data.url}`)
 })
 Template.verClip.helpers({
   clip () {

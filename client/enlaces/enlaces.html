@@ -33,17 +33,21 @@
 
 <template name="previsualizacion">
   <div class="social">
-    <div class="previsualizarImagen">
-      <img src="{{OG.ogImage.url}}" alt="">
-      {{#if icono}}
-      <div class="icono {{icono}}-">
-        <i class="{{icono}}"></i>
-      </div>
-      {{/if}}
-    </div>
+    <img src="{{OG.ogImage.url}}" alt="">
     <h3>
+      <span class="titulo">
+        {{#if icono}}
+          <i class="{{icono}}"></i>
+        {{else}}
+          <img src="{{favicon}}">
+        {{/if}}
         {{OG.ogTitle}}
+      </span>
+      {{#if OG.crLikes}}
+      <span class="likes"><i class="fas fa-heart"></i> {{OG.crLikes}}</span>
+      {{/if}}
     </h3>
+    <a href="{{link}}">{{link}}</a>
     <p>
       {{OG.ogDescription}}
     </p>
