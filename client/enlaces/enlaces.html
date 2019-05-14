@@ -1,0 +1,51 @@
+<template name="agregarEnlace">
+  <div class="fondo fade close"></div>
+  <div class="ventana fade">
+    <div class="cabecero">
+      Agregar enlace
+      <i class="fas fa-times close"></i>
+    </div>
+    <div class="cuerpo">
+      <input name="link" placeholder="https://enlace.a/agregar" value="{{link}}">
+    </div>
+    <div class="botonera">
+      <button class="close secundario">Cancelar</button>
+      <button class="siguiente ocultable {{oculto}}">Siguiente</button>
+    </div>
+  </div>
+</template>
+<template name="previsualizarEnlace">
+  <div class="fondo fade close"></div>
+  <div class="ventana fade scrollable">
+    <div class="cabecero">
+      Previsualizar
+      <i class="fas fa-times close"></i>
+    </div>
+    <div class="cuerpo">
+      {{> previsualizacion this}}
+    </div>
+    <div class="botonera">
+      <button class="close secundario openWindow" data-_id="agregarEnlace" data-link="">atras</button>
+      <button class="siguiente">Agregar</button>
+    </div>
+  </div>
+</template>
+
+<template name="previsualizacion">
+  <div class="social">
+    <div class="previsualizarImagen">
+      <img src="{{OG.ogImage.url}}" alt="">
+      {{#if icono}}
+      <div class="icono {{icono}}-">
+        <i class="{{icono}}"></i>
+      </div>
+      {{/if}}
+    </div>
+    <h3>
+        {{OG.ogTitle}}
+    </h3>
+    <p>
+      {{OG.ogDescription}}
+    </p>
+  </div>
+</template>

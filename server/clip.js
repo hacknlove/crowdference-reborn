@@ -27,10 +27,10 @@ const validaciones = {
     url: Joi.string().regex(/^[a-z-]+$/).required(),
     secreto: Joi.string()
   }),
-  agregarPost: Joi.object().keys({
+  agregarLink: Joi.object().keys({
     url: Joi.string().regex(/^[a-z-]+$/).required(),
     link: Joi.string().required(),
-    rrss: Joi.string().valid(['facebook', 'instagram', 'twitter', 'youtube']).required(),
+    OG: Joi.object().required(),
     secreto: Joi.string()
   }),
   titulo: Joi.string()
@@ -78,12 +78,12 @@ Meteor.methods({
       seguridad
     }
   },
-  agregarPost (opciones) {
+  agregarLink (opciones) {
     salirValidacion({
       data: opciones,
-      schema: validaciones.agregarPost,
+      schema: validaciones.agregarLink,
       debug: {
-        donde: 'method agregarPost'
+        donde: 'method agregarLink'
       }
     })
     const clip = clips.findOne({
@@ -92,7 +92,7 @@ Meteor.methods({
         $exists: 1
       }
     }) || salir(404, 'Clip no encontrado', {
-      donde: 'method agregarPost'
+      donde: 'method agregarLink'
     })
 
     if (posts.findOne({
@@ -103,7 +103,7 @@ Meteor.methods({
     }
     posts.insert({
       clipId: clip._id,
-      rrss: opciones.rrss,
+      OG: opciones.OG,
       link: opciones.link,
       timestamp: new Date(),
       status: opciones.secreto ? 'VISIBLE' : 'PENDIENTE'
@@ -249,11 +249,11 @@ Meteor.publish('clip', function (opciones) {
   const clip = clips.findOne({
     url: opciones.url
   }) || salir(404, 'Clip no encontrado', {
-    donde: 'method agregarPost'
+    donde: 'method agregarLink'
   })
 
   opciones.secreto && clip.secreto !== opciones.secreto && salir(401, 'No tienes permiso', {
-    donde: 'method agregarPost'
+    donde: 'method agregarLink'
   })
 
   const postsQuery = {
