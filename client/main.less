@@ -49,24 +49,17 @@ body {
   user-select: none;          /* Likely future */
 }
 
-.pie {
+.marca {
   z-index: 2000;
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
-  right: 0;
-  background-color: var(--color-tinta-f2);
-  padding: 5px;
-  text-align: right;
-  a {
-    color: var(--color-fondo-f2);
-    text-decoration: none;
-  }
+  margin: 5px;
+  color: var(--color-fondo-f1);
+  font-size: 125%;
+  text-decoration: none;
   &:hover {
-    color: var(--color-tinta);
-    a {
-      color: var(--color-fondo);
-    }
+    color: var(--color-fondo);
   }
 }
 

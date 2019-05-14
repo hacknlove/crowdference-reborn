@@ -120,6 +120,11 @@ Template.verClip.helpers({
     }
     return posts.find({
       clipId: clip._id
+    }, {
+      sort: {
+        prioridad: -1,
+        
+      }
     })
   }
 })

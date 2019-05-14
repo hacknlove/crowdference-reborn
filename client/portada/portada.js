@@ -7,6 +7,14 @@ Template.portada.onCreated(function () {
 Template.portada.events({
   'input input' (event) {
     ventanas.conf('buscar', event.currentTarget.value)
+  },
+  'submit form' (event) {
+    event.preventDefault()
+    ventanas.close('portada')
+    ventanas.insert({
+      _id: 'busqueda',
+      busqueda: ventanas.conf('buscar')
+    })
   }
 })
 Template.portada.helpers({

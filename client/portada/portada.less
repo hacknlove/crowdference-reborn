@@ -30,17 +30,33 @@
       opacity: 0;
     }
   }
-  &>input {
+  &>form.input {
     width: 255px;
     max-width: 90vw;
-    border-radius: 30px!important;
-    padding-left: 20px;
-    padding-right: 20px;
-    &::-webkit-input-placeholder,
-    &::-moz-placeholder,
-    &:-ms-input-placeholder,
-    &:-moz-placeholder {
-      text-align: center;
+    position: relative;
+    &>input {
+      border-radius: 30px!important;
+      padding-left: 20px;
+      padding-right: 30px;
+      &::-webkit-input-placeholder,
+      &::-moz-placeholder,
+      &:-ms-input-placeholder,
+      &:-moz-placeholder {
+        text-align: center;
+      }
+    }
+    &>i{
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      color: var(--color-tinta-f2);
+      cursor: pointer;
+      &:hover {
+        color: var(--color-tinta);
+      }
+    }
+    &>input:focus + i {
+      color: var(--color-tinta);
     }
   }
   div.botonera {
