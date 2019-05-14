@@ -122,7 +122,8 @@ Template.verClip.helpers({
       clipId: clip._id
     }, {
       sort: {
-        prioridad: -1
+        prioridad: -1,
+        timestamp: -1
       }
     })
   }

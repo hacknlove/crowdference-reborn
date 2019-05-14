@@ -70,7 +70,7 @@ const iconos = {
   Facebook: 'fab fa-facebook',
   Twitter: 'fab fa-twitter',
   Instagram: 'fab fa-instagram',
-  Reddit: 'fab fa-reddit'
+  reddit: 'fab fa-reddit'
 }
 
 Template.previsualizacion.helpers({
