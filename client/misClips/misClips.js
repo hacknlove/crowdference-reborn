@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating'
 import { ventanas } from 'meteor/hacknlove:ventanas'
-import { misClips } from '/common/baseDeDatos'
+import { misClips, clips } from '/common/baseDeDatos'
 
 ventanas.use('/ver/misClips', function (match, v) {
   return v.push({
@@ -19,5 +19,18 @@ Template.misClips.helpers({
         ultimoAcceso: -1
       }
     })
+  }
+})
+
+Template.vistaMisClips.onCreated(function () {
+  this.subscribe('clipId', {
+    clipId: this.data._id,
+    secreto: this.data.secreto
+  })
+})
+
+Template.vistaMisClips.helpers({
+  clip () {
+    return clips.findOne(this._id)
   }
 })

@@ -27,6 +27,10 @@ const validaciones = {
     url: Joi.string().regex(/^[a-z-]+$/).required(),
     secreto: Joi.string()
   }),
+  clipIdPublish: Joi.object().keys({
+    clipId: Joi.string().required(),
+    secreto: Joi.string().required()
+  }),
   agregarLink: Joi.object().keys({
     url: Joi.string().regex(/^[a-z-]+$/).required(),
     link: Joi.string().required(),
@@ -249,11 +253,11 @@ Meteor.publish('clip', function (opciones) {
   const clip = clips.findOne({
     url: opciones.url
   }) || salir(404, 'Clip no encontrado', {
-    donde: 'method agregarLink'
+    donde: 'publish clip'
   })
 
   opciones.secreto && clip.secreto !== opciones.secreto && salir(401, 'No tienes permiso', {
-    donde: 'method agregarLink'
+    donde: 'publish clip'
   })
 
   const postsQuery = {
@@ -273,4 +277,23 @@ Meteor.publish('clip', function (opciones) {
     }),
     posts.find(postsQuery)
   ]
+})
+Meteor.publish('clipId', function (opciones) {
+  salirValidacion({
+    data: opciones,
+    schema: validaciones.clipIdPublish,
+    debug: {
+      donde: 'publish clipId'
+    }
+  })
+
+  return clips.find({
+    _id: opciones.clipId,
+    secreto: opciones.secreto
+  }, {
+    fields: {
+      seguridad: 0,
+      secreto: 0
+    }
+  })
 })
