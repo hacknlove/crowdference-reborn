@@ -2,34 +2,34 @@
   <div class="fondo fade close openWindow" data-_id="portada"></div>
   <form class="ventana fade">
     <div class="cabecero">
-      Crear clip
+      {{_ 'Crear clip'}}
       <i class="fas fa-times cancelar close openWindow" data-_id="portada"></i>
     </div>
     <div class="cuerpo">
       <p class="informacion">
-        Una vez creado el clip, no se podrá modificar su título ni su url.
+        {{_ 'Una vez creado el clip, no se podrá modificar su título ni su url.'}}
       </p>
-      <label>Escribe un título para el clip </label>
-      <input type="text" value="{{c 'titulo'}}" placeholder="titulo" class="{{tituloVacio}}">
+      <label>{{_ 'Escribe un título para el clip'}} </label>
+      <input type="text" value="{{c 'titulo'}}" placeholder="{{_ 'Titulo'}}" class="{{tituloVacio}}">
       <div class="errores">
         <p class="vacio">
-          Tienes que indicar un título para poder continuar
+          {{_ 'Tienes que indicar un título para poder continuar'}}
         </p>
         <p class="noValido">
-          Ya hay un clip con ese título
+          {{_ 'Ya hay un clip con ese título'}}
         </p>
       </div>
       <label>url</label>
       <input type="text" readonly value="{{ROOT_URL}}{{url}}" class="{{urlRepetida}}">
       <div class="errores">
         <p class="noValido">
-          Ya hay un clip con esa url
+          {{_ 'Ya hay un clip con esa url'}}
         </p>
       </div>
     </div>
     <div class="botonera">
-      <button type="button" class="close secundario cancelar openWindow" data-_id="portada">Cancelar</button>
-      <button class="ocultable {{oculto}}">Crear</button>
+      <button type="button" class="close secundario cancelar openWindow" data-_id="portada">{{_ 'Cancelar'}}</button>
+      <button class="ocultable {{oculto}}">{{_ 'Crear'}}</button>
     </div>
   </form>
 </template>

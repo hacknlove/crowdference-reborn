@@ -19,8 +19,5 @@ Template.menuIdiomas.events({
   'click .menu>div:not(.activo)' (event) {
     localStorage.lang = event.currentTarget.dataset.lang
     ventanas.conf('lang', event.currentTarget.dataset.lang)
-    const path = ventanas.conf('path')
-    path.replace(/\?lang=.*/, `?lang=${event.currentTarget.dataset.lang}`)
-    ventanas.conf('path', `${traducir(ventanas.conf('template'))}?lang=${event.currentTarget.dataset.lang}`)
   }
 })

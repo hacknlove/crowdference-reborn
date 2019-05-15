@@ -3,17 +3,17 @@
   <div class="menu fade close">
     {{#if miClip url}}
     {{#if llaves}}
-    <div class="openWindow" data-_id="llaves" data-url="{{url}}"><i class="fas fa-key"></i> Llaves</div>
+    <div class="openWindow" data-_id="llaves" data-url="{{url}}"><i class="fas fa-key"></i> {{_ 'Llaves'}}</div>
     {{else}}
-    <div class="olvidar"><i class="fas fa-unlink"></i> Olvidar</div>
+    <div class="olvidar"><i class="fas fa-unlink"></i> {{_ 'Olvidar'}}</div>
     {{/if}}
     {{else}}
-    <div class="recordar"><i class="fas fa-paperclip"></i> Recordar</div>
+    <div class="recordar"><i class="fas fa-paperclip"></i> {{_ 'Recordar'}}</div>
     <hr>
     {{/if}}
-    <div class="compartir"><i class="fas fa-share-alt"></i> Compartir</div>
-    <div class="close openWindow" data-_id="agregarEnlace" data-link="" data-url="{{url}}"><i class="fas fa-plus"></i> Agregar</div>
-    <div class="salir"><i class="fas fa-arrow-left"></i> Atrás</div>
+    <div class="compartir"><i class="fas fa-share-alt"></i> {{_ 'Compartir'}}</div>
+    <div class="close openWindow" data-_id="agregarEnlace" data-link="" data-url="{{url}}"><i class="fas fa-plus"></i> {{_ 'Agregar'}}</div>
+    <div class="salir"><i class="fas fa-arrow-left"></i> {{_ 'Atrás'}}</div>
   </div>
 </template>
 
@@ -32,10 +32,10 @@
           {{else}}
             <div class="ventana">
               <div class="cabecero">
-                Clip vacío
+                {{_ 'Clip vacío'}}
               </div>
               <div class="cuerpo">
-                Agrega publicaciones a tu clip.
+                {{_ 'Agrega enlaces al clip.'}}
               </div>
             </div>
           {{/each}}
@@ -45,10 +45,10 @@
         {{else}}
           <div class="ventana">
             <div class="cabecero">
-              Clip vacío
+              {{_ 'Clip vacío'}}
             </div>
             <div class="cuerpo">
-              Agrega publicaciones al clip.
+              {{_ 'Agrega enlaces al clip.'}}
             </div>
           </div>
         {{/each}}
@@ -80,21 +80,21 @@
       <div class="miniFondo">
         <div class="menu">
           {{#if comprobarStatus 'PENDIENTE'}}
-          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> Aprobar</div>
-          <div class="establecerStatus" data-status="RECHAZADO"><i class="fas fa-ban"></i> Rechazar</div>
+          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> {{_ 'Aprobar'}}</div>
+          <div class="establecerStatus" data-status="RECHAZADO"><i class="fas fa-ban"></i> {{_ 'Rechazar'}}</div>
           {{/if}}
           {{#if comprobarStatus 'RECHAZADO'}}
-          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> Aprobar</div>
-          <div class="eliminar"><i class="fas fa-trash"></i> Eliminar</div>
+          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> {{_ 'Aprobar'}}</div>
+          <div class="eliminar"><i class="fas fa-trash"></i> {{_ 'Eliminar'}}</div>
           {{/if}}
           {{#if comprobarStatus 'VISIBLE'}}
-          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-eye-slash"></i> Ocultar</div>
+          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-eye-slash"></i> {{_ 'Ocultar'}}</div>
           {{/if}}
           {{#if comprobarStatus 'OCULTO'}}
-          <div class="establecerStatus" data-status="VISIBLE"><i class="fas fa-eye"></i> Mostrar</div>
-          <div class="eliminar"><i class="fas fa-trash"></i> Eliminar</div>
+          <div class="establecerStatus" data-status="VISIBLE"><i class="fas fa-eye"></i> {{_ 'Mostrar'}}</div>
+          <div class="eliminar"><i class="fas fa-trash"></i> {{_ 'Eliminar'}}</div>
           {{/if}}
-          <div class="openWindow" data-template="prioridad" data-post-id="{{_id}}"><i class="fas fa-sort"></i> Prioridad</div>
+          <div class="openWindow" data-template="prioridad" data-post-id="{{_id}}"><i class="fas fa-sort"></i> {{_ 'Prioridad'}}</div>
         </div>
       </div>
     </div>
@@ -105,7 +105,7 @@
   <div class="fondo fade"></div>
   <div class="ventana fade scrollable">
     <div class="cabecero">
-      Llaves
+      {{_ 'Llaves'}}
       <i class="fas fa-times close"></i>
     </div>
     <div class="cuerpo">
@@ -113,9 +113,9 @@
       {{#if secreto}}
         <div class="informacion llave">
           <div>
-            <h3>Llave de administración</h3>
+            <h3>{{_ 'Llave de administración'}}</h3>
             <p>
-              Con esta llave se puede administrar el clip
+              {{_ 'Con esta llave se puede administrar el clip'}}
             </p>
             <div class="iconera">
               <i class="fas fa-copy copiar" data-llave="secreto" title="copiar llave"></i>
@@ -130,9 +130,9 @@
       {{#if seguridad}}
         <div class="informacion seguridad">
           <div>
-            <h3>Llave de seguridad</h3>
+            <h3>{{_ 'Llave de seguridad'}}</h3>
             <p>
-              Con esta llave se pueden revocar las llaves de administración y seguridad.
+              {{_ 'Con esta llave se pueden revocar las llaves de administración y seguridad.'}}
             </p>
             <div class="iconera">
               <i class="fas fa-copy copiar" data-llave="seguridad" title="copiar llave"></i>
@@ -144,7 +144,7 @@
       {{/if}}
     </div>
     <div class="botonera">
-      <button class="close">Hecho</button>
+      <button class="close">{{_ 'Hecho'}}</button>
     </div>
   </div>
 </template>
@@ -153,19 +153,19 @@
   <div class="fondo fade"></div>
   <div class="ventana fade scrollable">
     <div class="cabecero">
-      Prioridad
+      {{_ 'Prioridad'}}
       <i class="fas fa-times close"></i>
     </div>
     <div class="cuerpo">
       <div class="informacion">
-          Los enlaces se ordenan por su prioridad, de mayor a menor, y por la fecha en la que han sido agregados
+          {{_ 'Los enlaces se ordenan por su prioridad, de mayor a menor, y por la fecha en la que han sido agregados.'}}
       </div>
       <br>
       <input type="number" name="prioridad" value="{{prioridad}}">
     </div>
     <div class="botonera">
-      <button class="secundario close">Cancelar</button>
-      <button class="aceptar">Aceptar</button>
+      <button class="secundario close">{{_ 'Cancelar'}}</button>
+      <button class="aceptar">{{_ 'Aceptar'}}</button>
     </div>
   </div>
 </template>

@@ -2,15 +2,15 @@
   <div class="fondo fade close"></div>
   <div class="ventana fade">
     <div class="cabecero">
-      Agregar enlace
+      {{_ 'Agregar enlace'}}
       <i class="fas fa-times close"></i>
     </div>
     <div class="cuerpo">
       <input name="link" placeholder="https://enlace.a/agregar" value="{{link}}">
     </div>
     <div class="botonera">
-      <button class="close secundario">Cancelar</button>
-      <button class="siguiente ocultable {{oculto}}">Siguiente</button>
+      <button class="close secundario">{{_ 'Cancelar'}}</button>
+      <button class="siguiente ocultable {{oculto}}">{{_ 'Siguiente'}}</button>
     </div>
   </div>
 </template>
@@ -18,15 +18,15 @@
   <div class="fondo fade close"></div>
   <div class="ventana fade scrollable">
     <div class="cabecero">
-      Previsualizar
+      {{_ 'Previsualizar'}}
       <i class="fas fa-times close"></i>
     </div>
     <div class="cuerpo">
       {{> previsualizacion this}}
     </div>
     <div class="botonera">
-      <button class="close secundario openWindow" data-_id="agregarEnlace" data-link="" data-url="{{url}}">atras</button>
-      <button class="siguiente">Agregar</button>
+      <button class="close secundario openWindow" data-_id="agregarEnlace" data-link="" data-url="{{url}}">{{_ 'Atrás'}}</button>
+      <button class="siguiente">{{_ 'Agregar'}}</button>
     </div>
   </div>
 </template>

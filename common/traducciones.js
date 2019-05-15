@@ -1,105 +1,165 @@
 
 
 export const traducciones = {
-  "delegar": {
-    "en": "Quality-code-control-delegating",
-    "es": "Delegar-control-de-calidad-de-codigo"
+  "Aceptar": {
+    "en": "Accept",
+    "es": "Aceptar"
   },
-  "calidad": {
-    "en": "Quality-code-consulting",
-    "es": "Consultoria-de-calidad-de-codigo"
+  "Agrega enlaces al clip.": {
+    "en": "Add links to clip.",
+    "es": "Agrega enlaces al clip."
   },
-  "tarifas": {
-    "en": "pricing",
-    "es": "tarifas"
+  "Agregar": {
+    "en": "Add",
+    "es": "Agregar"
   },
-  "Sí": {
-    "en": "Yes",
-    "es": "Sí"
+  "Agregar enlace": {
+    "en": "Add link",
+    "es": "Agregar enlace"
   },
-  "No": {
-    "en": "No",
-    "es": "No"
-  },
-  "Hablemos": {
-    "en": "More information",
-    "es": "Más información"
+  "Aprobar": {
+    "en": "Approve",
+    "es": "Aprobar"
   },
   "Atrás": {
     "en": "Back",
     "es": "Atrás"
   },
-  "Tarifas": {
-    "en": "Pricing",
-    "es": "Tarifas"
+  "Buscar clip": {
+    "en": "Search clip",
+    "es": "Buscar clip"
   },
-  "Titulo_Portada": {
-    "en": "the love for well done work",
-    "es": "Amor por el trabajo bien hecho"
+  "Busqueda:": {
+    "en": "Search",
+    "es": "Busqueda:"
   },
-  "Cuerpo_Portada": {
-    "en": "It is not enough to get software that works, its source code must have hight quality to avoid future problems.\n\n#### Do you know how to assess the quality of the code?",
-    "es": "Quien encarga un desarrollo de software no debería conformarse con que funcione.\n\nEs necesario que el código sea de calidad para evitar costes ocultos.\n \n#### ¿Sabes como valorar la cálidad interna del código?"
+  "Cancelar": {
+    "en": "Cancel",
+    "es": "Cancelar"
   },
-  "Titulo_Calidad": {
-    "en": "You need to audit the code to be safe",
-    "es": "Necesitas auditar el código que encargas."
+  "Clip vacío": {
+    "en": "Empty clip",
+    "es": "Clip vacío"
   },
-  "Cuerpo_Calidad": {
-    "en": "Your software provider’s QA departments defends its own interests, not yours.\n\n#### It's not about trust, it's about survival.\n\nhacknlove will review the code, inform you of the situation in a language you understand, and defend your insterests in front of your software providers.",
-    "es": "El departamento de QA de tu proveedor defiende los intereses de éste, los cuales pueden en ocasiones chocar con los tuyos.\n\n#### No es cuestión de confianza, es cuesión de supervivencia.\n\nhacknlove revisará el código que te entreguen, te informará de la situación en un lenguaje que entiendas, y será tu voz frente a tus proveedores a la hora de exigir que hagan las cosas bien.\n"
+  "Compartir": {
+    "en": "Share",
+    "es": "Compartir"
   },
-  "Titulo_Tarifas": {
-    "en": "Pricing",
-    "es": "Tarifas y servicios"
+  "Con esta llave se puede administrar el clip": {
+    "en": "This key allows to admin the clip",
+    "es": "Con esta llave se puede administrar el clip"
   },
-  "Pie_Tarifas": {
-    "en": "Non-negotiable prices, and service subject to availability",
-    "es": "Precios no negociables, y servicio sujeto a disponibilad"
+  "Con esta llave se pueden revocar las llaves de administración y seguridad.": {
+    "en": "This key allows to revoke the keys",
+    "es": "Con esta llave se pueden revocar las llaves de administración y seguridad."
   },
-  "Tarifas_Datos": {
-    "en": "Code quality consulting\n50 €/h\nIn-depth analysis of the quality of the code will be carried out, comprehensible reports will be delivered, and the development team will be helped to solve the problems encountered.",
-    "es": "Consultoría de calidad de código\n50€/h\nSe realizarán análisis profundos de la calidad del código, se entregarán informe comprensibles, y se ayudará al equipo de desarrollo a solucionar los problemas que se encuentren.\n\n"
+  "Crear": {
+    "en": "Create",
+    "es": "Crear"
   },
-  "Titulo_Delegar": {
-    "en": "Do you need 28 hour days?",
-    "es": "¿Necesitas días de 28 horas?"
+  "Crear clip": {
+    "en": "Create clip",
+    "es": "Crear clip"
   },
-  "Cuerpo_Delegar": {
-    "en": "If you trust hacknlove to control the quality of the code, you will have more time available for those other tasks that you can not delegate.",
-    "es": "Si confías en hacknlove para controlar la calidad del código, tendrás más tiempo disponible para aquellas otras labores que no puedes delegar. "
+  "Eliminar": {
+    "en": "Remove",
+    "es": "Eliminar"
   },
-  "portada_OG_title": {
-    "en": "Code quality consulting",
-    "es": "Consultoría de calidad de código"
+  "Escribe un título para el clip": {
+    "en": "Enter a title for the clip",
+    "es": "Escribe un título para el clip"
   },
-  "portada_OG_description": {
-    "en": "the love for well done work",
-    "es": "Amor por el trabajo bien hecho"
+  "Favoritos": {
+    "en": "Favorites",
+    "es": "Favoritos"
   },
-  "calidad_OG_title": {
-    "en": "You need to audit the code to be safe",
-    "es": "Necesitas auditar el código que encargas."
+  "Hecho": {
+    "en": "Done",
+    "es": "Hecho"
   },
-  "calidad_OG_description": {
-    "en": "hacknlove will review the code, inform you of the situation in a language you understand, and defend your insterests in front of your software providers.",
-    "es": "hacknlove revisará el código que te entreguen, te informará de la situación en un lenguaje que entiendas, y será tu voz frente a tus proveedores a la hora de exigir que hagan las cosas bien."
+  "Idioma": {
+    "en": "Language",
+    "es": "Idioma"
   },
-  "delegar_OG_title": {
-    "en": "Do you need 28 hour days?",
-    "es": "¿Necesitas días de 28 horas?"
+  "Llave de administración": {
+    "en": "Admin key",
+    "es": "Llave de administración"
   },
-  "delegar_OG_description": {
-    "en": "If you trust hacknlove to control the quality of the code, you will have more time available for those other tasks that you can not delegate.",
-    "es": "Si confías en hacknlove para controlar la calidad del código, tendrás más tiempo disponible para aquellas otras labores que no puedes delegar. "
+  "Llave de seguridad": {
+    "en": "Safe key",
+    "es": "Llave de seguridad"
   },
-  "tarifas_OG_title": {
-    "en": "Pricing",
-    "es": "Tarifas y servicios"
+  "Llaves": {
+    "en": "Keys",
+    "es": "Llaves"
   },
-  "tarifas_OG_description": {
-    "en": "Non-negotiable prices, and service subject to availability",
-    "es": "Precios no negociables, y servicio sujeto a disponibilad"
+  "Los enlaces se ordenan por su prioridad, de mayor a menor, y por la fecha en la que han sido agregados.": {
+    "en": "The links are ordered by their priority and then by the addition date",
+    "es": "Los enlaces se ordenan por su prioridad, de mayor a menor, y por la fecha en la que han sido agregados."
+  },
+  "Mostrar": {
+    "en": "Show",
+    "es": "Mostrar"
+  },
+  "Ocultar": {
+    "en": "Hide",
+    "es": "Ocultar"
+  },
+  "Olvidar": {
+    "en": "Forget",
+    "es": "Olvidar"
+  },
+  "organiza las": {
+    "en": "organize the",
+    "es": "organiza las"
+  },
+  "Prioridad": {
+    "en": "Priority",
+    "es": "Prioridad"
+  },
+  "Ranking": {
+    "en": "Ranking",
+    "es": "Ranking"
+  },
+  "Rechazar": {
+    "en": "Refuse",
+    "es": "Rechazar"
+  },
+  "Recordar": {
+    "en": "Remember",
+    "es": "Recordar"
+  },
+  "Siguiente": {
+    "en": "Next",
+    "es": "Siguiente"
+  },
+  "Tienes que indicar un título para poder continuar": {
+    "en": "You need to add a title to continue",
+    "es": "Tienes que indicar un título para poder continuar"
+  },
+  "Titulo": {
+    "en": "Title",
+    "es": "Titulo"
+  },
+  "Una vez creado el clip, no se podrá modificar su título ni su url.": {
+    "en": "After created, the title cannot be altered",
+    "es": "Una vez creado el clip, no se podrá modificar su título ni su url."
+  },
+  "Ver clip": {
+    "en": "View clip",
+    "es": "Ver clip"
+  },
+  "Ya hay un clip con esa url": {
+    "en": "A clip exists with this url",
+    "es": "Ya hay un clip con esa url"
+  },
+  "Ya hay un clip con ese título": {
+    "en": "A clip exists with this title",
+    "es": "Ya hay un clip con ese título"
+  },
+  "redes": {
+    "en": "networks",
+    "es": "redes"
   }
 }
 
