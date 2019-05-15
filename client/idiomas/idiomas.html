@@ -1,0 +1,9 @@
+<template name="menuIdiomas">
+  <div class="fondo fondoDeMenu fade close"></div>
+  <div class="menu fade close">
+    {{#each lang in languages}}
+      <div class="cambiarIdioma {{idiomaActivo lang}}" data-lang="{{lang}}">{{lang}}</div>
+    {{/each}}
+  </div>
+
+</template>

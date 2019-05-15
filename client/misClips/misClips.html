@@ -1,18 +1,10 @@
-<template name="menuMisClips">
-  <div class="fondo fondoDeMenu fade close"></div>
-  <div class="menu fade close closeRanking">
-    <div class="openWindow" data-_id="crearClip"><i class="fas fa-paperclip"></i> Agregar clip</div>
-    <div class="openWindow" data-_id="portada"><i class="fas fa-search"></i> buscar</div>
-  </div>
-</template>
-
 <template name="misClips">
   <div class="fade lista">
     <div class="cabecero">
       <h2>
         Mis Clips
       </h2>
-      {{>hamburguesa menu="menuMisClips"}}
+      {{>hamburguesa menu="menu" closeOther="misClips"}}
     </div>
     <div class="cuerpo">
       {{#each clip in misClips}}

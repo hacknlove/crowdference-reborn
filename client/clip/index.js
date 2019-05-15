@@ -1,7 +1,11 @@
 import { Template } from 'meteor/templating'
 import { misClips } from '/common/baseDeDatos'
+import { ventanas } from 'meteor/hacknlove:ventanas'
 
 Template.registerHelper('tengoClips', function () {
+  if (ventanas.findOne('misClips')) {
+    return
+  }
   return misClips.find().count()
 })
 

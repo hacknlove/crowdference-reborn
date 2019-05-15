@@ -64,7 +64,7 @@ Meteor.publish('primerPost', function (clipId) {
     status: 'VISIBLE'
   }, {
     sort: {
-      prioridad: 1,
+      prioridad: -1,
       timestamp: -1
     },
     limit: 1

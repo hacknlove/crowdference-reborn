@@ -2,7 +2,8 @@
   "name": "crowdference-reborn",
   "private": false,
   "scripts": {
-    "start": "meteor run --settings settings.json"
+    "start": "meteor run --settings settings.json",
+    "deploy": "ssh root@online2.hacknlove.org cat /var/www/cimeteor/local.sh | bash"
   },
   "dependencies": {
     "@babel/runtime": "^7.3.4",

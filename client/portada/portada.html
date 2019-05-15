@@ -1,21 +1,27 @@
+<template name="menuPortada">
+  <div class="fondo fondoDeMenu fade close"></div>
+  <div class="menu fade close closeRanking">
+    <div class="close-other openWindow ocultable" data-other="portada" data-_id="ranking"><i class="fas fa-sort-numeric-down"></i> Ranking</div>
+    <div class="close-other openWindow ocultable" data-other="portada" data-_id="crearClip"><i class="fas fa-paperclip"></i> Crear clip</div>
+    <div class="openWindow ocultable" data-_id="menuIdiomas"><i class="fas fa-globe-americas"></i> Idioma</div>
+    {{#if tengoClips}}
+    <div class="close-other openWindow" data-other="portada" data-_id="misClips"><i class="fas fa-heart"></i> Favoritos</div>
+    {{/if}}
+  </div>
+</template>
+
 <template name="portada">
+  {{>hamburguesa menu="menu" closeOther="portada"}}
   <div id="portada">
     <div class="crecer"></div>
     <img class="close openWindow" data-_id="crearClip" data-pagina="0" id="logo" src="/logoletrasConClip.png">
     <p class="close openWindow" data-_id="crearClip" data-pagina="0">Organiza las<i class="fas fa-mouse-pointer"></i> redes</p>
     <form class="input">
       <input type="search" placeholder="Buscar clip" value="{{c 'buscar'}}">
-      <i class="fas fa-search openWindow buscar" data-_id="busqueda" data-busqueda="{{c 'buscar'}}"></i>
+      <i class="fas fa-search openWindow buscar close" data-_id="busqueda" data-busqueda="{{c 'buscar'}}"></i>
     </form>
     <div class="botonera">
     </div>
     <div class="crecer"></div>
-    <div class="botonera">
-      {{#if tengoClips}}
-      <button class="close openWindow" data-_id="misClips"><i class="fas fa-paperclip"></i> mis clips</button>
-      {{/if}}
-      <button class="close openWindow ocultable" data-_id="crearClip"><i class="fas fa-paperclip"></i> Crear</button>
-      <button class="close openWindow ocultable" data-_id="ranking"><i class="fas fa-sort-numeric-down"></i> Ranking</button>
-    </div>
   </div>
 </template>

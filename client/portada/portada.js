@@ -4,6 +4,9 @@ import { Template } from 'meteor/templating'
 Template.portada.onCreated(function () {
   ventanas.conf('path', '/')
 })
+Template.portada.onDestroyed(function () {
+  ventanas.close('menuPortada')
+})
 Template.portada.events({
   'input input' (event) {
     ventanas.conf('buscar', event.currentTarget.value)

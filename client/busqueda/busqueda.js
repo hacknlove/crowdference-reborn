@@ -31,9 +31,3 @@ Template.busqueda.helpers({
     })
   }
 })
-
-Template.menuBusqueda.events({
-  'click .closeBusqueda' () {
-    ventanas.close('busqueda')
-  }
-})

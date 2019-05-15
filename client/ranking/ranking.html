@@ -1,18 +1,10 @@
-<template name="menuRanking">
-  <div class="fondo fondoDeMenu fade close"></div>
-  <div class="menu fade close closeRanking">
-    <div class="openWindow" data-_id="crearClip"><i class="fas fa-paperclip"></i> Crear</div>
-    <div class="openWindow" data-_id="portada"><i class="fas fa-arrow-left"></i> Atrás</div>
-  </div>
-</template>
-
 <template name="ranking">
   <div class="fade lista">
     <div class="cabecero">
       <h2>
         Ranking
       </h2>
-      {{>hamburguesa menu="menuRanking"}}
+      {{>hamburguesa menu="menu" closeOther="ranking"}}
     </div>
     <div class="cuerpo">
       {{#each clip in clips}}

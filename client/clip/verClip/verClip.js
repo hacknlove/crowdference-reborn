@@ -7,24 +7,57 @@ import { Meteor } from 'meteor/meteor'
 import ClipboardJS from 'clipboard'
 
 const llaveRevocada = function llaveRevocada (e, url) {
+  console.log('llaveRevocada')
   if (!e) {
     return
   }
   if (e.error !== 401) {
     return ventanas.error(e)
   }
-
-  ventanas.insert({
-    template: 'alerta',
-    titulo: 'Llave no válida',
-    contenido: 'Tú llave de administración ha sido revocada'
-  })
-  misClips.update({
-    url
-  }, {
-    $unset: {
-      secreto: 1
+  const miClip = misClips.findOne({
+    url: url,
+    seguridad: {
+      $exists: 1
     }
+  })
+
+  if (!miClip) {
+    ventanas.insert({
+      template: 'alerta',
+      titulo: 'Llave no válida',
+      contenido: 'Tú llave ha sido revocada'
+    })
+    return misClips.update({
+      url
+    }, {
+      $unset: {
+        secreto: 1
+      }
+    })
+  }
+  Meteor.call('obtenerSecreto', {
+    clipId: miClip._id,
+    seguridad: miClip.seguridad
+  }, (e, r) => {
+    if (!e) {
+      return misClips.update({
+        url
+      }, {
+        $set: {
+          secreto: r
+        }
+      })
+    }
+    if (e.error === 401) {
+      misClips.update({
+        url
+      }, {
+        $unset: {
+          seguridad: 1
+        }
+      })
+    }
+    llaveRevocada(e, url)
   })
 }
 
@@ -258,5 +291,30 @@ Template.llaves.helpers({
       url: verClip.url
     }) || {}
     return miClip.secreto
+  }
+})
+
+Template.prioridad.helpers({
+  prioridad () {
+    return posts.findOne(this.postId).prioridad
+  }
+})
+
+Template.prioridad.events({
+  'click .aceptar' (event, template) {
+    const post = posts.findOne(this.postId)
+    const clip = misClips.findOne(post.clipId)
+    ventanas.wait(this._id)
+    Meteor.call('cambiarPrioridad', {
+      clipId: clip._id,
+      secreto: clip.secreto,
+      postId: post._id,
+      prioridad: template.$('input').val() * 1
+    }, (e) => {
+      if (e) {
+        return ventanas.error(e)
+      }
+      ventanas.close(this)
+    })
   }
 })

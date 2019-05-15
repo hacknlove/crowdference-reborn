@@ -7,10 +7,20 @@ import { tituloAUrl } from '/common/varios'
 import Joi from 'joi'
 
 const validaciones = {
+  cambiarPrioridad: Joi.object().keys({
+    clipId: Joi.string().required(),
+    postId: Joi.string().required(),
+    secreto: Joi.string().required(),
+    prioridad: Joi.number().required()
+  }),
   revocar: Joi.object().keys({
     clipId: Joi.string().required(),
     seguridad: Joi.string().required(),
     llave: Joi.string().valid(['seguridad', 'secreto']).required()
+  }),
+  obtenerSecreto: Joi.object().keys({
+    clipId: Joi.string().required(),
+    seguridad: Joi.string().required()
   }),
   establecerStatus: Joi.object().keys({
     clipId: Joi.string().required(),
@@ -118,6 +128,38 @@ Meteor.methods({
         }
       })
     }
+  },
+  cambiarPrioridad (opciones) {
+    salirValidacion({
+      data: opciones,
+      schema: validaciones.cambiarPrioridad,
+      debug: {
+        donde: 'method cambiarPrioridad'
+      }
+    })
+    clips.find({
+      _id: opciones.clipId
+    }).count() || salir(404, 'Clip no encontrado', {
+      donde: 'method establecerStatus'
+    })
+
+    clips.find({
+      _id: opciones.clipId,
+      secreto: opciones.secreto
+    }).count() || salir(401, 'No tienes permiso para administrar el clip', {
+      donde: 'method establecerStatus'
+    })
+
+    posts.find({
+      _id: opciones.postId,
+      clipId: opciones.clipId
+    }).count() || salir(404, 'Post no encontrado')
+
+    posts.update(opciones.postId, {
+      $set: {
+        prioridad: opciones.prioridad
+      }
+    })
   },
   testTitulo (titulo) {
     salirValidacion({
@@ -236,6 +278,30 @@ Meteor.methods({
       }
     })
     return llave
+  },
+  obtenerSecreto (opciones) {
+    salirValidacion({
+      data: opciones,
+      schema: validaciones.obtenerSecreto,
+      debug: {
+        donde: 'method obtenerSecreto'
+      }
+    })
+
+    clips.find({
+      _id: opciones.clipId
+    }).count() || salir(404, 'Clip no encontrado', {
+      donde: 'method revocar'
+    })
+
+    const clip = clips.findOne({
+      _id: opciones.clipId,
+      seguridad: opciones.seguridad
+    }) || salir(401, 'No tienes permiso para obtener la llave de administración', {
+      donde: 'method revocar'
+    })
+
+    return clip.secreto
   }
 })
 

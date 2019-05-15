@@ -48,9 +48,3 @@ Template.vistaPrevia.helpers({
 Template.registerHelper('fecha', function (fecha) {
   return moment(fecha).format('YYYY-MM-DD')
 })
-
-Template.menuRanking.events({
-  'click .closeRanking' () {
-    ventanas.close('ranking')
-  }
-})
