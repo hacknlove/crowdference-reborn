@@ -92,3 +92,22 @@ body {
     }
   }
 }
+
+.informacion {
+  .iconera {
+    color: var(--color-fondo);
+    text-align: right;
+    i {
+      transition: .3s background ease-out;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      padding: 8px;
+      &:hover {
+        background: var(--color-tinta);
+      }
+      &:active {
+        background: var(--color-fondo);
+      }
+    }
+  }
+}

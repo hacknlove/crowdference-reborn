@@ -1,16 +1,19 @@
 <template name="menuVerClip">
   <div class="fondo fondoDeMenu fade close"></div>
   <div class="menu fade close">
-    <div class="close openWindow" data-_id="agregarEnlace" data-link="" data-url="{{url}}"><i class="fas fa-plus"></i> Agregar</div>
-    <div class="compartir"><i class="fas fa-share-alt"></i> Compartir</div>
-    <div class="salir"><i class="fas fa-times"></i> Salir de clip</div>
-    <hr>
     {{#if miClip url}}
-      <div class="openWindow" data-_id="llaves" data-url="{{url}}"><i class="fas fa-key"></i> Llaves</div>
-      <div class="olvidar"><i class="fas fa-unlink"></i> Olvidar</div>
+    {{#if llaves}}
+    <div class="openWindow" data-_id="llaves" data-url="{{url}}"><i class="fas fa-key"></i> Llaves</div>
     {{else}}
-      <div class="recordar"><i class="fas fa-paperclip"></i> Recordar</div>
+    <div class="olvidar"><i class="fas fa-unlink"></i> Olvidar</div>
     {{/if}}
+    {{else}}
+    <div class="recordar"><i class="fas fa-paperclip"></i> Recordar</div>
+    <hr>
+    {{/if}}
+    <div class="compartir"><i class="fas fa-share-alt"></i> Compartir</div>
+    <div class="close openWindow" data-_id="agregarEnlace" data-link="" data-url="{{url}}"><i class="fas fa-plus"></i> Agregar</div>
+    <div class="salir"><i class="fas fa-arrow-left"></i> Atrás</div>
   </div>
 </template>
 
@@ -103,45 +106,42 @@
   <div class="ventana fade scrollable">
     <div class="cabecero">
       Llaves
+      <i class="fas fa-times close"></i>
     </div>
     <div class="cuerpo">
+
       {{#if secreto}}
         <div class="informacion llave">
           <div>
-            <p>
-              <label>Llave de administración</label>
-            </p>
-            <button class="copiar" data-llave="secreto">Copiar <i class="fas fa-copy"></i></button>
-            <button class="olvidar" data-llave="secreto">Olvidar <i class="fas fa-times"></i></button>
+            <h3>Llave de administración</h3>
             <p>
               Con esta llave se puede administrar el clip
             </p>
+            <div class="iconera">
+              <i class="fas fa-copy copiar" data-llave="secreto" title="copiar llave"></i>
+              <i class="fas fa-trash olvidar" data-llave="secreto" title="olvidar llave"></i>
+              {{#if seguridad}}
+                <i class="fas fa-sync-alt revocar" data-llave="secreto" title="cambiar llave"></i>
+              {{/if}}
+            </div>
           </div>
         </div><br>
       {{/if}}
       {{#if seguridad}}
         <div class="informacion seguridad">
           <div>
-            <label>Llave de seguridad</label>
-            <button class="copiar" data-llave="seguridad">Copiar <i class="fas fa-copy"></i></button>
-            <button class="olvidar" data-llave="seguridad">Olvidar <i class="fas fa-times"></i></button>
-            <button class="revocar" data-llave="secreto">Revocar llave de administración <i class="fas fa-key"></i></button>
-            <button class="revocar" data-llave="seguridad">Revocar llave de seguridad <i class="fas fa-lock"></i></button>
+            <h3>Llave de seguridad</h3>
             <p>
               Con esta llave se pueden revocar las llaves de administración y seguridad.
             </p>
+            <div class="iconera">
+              <i class="fas fa-copy copiar" data-llave="seguridad" title="copiar llave"></i>
+              <i class="fas fa-trash olvidar" data-llave="seguridad" title="olvidar llave"></i>
+              <i class="fas fa-sync-alt revocar" data-llave="seguridad" title="cambiar llave"></i>
+            </div>
           </div>
         </div>
       {{/if}}
-      {{#unless seguridad}}{{#unless secreto}}
-        <div class="informacion">
-          <div>
-            <p>
-              No tienes ninguna llave de administración.
-            </p>
-          </div>
-        </div>
-      {{/unless}}{{/unless}}
     </div>
     <div class="botonera">
       <button class="close">Hecho</button>

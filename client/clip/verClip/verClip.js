@@ -59,6 +59,24 @@ ventanas.use('/:url/:clipId/:llave/:tipo', function (match, v) {
 Template.menuVerClip.helpers({
   url () {
     return (ventanas.findOne('verClip') || {}).url
+  },
+  llaves () {
+    const url = (ventanas.findOne('verClip') || {}).url
+    return misClips.findOne({
+      url,
+      $or: [
+        {
+          secreto: {
+            $exists: 1
+          }
+        },
+        {
+          seguridad: {
+            $exists: 1
+          }
+        }
+      ]
+    })
   }
 })
 Template.menuVerClip.events({
@@ -170,7 +188,7 @@ Template.adminPost.helpers({
 })
 
 Template.llaves.onRendered(function () {
-  this.clipboard = new ClipboardJS('button.copiar', {
+  this.clipboard = new ClipboardJS('i.copiar', {
     text (element) {
       const verClip = ventanas.findOne('verClip')
       const miClip = misClips.findOne({

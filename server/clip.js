@@ -34,8 +34,7 @@ const validaciones = {
   agregarLink: Joi.object().keys({
     url: Joi.string().regex(/^[a-z-]+$/).required(),
     link: Joi.string().required(),
-    OG: Joi.object().required(),
-    secreto: Joi.string()
+    OG: Joi.object().required()
   }),
   titulo: Joi.string()
 }
@@ -91,10 +90,7 @@ Meteor.methods({
       }
     })
     const clip = clips.findOne({
-      url: opciones.url,
-      secreto: opciones.secreto || {
-        $exists: 1
-      }
+      url: opciones.url
     }) || salir(404, 'Clip no encontrado', {
       donde: 'method agregarLink'
     })
@@ -110,7 +106,8 @@ Meteor.methods({
       OG: opciones.OG,
       link: opciones.link,
       timestamp: new Date(),
-      status: opciones.secreto ? 'VISIBLE' : 'PENDIENTE'
+      status: 'PENDIENTE',
+      prioridad: 0
     })
     if (opciones.secreto) {
       clips.update({
