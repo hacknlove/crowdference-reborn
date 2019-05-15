@@ -73,10 +73,6 @@ const rrss = {
   }
 }
 
-const obtenerApoyos = function obtenerApoyos (post) {
-  return (rrss[post.rrss].obtenerApoyos(post.link) || 0) * 1
-}
-
 const actualizar = function actualizar (url) {
   var response
   var html
@@ -108,7 +104,6 @@ const actualizar = function actualizar (url) {
 
 Meteor.methods({
   actualizarApoyos (clipId, forzar) {
-    return
     if (!forzar && clips.findOne({
       _id: clipId,
       actualizacion: {
@@ -122,15 +117,15 @@ Meteor.methods({
       clipId,
       status: 'VISIBLE'
     }).forEach(post => {
-      const misApoyos = obtenerApoyos(post)
+      const response = actualizar(post.link)
       posts.update({
         _id: post._id
       }, {
         $set: {
-          apoyos: misApoyos
+          OG: response.data
         }
       })
-      apoyos += misApoyos
+      apoyos += (response.data.crLikes || 0) * 1
     })
     clips.update({
       _id: clipId

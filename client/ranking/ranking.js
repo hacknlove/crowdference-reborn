@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating'
 import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Meteor } from 'meteor/meteor'
-import { clips, posts, misClips } from '/common/baseDeDatos'
+import { clips, posts } from '/common/baseDeDatos'
 import moment from 'moment'
 
 ventanas.use('/ranking/:pagina', function (match, v) {

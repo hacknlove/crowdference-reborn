@@ -52,8 +52,8 @@ Template.previsualizarEnlace.events({
       if (!this.secreto) {
         ventanas.insert({
           template: 'alerta',
-          titulo: 'Publicación agregada',
-          contenido: 'La publicación ha sido agregada y será visible en cuanto sea aprobada por los moderadores del clip.'
+          titulo: 'Enlace agregado',
+          contenido: 'El enlace ha sido agregado y será visible públicamente en cuanto sea aprobado.'
         })
       }
       ventanas.close('previsualizarEnlace')
