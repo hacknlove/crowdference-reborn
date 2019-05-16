@@ -19,7 +19,7 @@ Template.agregarEnlace.events({
   },
   'click button' (event) {
     ventanas.close('agregarEnlace')
-    Meteor.call('previsualizar', this.link, (e, r) => {
+    Meteor.call('link', this.link, (e, r) => {
       if (e) {
         return ventanas.error({
           message: 'Error al obtener previsualización, inténtalo dentro de unos minutos.'
@@ -27,10 +27,7 @@ Template.agregarEnlace.events({
       }
       ventanas.insert({
         _id: 'previsualizarEnlace',
-        link: this.link,
-        OG: r.data,
-        url: this.url,
-        secreto: this.secreto
+        link: r
       })
     })
   }
@@ -39,11 +36,9 @@ Template.agregarEnlace.events({
 Template.previsualizarEnlace.events({
   'click .siguiente' () {
     ventanas.wait('previsualizarEnlace')
-    Meteor.call('agregarLink', {
-      url: this.url,
-      secreto: this.secreto,
-      link: this.link,
-      OG: this.OG
+    Meteor.call('agregarPost', {
+      clipId: ventanas.conf('clipId'),
+      linkId: this.link._id
     }, (e, r) => {
       if (e) {
         ventanas.unwait('previsualizarEnlace')
@@ -61,9 +56,6 @@ Template.previsualizarEnlace.events({
   }
 })
 
-Template.previsualizacion.onRendered(function () {
-})
-
 const iconos = {
   YouTube: 'fab fa-youtube',
   Vimeo: 'fab fa-vimeo',
@@ -75,9 +67,9 @@ const iconos = {
 
 Template.previsualizacion.helpers({
   icono () {
-    return iconos[this.OG.ogSiteName] || 'fas fa-external-link-alt'
+    return iconos[this.link.siteName] || 'fas fa-external-link-alt'
   },
   favicon () {
-    return this.link.replace(/^(.*:\/\/.*?)\/(.*)$/, '$1/favicon.ico')
+    return this.link.url.replace(/^(.*:\/\/.*?)\/(.*)$/, '$1/favicon.ico')
   }
 })

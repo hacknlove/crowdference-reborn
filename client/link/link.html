@@ -1,0 +1,15 @@
+<template name="link">
+  <div class="fade lista">
+    <div class="cabecero">
+      <h2>
+        {{link}}
+      </h2>
+      {{>hamburguesa menu="menu" closeOther="clipsCon"}}
+    </div>
+    <div class="cuerpo">
+      {{#each clip in clips}}
+        {{> vistaPrevia clip}}
+      {{/each}}
+    </div>
+  </div>
+</template>

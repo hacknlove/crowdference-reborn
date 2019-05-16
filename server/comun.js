@@ -2,8 +2,10 @@ import { Meteor } from 'meteor/meteor'
 import Joi from 'joi'
 
 export const salir = function salir (codigo, mensaje, debug) {
-  if (debug) {
+  if (Meteor.isDevelopment) {
     console.log(codigo, mensaje)
+    const err = new Error()
+    console.log(err.stack)
     console.log(JSON.stringify(debug, null, 2))
   }
   throw new Meteor.Error(codigo, mensaje)

@@ -20,4 +20,16 @@ export const traducir = function (key) {
   return traducciones[key][ventanas.conf('lang')] || key
 }
 
+export const traducirConVariables = function (key, ...variables) {
+  console.log(variables)
+  var t = traducir(key)
+  var i = 1
+  while (variables[i]) {
+    t = t.replace(new RegExp(`\\$${i}`, 'g'), variables[i - 1])
+    i++
+  }
+  return t
+}
+
 Template.registerHelper('_', traducir)
+Template.registerHelper('__', traducirConVariables)

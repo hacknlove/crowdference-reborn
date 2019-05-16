@@ -15,11 +15,18 @@ db.clips.createIndex({
 })
 
 db.posts.createIndex({
-  url: 1
+  linkId: 1
 })
 db.posts.createIndex({
   clipId: 1
 })
 db.posts.createIndex({
   status: 1
+})
+
+db.links.createIndex({
+  url: 1
+})
+db.links.createIndex({
+  actualizado: 1
 })

@@ -1,9 +1,9 @@
 <template name="menuVerClip">
   <div class="fondo fondoDeMenu fade close"></div>
   <div class="menu fade close">
-    {{#if miClip url}}
+    {{#if miClip clipId}}
     {{#if llaves}}
-    <div class="openWindow" data-_id="llaves" data-url="{{url}}"><i class="fas fa-key"></i> {{_ 'Llaves'}}</div>
+    <div class="openWindow" data-_id="llaves"><i class="fas fa-key"></i> {{_ 'Llaves'}}</div>
     {{else}}
     <div class="olvidar"><i class="fas fa-unlink"></i> {{_ 'Olvidar'}}</div>
     {{/if}}
@@ -12,7 +12,7 @@
     <hr>
     {{/if}}
     <div class="compartir"><i class="fas fa-share-alt"></i> {{_ 'Compartir'}}</div>
-    <div class="close openWindow" data-_id="agregarEnlace" data-link="" data-url="{{url}}"><i class="fas fa-plus"></i> {{_ 'Agregar'}}</div>
+    <div class="close openWindow" data-_id="agregarEnlace"><i class="fas fa-plus"></i> {{_ 'Agregar'}}</div>
     <div class="salir"><i class="fas fa-arrow-left"></i> {{_ 'Atrás'}}</div>
   </div>
 </template>
@@ -26,33 +26,18 @@
       {{>hamburguesa menu="menuVerClip"}}
     </div>
     <div class="cuerpo">
-      {{#if secreto url}}
-          {{#each post in posts}}
-            {{> adminPost post}}
-          {{else}}
-            <div class="ventana">
-              <div class="cabecero">
-                {{_ 'Clip vacío'}}
-              </div>
-              <div class="cuerpo">
-                {{_ 'Agrega enlaces al clip.'}}
-              </div>
-            </div>
-          {{/each}}
+      {{#each post in posts}}
+        {{> vistaPreviaPost post}}
       {{else}}
-        {{#each post in posts}}
-          {{> vistaPreviaPost post}}
-        {{else}}
-          <div class="ventana">
-            <div class="cabecero">
-              {{_ 'Clip vacío'}}
-            </div>
-            <div class="cuerpo">
-              {{_ 'Agrega enlaces al clip.'}}
-            </div>
+        <div class="ventana">
+          <div class="cabecero">
+            {{_ 'Clip vacío'}}
           </div>
-        {{/each}}
-      {{/if}}
+          <div class="cuerpo">
+            {{_ 'Agrega enlaces al clip.'}}
+          </div>
+        </div>
+      {{/each}}
     </div>
   </div>
 </template>
@@ -61,40 +46,40 @@
   <div class="ventana">
     <div class="cabecero">
       {{fecha timestamp}}
-    </div>
-    <div class="cuerpo">
-      {{>previsualizacion this}}
-    </div>
-  </div>
-</template>
-
-<template name="adminPost">
-  <div class="ventana">
-    <div class="cabecero">
-      {{fecha timestamp}} - {{status}} - {{prioridad}}
-
+      {{#if admin}}
+        - {{status}} - {{prioridad}}
+      {{/if}}
       <i class="fas fa-bars"></i>
     </div>
     <div class="cuerpo">
-      {{>previsualizacion this}}
+      {{#if link}}
+        {{>previsualizacion link=link}}
+      {{/if}}
       <div class="miniFondo">
         <div class="menu">
-          {{#if comprobarStatus 'PENDIENTE'}}
-          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> {{_ 'Aprobar'}}</div>
-          <div class="establecerStatus" data-status="RECHAZADO"><i class="fas fa-ban"></i> {{_ 'Rechazar'}}</div>
+          <div class="openWindow" data-template="crearClip" data-post-id="{{_id}}"><i class="fas fa-paperclip"></i> {{_ 'Crear clip'}}</div>
+          <div class="copiar"><i class="fas fa-share-alt"></i> {{_ 'Compartir'}}</div>
+          {{#if clips}}
+            <div class="openWindow" data-template="link" data-post-id="{{_id}}"><i class="fas fa-search"></i> {{_ 'buscar'}}</div>
           {{/if}}
-          {{#if comprobarStatus 'RECHAZADO'}}
-          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> {{_ 'Aprobar'}}</div>
-          <div class="eliminar"><i class="fas fa-trash"></i> {{_ 'Eliminar'}}</div>
+          {{#if admin}}
+            {{#if comprobarStatus 'PENDIENTE'}}
+            <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> {{_ 'Aprobar'}}</div>
+            <div class="establecerStatus" data-status="RECHAZADO"><i class="fas fa-ban"></i> {{_ 'Rechazar'}}</div>
+            {{/if}}
+            {{#if comprobarStatus 'RECHAZADO'}}
+            <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> {{_ 'Aprobar'}}</div>
+            <div class="eliminar"><i class="fas fa-trash"></i> {{_ 'Eliminar'}}</div>
+            {{/if}}
+            {{#if comprobarStatus 'VISIBLE'}}
+            <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-eye-slash"></i> {{_ 'Ocultar'}}</div>
+            {{/if}}
+            {{#if comprobarStatus 'OCULTO'}}
+            <div class="establecerStatus" data-status="VISIBLE"><i class="fas fa-eye"></i> {{_ 'Mostrar'}}</div>
+            <div class="eliminar"><i class="fas fa-trash"></i> {{_ 'Eliminar'}}</div>
+            {{/if}}
+            <div class="openWindow" data-template="prioridad" data-post-id="{{_id}}"><i class="fas fa-sort"></i> {{_ 'Prioridad'}}</div>
           {{/if}}
-          {{#if comprobarStatus 'VISIBLE'}}
-          <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-eye-slash"></i> {{_ 'Ocultar'}}</div>
-          {{/if}}
-          {{#if comprobarStatus 'OCULTO'}}
-          <div class="establecerStatus" data-status="VISIBLE"><i class="fas fa-eye"></i> {{_ 'Mostrar'}}</div>
-          <div class="eliminar"><i class="fas fa-trash"></i> {{_ 'Eliminar'}}</div>
-          {{/if}}
-          <div class="openWindow" data-template="prioridad" data-post-id="{{_id}}"><i class="fas fa-sort"></i> {{_ 'Prioridad'}}</div>
         </div>
       </div>
     </div>
@@ -148,6 +133,7 @@
     </div>
   </div>
 </template>
+
 
 <template name="prioridad">
   <div class="fondo fade"></div>

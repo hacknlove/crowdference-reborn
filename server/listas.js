@@ -4,7 +4,8 @@ import { salirValidacion } from '/server/comun'
 import Joi from 'joi'
 
 const validaciones = {
-  primerPost: Joi.string()
+  primerPost: Joi.string(),
+  link: Joi.string()
 }
 
 Meteor.publish('ranking', function (pagina = 0) {
@@ -67,6 +68,23 @@ Meteor.publish('primerPost', function (clipId) {
       prioridad: -1,
       timestamp: -1
     },
+    limit: 1
+  })
+})
+
+Meteor.publish('link', function (link) {
+  return posts.findOne({
+    link
+  }, {
+    fields: {
+      clipId: 1
+    }
+  })
+})
+Meteor.publish('linkPost', function (link) {
+  return posts.find({
+    link
+  }, {
     limit: 1
   })
 })

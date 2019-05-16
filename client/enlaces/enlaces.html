@@ -1,3 +1,9 @@
+<template name="enlace">
+  {{#if post}}
+    {{> vistaPreviaPost post}}
+  {{/if}}
+</template>
+
 <template name="agregarEnlace">
   <div class="fondo fade close"></div>
   <div class="ventana fade">
@@ -25,7 +31,7 @@
       {{> previsualizacion this}}
     </div>
     <div class="botonera">
-      <button class="close secundario openWindow" data-_id="agregarEnlace" data-link="" data-url="{{url}}">{{_ 'Atrás'}}</button>
+      <button class="close secundario openWindow" data-_id="agregarEnlace">{{_ 'Atrás'}}</button>
       <button class="siguiente">{{_ 'Agregar'}}</button>
     </div>
   </div>
@@ -33,8 +39,8 @@
 
 <template name="previsualizacion">
   <div class="social">
-    <a class="imagen" href="{{link}}" target="_blank">
-      <img src="{{OG.ogImage.url}}" alt="">
+    <a class="imagen" href="{{link.url.[0]}}" target="_blank">
+      <img src="{{link.image}}">
     </a>
     <h3>
       <span class="titulo">
@@ -43,15 +49,12 @@
         {{else}}
           <img src="{{favicon}}">
         {{/if}}
-        {{OG.ogTitle}}
+        {{link.title}}
       </span>
-      {{#if OG.crLikes}}
-      <span class="likes"><i class="fas fa-heart"></i> {{OG.crLikes}}</span>
-      {{/if}}
     </h3>
-    <a href="{{link}}" target="_blank">{{link}}</a>
+    <a href="{{link.url.[0]}}" target="_blank">{{link.url.[0]}}</a>
     <p>
-      {{OG.ogDescription}}
+      {{link.description}}
     </p>
   </div>
 </template>

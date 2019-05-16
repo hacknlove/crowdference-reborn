@@ -2,15 +2,15 @@
 
 import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Template } from 'meteor/templating'
-import { clips, posts, misClips } from '/common/baseDeDatos'
+import { clips, posts, misClips, localLinks } from '/common/baseDeDatos'
 import { Meteor } from 'meteor/meteor'
 import ClipboardJS from 'clipboard'
 
 const llaveRevocada = function llaveRevocada (e, url) {
-  console.log('llaveRevocada')
   if (!e) {
     return
   }
+  console.log('llaveRevocada')
   if (e.error !== 401) {
     return ventanas.error(e)
   }
@@ -140,21 +140,37 @@ Template.menuVerClip.events({
 })
 
 Template.verClip.onCreated(function () {
+  this.subscribe('clipUrl', this.data.url)
   this.autorun(() => {
-    const query = {
+    const clip = clips.findOne({
       url: this.data.url
-    }
-    const miclip = misClips.findOne(query) || {}
-    if (miclip.secreto) {
-      query.secreto = miclip.secreto
-    }
-    Meteor.subscribe('clip', query, {
-      onStop: (e) => {
-        return llaveRevocada(e, this.data.url)
+    }, {
+      fields: {
+        _id: 1
       }
+    })
+    if (!clip) {
+      return
+    }
+    ventanas.conf('clipId', clip._id)
+    Meteor.subscribe('postsVisibles', clip._id)
+    const miClip = misClips.findOne(clip._id, {
+      fields: {
+        secreto: 1
+      }
+    })
+    if (!miClip) {
+      return
+    }
+    Meteor.subscribe('postsNoVisibles', {
+      clipId: clip._id,
+      secreto: miClip.secreto
     })
   })
   ventanas.conf('path', `/${this.data.url}`)
+})
+Template.verClip.onDestroyed(function () {
+  ventanas.conf('clipId', false)
 })
 Template.verClip.helpers({
   clip () {
@@ -180,7 +196,37 @@ Template.verClip.helpers({
   }
 })
 
-Template.adminPost.events({
+Template.vistaPreviaPost.onCreated(function () {
+  if (!localLinks.findOne(this.data.linkId)) {
+    Meteor.call('linkId', this.data.linkId, (e, r) => {
+      if (e) {
+        console.log(e)
+      }
+      localLinks.insert(r)
+    })
+  }
+})
+Template.vistaPreviaPost.onRendered(function () {
+  const that = this
+  this.clipboard = new ClipboardJS(this.$('.copiar')[0], {
+    text () {
+      return `${__meteor_runtime_config__.ROOT_URL}link/${encodeURIComponent(that.data.link)}`
+    }
+  })
+  this.clipboard.on('success', (event) => {
+    ventanas.insert({
+      template: 'alerta',
+      titulo: 'copiado',
+      contenido: 'El enlace se ha copiado al portapapeles'
+    })
+    ventanas.update('mostrarSecreto', {
+      $addToSet: {
+        copiado: event.trigger.title
+      }
+    })
+  })
+})
+Template.vistaPreviaPost.events({
   'click .cabecero .fa-bars' (event, template) {
     template.$('.miniFondo').addClass('visible')
   },
@@ -193,7 +239,6 @@ Template.adminPost.events({
 
     Meteor.call('establecerStatus', {
       postId: this._id,
-      clipId: this.clipId,
       secreto: miClip.secreto,
       status: event.currentTarget.dataset.status
     }, e => {
@@ -204,19 +249,32 @@ Template.adminPost.events({
     const miClip = misClips.findOne(this.clipId)
     Meteor.call('eliminarPost', {
       postId: this._id,
-      clipId: this.clipId,
       secreto: miClip.secreto
     }, e => {
       llaveRevocada(e, miClip.url)
     })
   }
 })
-Template.adminPost.helpers({
+Template.vistaPreviaPost.helpers({
+  link () {
+    return localLinks.findOne(this.linkId)
+  },
+  admin () {
+    return misClips.findOne({
+      _id: this.clipId,
+      secreto: {
+        $exists: 1
+      }
+    })
+  },
   comprobarStatus (status) {
     Template.currentData()
     if (this.status === status) {
       return true
     }
+  },
+  clips () {
+    return 4
   }
 })
 
@@ -279,17 +337,11 @@ Template.llaves.events({
 })
 Template.llaves.helpers({
   seguridad () {
-    const verClip = ventanas.findOne('verClip')
-    const miClip = misClips.findOne({
-      url: verClip.url
-    }) || {}
+    const miClip = misClips.findOne(ventanas.conf('clipId')) || {}
     return miClip.seguridad
   },
   secreto () {
-    const verClip = ventanas.findOne('verClip')
-    const miClip = misClips.findOne({
-      url: verClip.url
-    }) || {}
+    const miClip = misClips.findOne(ventanas.conf('clipId')) || {}
     return miClip.secreto
   }
 })
@@ -302,13 +354,11 @@ Template.prioridad.helpers({
 
 Template.prioridad.events({
   'click .aceptar' (event, template) {
-    const post = posts.findOne(this.postId)
-    const clip = misClips.findOne(post.clipId)
+    const miClip = misClips.findOne(ventanas.conf('clipId'))
     ventanas.wait(this._id)
     Meteor.call('cambiarPrioridad', {
-      clipId: clip._id,
-      secreto: clip.secreto,
-      postId: post._id,
+      secreto: miClip.secreto,
+      postId: this.postId,
       prioridad: template.$('input').val() * 1
     }, (e) => {
       if (e) {
