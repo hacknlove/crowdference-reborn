@@ -1,0 +1,21 @@
+<template name="favoritos">
+  <div class="fade lista">
+    <div class="cabecero">
+      <h2>
+        {{_ 'Favoritos'}}
+      </h2>
+      {{>hamburguesa menu="menu" closeOther="favoritos"}}
+    </div>
+    <div class="cuerpo">
+      {{#each clip in favoritos}}
+        {{> vistafavoritos clip}}
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="vistafavoritos">
+  {{#if clip}}
+    {{> previaClip clip}}
+  {{/if}}
+</template>

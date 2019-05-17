@@ -1,0 +1,62 @@
+<template name="verPost">
+  <div class="ventana">
+    <div class="cabecero">
+      {{fecha timestamp}}
+      {{#if admin}}
+        - {{status}} - {{prioridad}}
+      {{/if}}
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="cuerpo">
+      {{>mostrarLink linkId=linkId}}
+      <div class="miniFondo">
+        <div class="menu">
+          <div class="openWindow" data-template="crearClip" data-post-id="{{_id}}"><i class="fas fa-paperclip"></i> {{_ 'Crear clip'}}</div>
+          <div class="copiar"><i class="fas fa-share-alt"></i> {{_ 'Compartir'}}</div>
+          {{#if clips}}
+            <div class="openWindow" data-template="link" data-post-id="{{_id}}"><i class="fas fa-search"></i> {{_ 'buscar'}}</div>
+          {{/if}}
+          {{#if admin}}
+            {{#if comprobarStatus 'PENDIENTE'}}
+            <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> {{_ 'Aprobar'}}</div>
+            <div class="establecerStatus" data-status="RECHAZADO"><i class="fas fa-ban"></i> {{_ 'Rechazar'}}</div>
+            {{/if}}
+            {{#if comprobarStatus 'RECHAZADO'}}
+            <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-check"></i> {{_ 'Aprobar'}}</div>
+            <div class="eliminar"><i class="fas fa-trash"></i> {{_ 'Eliminar'}}</div>
+            {{/if}}
+            {{#if comprobarStatus 'VISIBLE'}}
+            <div class="establecerStatus" data-status="OCULTO"><i class="fas fa-eye-slash"></i> {{_ 'Ocultar'}}</div>
+            {{/if}}
+            {{#if comprobarStatus 'OCULTO'}}
+            <div class="establecerStatus" data-status="VISIBLE"><i class="fas fa-eye"></i> {{_ 'Mostrar'}}</div>
+            <div class="eliminar"><i class="fas fa-trash"></i> {{_ 'Eliminar'}}</div>
+            {{/if}}
+            <div class="openWindow" data-template="prioridad" data-post-id="{{_id}}"><i class="fas fa-sort"></i> {{_ 'Prioridad'}}</div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="prioridad">
+  <div class="fondo fade"></div>
+  <div class="ventana fade scrollable">
+    <div class="cabecero">
+      {{_ 'Prioridad'}}
+      <i class="fas fa-times close"></i>
+    </div>
+    <div class="cuerpo">
+      <div class="informacion">
+          {{_ 'Los enlaces se ordenan por su prioridad, de mayor a menor, y por la fecha en la que han sido agregados.'}}
+      </div>
+      <br>
+      <input type="number" name="prioridad" value="{{prioridad}}">
+    </div>
+    <div class="botonera">
+      <button class="secundario close">{{_ 'Cancelar'}}</button>
+      <button class="aceptar">{{_ 'Aceptar'}}</button>
+    </div>
+  </div>
+</template>

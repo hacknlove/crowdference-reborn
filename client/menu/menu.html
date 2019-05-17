@@ -9,13 +9,15 @@
     {{#unless activo 'ranking'}}
       <div class="close-other openWindow ocultable" data-other="{{closeOther}}" data-_id="ranking"><i class="fas fa-sort-numeric-down"></i> {{_ 'Ranking'}}</div>
     {{/unless}}
-    <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="crearClip"><i class="fas fa-paperclip"></i> {{_ 'Crear'}}</div>
+    {{#unless activo 'crearClip'}}
+      <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="crearClip"><i class="fas fa-paperclip"></i> {{_ 'Crear'}}</div>
+    {{/unless}}
     <div class="openWindow" data-_id="menuIdiomas"><i class="fas fa-globe-americas"></i> {{_ 'Idioma'}}</div>
-    {{#if tengoClips}}
-      {{#unless activo 'misClips'}}
-        <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="misClips"><i class="fas fa-heart"></i> {{_ 'Favoritos'}}</div>
-      {{/unless}}
-    {{/if}}
+    {{#unless activo 'favoritos'}}
+      {{#if tengoClips}}
+          <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="favoritos"><i class="fas fa-heart"></i> {{_ 'Favoritos'}}</div>
+      {{/if}}
+    {{/unless}}
     {{#unless activo 'portada'}}
       <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="portada"><i class="fas fa-arrow-left"></i> {{_ 'Atrás'}}</div>
     {{/unless}}

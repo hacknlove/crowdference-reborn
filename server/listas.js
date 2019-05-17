@@ -8,7 +8,7 @@ const validaciones = {
   link: Joi.string()
 }
 
-Meteor.publish('ranking', function (pagina = 0) {
+Meteor.publish('ranking', function () {
   return clips.find({
     posts: {
       $gt: 0
@@ -19,14 +19,13 @@ Meteor.publish('ranking', function (pagina = 0) {
       seguridad: 0
     },
     sort: {
-      apoyos: -1
+      actualizacion: -1
     },
-    skip: 10 * pagina,
-    limit: 10
+    limit: 100
   })
 })
 
-Meteor.publish('busqueda', function (busqueda, pagina = 0) {
+Meteor.publish('busqueda', function (busqueda) {
   var regex = /(?:)/
   try {
     regex = new RegExp(busqueda)
@@ -44,10 +43,9 @@ Meteor.publish('busqueda', function (busqueda, pagina = 0) {
       seguridad: 0
     },
     sort: {
-      apoyos: -1
+      actualizacion: -1
     },
-    skip: 10 * pagina,
-    limit: 10
+    limit: 100
   })
 })
 

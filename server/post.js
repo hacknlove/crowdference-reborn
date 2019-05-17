@@ -39,11 +39,12 @@ const testSecretoClip = function (opciones) {
     }
   }) || salir(404, 'Post no encontrado')
 
-  const clip = clips.find({
+  const clip = clips.findOne({
     _id: post.clipId
   }, {
     fields: {
-      secreto: 1
+      secreto: 1,
+      status: 1
     }
   }) || salir(404, 'Clip no encontrado', {
     donde: 'method establecerStatus'
@@ -52,6 +53,8 @@ const testSecretoClip = function (opciones) {
   clip.seguridad === opciones.seguridad || salir(401, 'No tienes permiso para administrar el clip', {
     donde: 'method establecerStatus'
   })
+
+  return clip
 }
 
 Meteor.methods({
@@ -94,13 +97,30 @@ Meteor.methods({
       data: opciones,
       schema: validaciones.establecerStatus
     })
-    testSecretoClip(opciones)
+    const clip = testSecretoClip(opciones)
 
     posts.update(opciones.postId, {
       $set: {
         status: opciones.status
       }
     })
+    console.log(clip)
+    if (clip.status !== 'VISIBLE' && opciones.status === 'VISIBLE') {
+      console.log(+1)
+      return clips.update(clip._id, {
+        $inc: {
+          posts: 1
+        }
+      })
+    }
+    if (clip.status === 'VISIBLE' && opciones.status !== 'VISIBLE') {
+      console.log(-1)
+      return clips.update(clip._id, {
+        $inc: {
+          posts: -1
+        }
+      })
+    }
   },
   eliminarPost (opciones) {
     salirValidacion({

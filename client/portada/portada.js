@@ -26,12 +26,6 @@ Template.portada.helpers({
   }
 })
 
-ventanas.use('/', function (match, v) {
-  return v.length || v.push({
-    _id: 'portada'
-  })
-})
-
 ventanas.options.notFound = function (match, v) {
   v.push({
     _id: 'portada'

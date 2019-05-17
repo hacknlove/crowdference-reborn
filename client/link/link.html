@@ -8,8 +8,65 @@
     </div>
     <div class="cuerpo">
       {{#each clip in clips}}
-        {{> vistaPrevia clip}}
+        {{> previaClip clip}}
       {{/each}}
     </div>
+  </div>
+</template>
+
+<template name="enlace">
+  {{#if post}}
+    {{> verPost post}}
+  {{/if}}
+</template>
+
+<template name="agregarEnlace">
+  <div class="fondo fade close"></div>
+  <div class="ventana fade">
+    <div class="cabecero">
+      {{_ 'Agregar enlace'}}
+      <i class="fas fa-times close"></i>
+    </div>
+    <div class="cuerpo">
+      <input name="link" placeholder="https://enlace.a/agregar" value="{{link}}">
+    </div>
+    <div class="botonera">
+      <button class="close secundario">{{_ 'Cancelar'}}</button>
+      <button class="siguiente ocultable {{oculto}}">{{_ 'Siguiente'}}</button>
+    </div>
+  </div>
+</template>
+<template name="previsualizarEnlace">
+  <div class="fondo fade close"></div>
+  <div class="ventana fade scrollable">
+    <div class="cabecero">
+      {{_ 'Previsualizar'}}
+      <i class="fas fa-times close"></i>
+    </div>
+    <div class="cuerpo">
+      {{> previsualizacion this}}
+    </div>
+    <div class="botonera">
+      <button class="close secundario openWindow" data-_id="agregarEnlace">{{_ 'Atrás'}}</button>
+      <button class="siguiente">{{_ 'Agregar'}}</button>
+    </div>
+  </div>
+</template>
+
+<template name="mostrarLink">
+  <div class="social">
+    <a class="imagen" href="{{link.url.[0]}}" target="_blank">
+      <img src="{{link.image}}">
+    </a>
+    <h3>
+      <span class="titulo">
+        <i class="{{icono}}"></i>
+        {{link.title}}
+      </span>
+    </h3>
+    <a href="{{link.url.[0]}}" target="_blank">{{link.url.[0]}}</a>
+    <p>
+      {{link.description}}
+    </p>
   </div>
 </template>

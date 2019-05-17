@@ -1,0 +1,50 @@
+.youtube {
+  padding-top: 56.25%;
+  position: relative;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+.social {
+  -webkit-user-select: text;  /* Chrome all / Safari all */
+  -moz-user-select: text;     /* Firefox all */
+  -ms-user-select: text;      /* IE 10+ */
+  user-select: text;          /* Likely future */
+  &>a.imagen {
+    display: block;
+    width: 100%;
+    &>img {
+      width: 100%;
+      border-radius: var(--border-radius);
+    }
+  }
+  h3 {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    span {
+      white-space: nowrap;
+    }
+    .titulo {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  p {
+    margin-top: 10px;
+  }
+  a {
+    color: var(--color-basico);
+    text-decoration: none;
+    font-size: 75%;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

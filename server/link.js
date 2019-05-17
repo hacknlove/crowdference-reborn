@@ -36,6 +36,11 @@ const rrss = {
   }
 }
 
+const siteNameFromUrl = function siteNameFromUrl (url) {
+  url = url.match(siteNameFromUrl.regex)
+  return url[2]
+}
+siteNameFromUrl.regex = /^http(?:s?):\/\/([0-9a-z-]*\.)?([0-9a-z-]+\.[0-9a-z-]+)(?:\/|$)/
 const actualizar = function actualizar (url) {
   var response
   var opciones
@@ -64,13 +69,19 @@ const actualizar = function actualizar (url) {
     response.data.ogSiteName = 'Facebook'
   }
 
+  if (response.data.ogUrl) {
+    url = Array.from(new Set([response.data.ogUrl, url]))
+  } else {
+    url = [url]
+  }
+
   response = {
     description: response.data.ogDescription,
     title: response.data.ogTitle,
     image: (response.data.ogImage || {}).url,
     type: response.data.ogType,
-    url: Array.from(new Set([response.data.ogUrl, url])),
-    siteName: response.data.ogSiteName || response.data.twitterSite
+    url: url,
+    siteName: response.data.ogSiteName || response.data.twitterSite || siteNameFromUrl(url[0])
   }
 
   if (rrss[response.siteName]) {

@@ -16,15 +16,28 @@ const validaciones = {
     clipId: Joi.string().required(),
     seguridad: Joi.string().required()
   }),
-  string: Joi.string().regex(/^[a-z-]+$/).required(),
+  url: Joi.string().regex(/^[a-z-]+$/).required(),
   clipIdPublish: Joi.object().keys({
     clipId: Joi.string().required(),
     secreto: Joi.string().required()
   }),
-  titulo: Joi.string()
+  titulo: Joi.string(),
+  _id: Joi.string()
 }
 
 Meteor.methods({
+  clipIdToUrl (_id) {
+    salirValidacion({
+      data: _id,
+      schema: validaciones._id
+    })
+    const clip = clips.findOne(_id, {
+      fields: {
+        url: 1
+      }
+    }) || salir(404, 'Clip no encontrado')
+    return clip.url
+  },
   crearClip (titulo) {
     salirValidacion({
       data: titulo,
@@ -41,13 +54,12 @@ Meteor.methods({
     const secreto = Random.secret()
     const seguridad = Random.secret()
     const clipId = clips.insert({
-      creacion: new Date(),
+      actualizacion: new Date(),
       titulo,
       url,
       secreto,
       seguridad,
-      apoyos: 0,
-      links: 0
+      posts: 0
     })
 
     return {
@@ -127,7 +139,7 @@ Meteor.methods({
 Meteor.publish('clipUrl', function (url) {
   salirValidacion({
     data: url,
-    schema: validaciones.string
+    schema: validaciones.url
   })
 
   return clips.find({
@@ -142,7 +154,7 @@ Meteor.publish('clipUrl', function (url) {
 Meteor.publish('clipId', function (_id) {
   salirValidacion({
     data: _id,
-    schema: validaciones.string
+    schema: validaciones._id
   })
 
   return clips.find({

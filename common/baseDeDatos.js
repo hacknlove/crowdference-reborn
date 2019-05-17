@@ -6,12 +6,12 @@ export const posts = new Mongo.Collection('posts')
 export const links = new Mongo.Collection('links')
 
 export var localLinks
-export var misClips
+export var favoritos
 
 if (Meteor.isClient) {
-  misClips = new Mongo.Collection(null)
+  favoritos = new Mongo.Collection(null)
   /* eslint-disable-next-line */
-  new PersistentMinimongo2(misClips, 'misClips')
+  new PersistentMinimongo2(favoritos, 'favoritos')
 
   localLinks = new Mongo.Collection(null)
   /* eslint-disable-next-line */
@@ -19,7 +19,7 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isDevelopment) {
-  global.misClips = misClips
+  global.favoritos = favoritos
   global.clips = clips
   global.posts = posts
   global.links = links

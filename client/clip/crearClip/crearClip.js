@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating'
 import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Meteor } from 'meteor/meteor'
 import { tituloAUrl } from '/common/varios'
-import { misClips } from '/common/baseDeDatos'
+import { favoritos } from '/common/baseDeDatos'
 
 Template.crearClip.testUrl = _.debounce(function testUrl (titulo) {
   if (!titulo) {
@@ -76,10 +76,8 @@ Template.crearClip.events({
     Meteor.call('crearClip', titulo, (e, r) => {
       if (!e) {
         ventanas.close('crearClip')
-        misClips.insert({
+        favoritos.insert({
           _id: r.clipId,
-          titulo,
-          url: tituloAUrl(titulo),
           secreto: r.secreto,
           seguridad: r.seguridad,
           ultimoAcceso: new Date()

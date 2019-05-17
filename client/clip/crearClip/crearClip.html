@@ -1,6 +1,6 @@
 <template name="crearClip">
-  <div class="fondo fade close openWindow" data-_id="portada"></div>
   <form class="ventana fade">
+    {{>hamburguesa menu="menu" closeOther="portada"}}
     <div class="cabecero">
       {{_ 'Crear clip'}}
       <i class="fas fa-times cancelar close openWindow" data-_id="portada"></i>

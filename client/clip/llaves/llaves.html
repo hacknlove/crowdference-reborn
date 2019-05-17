@@ -1,0 +1,48 @@
+<template name="llaves">
+  <div class="fondo fade"></div>
+  <div class="ventana fade scrollable">
+    <div class="cabecero">
+      {{_ 'Llaves'}}
+      <i class="fas fa-times close"></i>
+    </div>
+    <div class="cuerpo">
+
+      {{#if secreto}}
+        <div class="informacion llave">
+          <div>
+            <h3>{{_ 'Llave de administración'}}</h3>
+            <p>
+              {{_ 'Con esta llave se puede administrar el clip'}}
+            </p>
+            <div class="iconera">
+              <i class="fas fa-copy copiar" data-llave="secreto" title="copiar llave"></i>
+              {{#if seguridad}}
+                <i class="fas fa-sync-alt revocar" data-llave="secreto" title="cambiar llave"></i>
+              {{else}}
+                <i class="fas fa-trash olvidar" data-llave="secreto" title="olvidar llave"></i>
+              {{/if}}
+            </div>
+          </div>
+        </div><br>
+      {{/if}}
+      {{#if seguridad}}
+        <div class="informacion seguridad">
+          <div>
+            <h3>{{_ 'Llave de seguridad'}}</h3>
+            <p>
+              {{_ 'Con esta llave se pueden revocar las llaves de administración y seguridad.'}}
+            </p>
+            <div class="iconera">
+              <i class="fas fa-copy copiar" data-llave="seguridad" title="copiar llave"></i>
+              <i class="fas fa-trash olvidar" data-llave="seguridad" title="olvidar llave"></i>
+              <i class="fas fa-sync-alt revocar" data-llave="seguridad" title="cambiar llave"></i>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    <div class="botonera">
+      <button class="close">{{_ 'Hecho'}}</button>
+    </div>
+  </div>
+</template>
