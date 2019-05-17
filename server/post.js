@@ -23,7 +23,7 @@ const validaciones = {
     postId: Joi.string().required(),
     secreto: Joi.string().required()
   }),
-  postsVisibles: Joi.string(),
+  _id: Joi.string(),
   postsNoVisibles: Joi.object().keys({
     clipId: Joi.string().required(),
     secreto: Joi.string().required()
@@ -104,9 +104,7 @@ Meteor.methods({
         status: opciones.status
       }
     })
-    console.log(clip)
     if (clip.status !== 'VISIBLE' && opciones.status === 'VISIBLE') {
-      console.log(+1)
       return clips.update(clip._id, {
         $inc: {
           posts: 1
@@ -114,7 +112,6 @@ Meteor.methods({
       })
     }
     if (clip.status === 'VISIBLE' && opciones.status !== 'VISIBLE') {
-      console.log(-1)
       return clips.update(clip._id, {
         $inc: {
           posts: -1
@@ -140,7 +137,7 @@ Meteor.methods({
 Meteor.publish('postsVisibles', function (clipId) {
   salirValidacion({
     data: clipId,
-    schema: validaciones.postsVisibles
+    schema: validaciones._id
   })
 
   return posts.find({
@@ -164,5 +161,22 @@ Meteor.publish('postsNoVisibles', function (opciones) {
     status: {
       $ne: 'VISIBLE'
     }
+  })
+})
+Meteor.publish('postDelLink', function (linkId) {
+  salirValidacion({
+    data: linkId,
+    schema: validaciones._id
+  })
+  return posts.find({
+    linkId
+  }, {
+    fields: {
+      clipId: 1
+    },
+    sort: {
+      timestamp: -1
+    },
+    limit: 100
   })
 })

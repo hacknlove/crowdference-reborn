@@ -4,11 +4,17 @@
       <h2>
         {{link}}
       </h2>
-      {{>hamburguesa menu="menu" closeOther="clipsCon"}}
+      {{>hamburguesa menu="menu" closeOther="link"}}
     </div>
     <div class="cuerpo">
-      {{#each clip in clips}}
-        {{> previaClip clip}}
+      <div class="ventana">
+        <div class="cuerpo">
+          {{>mostrarLink linkId=linkId}}
+        </div>
+      </div>
+      {{#each post in posts}}
+        {{post.clipId}}
+        {{> vistafavoritos clipId=post.clipId}}
       {{/each}}
     </div>
   </div>
@@ -44,7 +50,7 @@
       <i class="fas fa-times close"></i>
     </div>
     <div class="cuerpo">
-      {{> previsualizacion this}}
+      {{> mostrarLink linkId=linkId}}
     </div>
     <div class="botonera">
       <button class="close secundario openWindow" data-_id="agregarEnlace">{{_ 'Atrás'}}</button>
@@ -55,7 +61,7 @@
 
 <template name="mostrarLink">
   <div class="social">
-    <a class="imagen" href="{{link.url.[0]}}" target="_blank">
+    <a class="imagen" href="{{href}}" target="_blank">
       <img src="{{link.image}}">
     </a>
     <h3>

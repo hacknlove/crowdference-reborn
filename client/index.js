@@ -46,7 +46,6 @@ ventanas.use('/k/:clipId/:secreto/:seguridad', function (match, v) {
   })
 })
 ventanas.use('/l/:link', function (match, v) {
-  console.log(match)
   return v.push({
     _id: 'link',
     link: decodeURIComponent(match.link)

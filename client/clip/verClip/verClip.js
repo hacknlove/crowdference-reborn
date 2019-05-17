@@ -92,6 +92,10 @@ Template.previaClip.helpers({
   linkId () {
     return (posts.findOne({
       clipId: this._id
+    }, {
+      sort: {
+        timestamp: -1
+      }
     }) || {}).linkId
   }
 })

@@ -1,26 +1,47 @@
 import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Meteor } from 'meteor/meteor'
-import { clips, posts, localLinks } from '/common/baseDeDatos'
+import { posts, localLinks } from '/common/baseDeDatos'
 import { Template } from 'meteor/templating'
 
 Template.link.onCreated(function () {
-  Meteor.subscribe('link', this.data.link)
+  this.autorun(() => {
+    const link = localLinks.findOne({
+      url: this.data.link
+    })
+    if (!link) {
+      return Meteor.call('link', this.data.link, (e, r) => {
+        if (e) {
+          return ventanas.error(e)
+        }
+        const _id = r._id
+        delete r._id
+        localLinks.upsert(_id, {
+          $set: r
+        })
+      })
+    }
+    Meteor.subscribe('postDelLink', link._id)
+  })
 })
 
 Template.link.helpers({
-  post () {
-    return posts.findOne({
-      link: this.data.link
-    }, {
-      fields: {
-        clipId: 0
-      }
+  linkId () {
+    const link = localLinks.findOne({
+      url: this.link
     })
+    if (!link) {
+      return
+    }
+    return link._id
   },
-  clips () {
-    return clips.find({}, {
+  posts () {
+    return posts.find({
+      linkId: {
+        $exists: 0
+      }
+    }, {
       sort: {
-        actualizacion: -1
+        timestamp: -1
       }
     })
   }
@@ -43,15 +64,25 @@ Template.agregarEnlace.events({
   },
   'click button' (event) {
     ventanas.close('agregarEnlace')
+    var link = localLinks.findOne({
+      url: this.link
+    })
+    if (link) {
+      return ventanas.insert({
+        _id: 'previsualizarEnlace',
+        linkId: link._id
+      })
+    }
     Meteor.call('link', this.link, (e, r) => {
       if (e) {
         return ventanas.error({
           message: 'Error al obtener previsualización, inténtalo dentro de unos minutos.'
         })
       }
+      localLinks.insert(r)
       ventanas.insert({
         _id: 'previsualizarEnlace',
-        link: r
+        linkId: r._id
       })
     })
   }
@@ -62,7 +93,7 @@ Template.previsualizarEnlace.events({
     ventanas.wait('previsualizarEnlace')
     Meteor.call('agregarPost', {
       clipId: ventanas.conf('clipId'),
-      linkId: this.link._id
+      linkId: this.linkId
     }, (e, r) => {
       if (e) {
         ventanas.unwait('previsualizarEnlace')
@@ -105,6 +136,16 @@ Template.mostrarLink.onCreated(function () {
   })
 })
 Template.mostrarLink.helpers({
+  href () {
+    if (this.href) {
+      return `/c/${this.href}`
+    }
+    const link = localLinks.findOne(this.linkId)
+    if (!link) {
+      return
+    }
+    return `/l/${encodeURIComponent(link.url[0])}`
+  },
   link () {
     return localLinks.findOne(this.linkId)
   },

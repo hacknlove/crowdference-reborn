@@ -17,11 +17,12 @@ Template.favoritos.helpers({
 })
 
 Template.vistafavoritos.onCreated(function () {
-  this.subscribe('clipId', this.data._id)
+  console.log(this.data.clipId)
+  this.subscribe('clipId', this.data.clipId)
 })
 
 Template.vistafavoritos.helpers({
   clip () {
-    return clips.findOne(this._id)
+    return clips.findOne(this.clipId)
   }
 })
