@@ -93,6 +93,26 @@ body {
   }
 }
 
+.cabecero {
+    .iconera {
+    color: var(--color-basico);
+    text-align: right;
+    &>div {
+      display: inline-block;
+      transition: .3s background ease-out;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      padding: 8px;
+      &:hover {
+        background: var(--color-tinta);
+      }
+      &:active {
+        background: var(--color-fondo);
+      }
+    }
+  }
+}
+
 .informacion {
   .iconera {
     color: var(--color-fondo);
