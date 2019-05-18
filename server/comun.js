@@ -1,6 +1,10 @@
 import { Meteor } from 'meteor/meteor'
 import Joi from 'joi'
 
+export const validacionesComunes = {
+  _id: Joi.string()
+}
+
 export const salir = function salir (codigo, mensaje, debug) {
   if (Meteor.isDevelopment) {
     console.log(codigo, mensaje)
