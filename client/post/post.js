@@ -60,6 +60,9 @@ const llaveRevocada = function llaveRevocada (e, url) {
   })
 }
 
+Template.verPost.onCreated(function () {
+  Meteor.subscribe('postsDelLink', this.data.linkId)
+})
 Template.verPost.onRendered(function () {
   const that = this
   this.clipboard = new ClipboardJS(this.$('.copiar')[0], {
@@ -125,7 +128,11 @@ Template.verPost.helpers({
     }
   },
   clips () {
-    return 4
+    return posts.find({
+      clipId: {
+        $ne: this.clipId
+      }
+    }).count() + 1
   }
 })
 

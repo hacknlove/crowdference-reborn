@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { clips, posts } from '/common/baseDeDatos'
-import { salirValidacion } from '/server/comun'
+import { salirValidacion, validacionesComunes } from '/server/comun'
 import Joi from 'joi'
 
 const validaciones = {
@@ -70,19 +70,20 @@ Meteor.publish('primerPost', function (clipId) {
   })
 })
 
-Meteor.publish('link', function (link) {
-  return posts.findOne({
-    link
+Meteor.publish('postsDelLink', function (linkId) {
+  salirValidacion({
+    data: linkId,
+    schema: validacionesComunes._id
+  })
+  return posts.find({
+    linkId
   }, {
     fields: {
       clipId: 1
-    }
-  })
-})
-Meteor.publish('linkPost', function (link) {
-  return posts.find({
-    link
-  }, {
-    limit: 1
+    },
+    sort: {
+      timestamp: -1
+    },
+    limit: 100
   })
 })

@@ -20,7 +20,7 @@ Template.link.onCreated(function () {
         })
       })
     }
-    Meteor.subscribe('postDelLink', link._id)
+    Meteor.subscribe('postsDelLink', link._id)
   })
   ventanas.conf('path', `/l/${encodeURIComponent(this.data.link)}`)
 })

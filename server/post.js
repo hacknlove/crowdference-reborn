@@ -1,35 +1,39 @@
 import { Meteor } from 'meteor/meteor'
 import { clips, posts } from '/common/baseDeDatos'
-import { salirValidacion, salir } from '/server/comun'
+import { salirValidacion, salir, validacionesComunes } from '/server/comun'
 
 import Joi from 'joi'
 
 const validaciones = {
   agregarPost: Joi.object().keys({
-    clipId: Joi.string().required(),
-    linkId: Joi.string().required()
+    clipId: validacionesComunes._id.required(),
+    linkId: validacionesComunes._id.required()
   }),
   cambiarPrioridad: Joi.object().keys({
-    postId: Joi.string().required(),
+    postId: validacionesComunes._id.required(),
     secreto: Joi.string().required(),
     prioridad: Joi.number().required()
   }),
   establecerStatus: Joi.object().keys({
-    postId: Joi.string().required(),
+    postId: validacionesComunes._id.required(),
     secreto: Joi.string().required(),
     status: Joi.string().valid(['RECHAZADO', 'OCULTO', 'VISIBLE']).required()
   }),
   eliminarPost: Joi.object().keys({
-    postId: Joi.string().required(),
+    postId: validacionesComunes._id.required(),
     secreto: Joi.string().required()
   }),
-  _id: Joi.string(),
   postsNoVisibles: Joi.object().keys({
-    clipId: Joi.string().required(),
+    clipId: validacionesComunes._id.required(),
     secreto: Joi.string().required()
   })
 }
 
+/** @description Comprueba que el post existe, el clip existe, y que la llave de administración es válida
+ * @param {object} opciones contiene las id y el secreto
+ * @returns {object} el clip
+ * @throws 404 si no existe el clip, no existe el post, o no se tienen permisos
+*/
 const testSecretoClip = function (opciones) {
   const post = posts.findOne({
     _id: opciones.postId
@@ -137,7 +141,7 @@ Meteor.methods({
 Meteor.publish('postsVisibles', function (clipId) {
   salirValidacion({
     data: clipId,
-    schema: validaciones._id
+    schema: validacionesComunes._id
   })
 
   return posts.find({
@@ -161,22 +165,5 @@ Meteor.publish('postsNoVisibles', function (opciones) {
     status: {
       $ne: 'VISIBLE'
     }
-  })
-})
-Meteor.publish('postDelLink', function (linkId) {
-  salirValidacion({
-    data: linkId,
-    schema: validaciones._id
-  })
-  return posts.find({
-    linkId
-  }, {
-    fields: {
-      clipId: 1
-    },
-    sort: {
-      timestamp: -1
-    },
-    limit: 100
   })
 })
