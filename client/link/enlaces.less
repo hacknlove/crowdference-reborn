@@ -14,13 +14,10 @@
   -moz-user-select: text;     /* Firefox all */
   -ms-user-select: text;      /* IE 10+ */
   user-select: text;          /* Likely future */
-  &>a.imagen {
-    display: block;
+  &>img {
     width: 100%;
-    &>img {
-      width: 100%;
-      border-radius: var(--border-radius);
-    }
+    border-radius: var(--border-radius);
+    cursor: pointer;
   }
   h3 {
     margin-bottom: 10px;

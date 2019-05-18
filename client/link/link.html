@@ -13,8 +13,8 @@
         </div>
       </div>
       {{#each post in posts}}
-        {{post.clipId}}
-        {{> vistafavoritos clipId=post.clipId}}
+      {{post.clipId}}
+      {{> vistafavoritos clipId=post.clipId}}
       {{/each}}
     </div>
   </div>
@@ -22,7 +22,7 @@
 
 <template name="enlace">
   {{#if post}}
-    {{> verPost post}}
+  {{> verPost post}}
   {{/if}}
 </template>
 
@@ -61,9 +61,7 @@
 
 <template name="mostrarLink">
   <div class="social">
-    <a class="imagen" href="{{href}}" target="_blank">
-      <img src="{{link.image}}">
-    </a>
+    <img src="{{link.image}}">
     <h3>
       <span class="titulo">
         <i class="{{icono}}"></i>

@@ -159,3 +159,19 @@ Template.mostrarLink.helpers({
     return this.link.url.replace(/^(.*:\/\/.*?)\/(.*)$/, '$1/favicon.ico')
   }
 })
+Template.mostrarLink.events({
+  'click img' () {
+    const link = localLinks.findOne(this.linkId)
+    if (ventanas.findOne('verClip')) {
+      ventanas.close('verClip')
+      return ventanas.insert({
+        _id: 'link',
+        link: link.url[0]
+      })
+    }
+    ventanas.close('link')
+    ventanas.close('link')
+    ventanas.close('link')
+    ventanas.close('link')
+  }
+})
