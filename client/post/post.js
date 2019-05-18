@@ -60,7 +60,13 @@ const llaveRevocada = function llaveRevocada (e, url) {
 }
 
 Template.verPost.onCreated(function () {
-  Meteor.subscribe('postsDelLink', this.data.linkId)
+  this.autorun(() => {
+    const data = Template.currentData()
+    if (!data.linkId) {
+      return
+    }
+    Meteor.subscribe('postsDelLink', data.linkId)
+  })
 })
 Template.verPost.onRendered(function () {
   const that = this
