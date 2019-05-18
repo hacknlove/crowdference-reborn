@@ -12,7 +12,7 @@
           {{>mostrarLink linkId=linkId}}
         </div>
         <div class="botonera">
-          <button>{{_ 'Crear clip'}}</button>
+          <button class="close openWindow" data-_id="crearClip" data-link-id="{{linkId}}">{{_ 'Crear clip'}}</button>
         </div>
       </div>
       {{#each post in posts}}
