@@ -1,17 +1,21 @@
 <template name="verPost">
   <div class="ventana">
     <div class="cabecero">
-      {{fecha timestamp}}
-      {{#if admin}}
-        - {{status}} - {{prioridad}}
-      {{/if}}
+      <div>
+        {{fecha timestamp}}
+        {{#if admin}}
+          - {{status}} - {{prioridad}}
+        {{/if}}
+      </div>
       <div class="iconera">
         <div class="close openWindow" data-_id="link" data-link="{{linkUrl}}">
           <i class="fas fa-paperclip"></i> {{clips}}
         </div>
         <div class="copiar"><i class="fas fa-share-alt"></i></div>
         {{#if admin}}
-          <i class="fas fa-bars"></i>
+          <div class="miniMenu">
+            <i class="fas fa-bars"></i>
+          </div>
         {{/if}}
       </div>
     </div>

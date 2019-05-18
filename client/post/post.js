@@ -1,6 +1,6 @@
 /* global __meteor_runtime_config__ */
 import { Template } from 'meteor/templating'
-import { posts, favoritos } from '/common/baseDeDatos'
+import { posts, favoritos, localLinks } from '/common/baseDeDatos'
 import { Meteor } from 'meteor/meteor'
 import ClipboardJS from 'clipboard'
 import { ventanas } from 'meteor/hacknlove:ventanas'
@@ -67,7 +67,11 @@ Template.verPost.onRendered(function () {
   const that = this
   this.clipboard = new ClipboardJS(this.$('.copiar')[0], {
     text () {
-      return `${__meteor_runtime_config__.ROOT_URL}link/${encodeURIComponent(that.data.link)}`
+      const link = localLinks.findOne(that.data.linkId)
+      if (!link) {
+        return
+      }
+      return `${__meteor_runtime_config__.ROOT_URL}link/${encodeURIComponent(link.url[0])}`
     }
   })
   this.clipboard.on('success', (event) => {
@@ -84,7 +88,7 @@ Template.verPost.onRendered(function () {
   })
 })
 Template.verPost.events({
-  'click .cabecero .fa-bars' (event, template) {
+  'click .cabecero .miniMenu' (event, template) {
     template.$('.miniFondo').addClass('visible')
   },
   'click .miniFondo' (event, template) {
@@ -120,6 +124,13 @@ Template.verPost.helpers({
         $exists: 1
       }
     })
+  },
+  linkUrl () {
+    const link = localLinks.findOne(this.linkId)
+    if (!link) {
+      return
+    }
+    return link.url[0]
   },
   comprobarStatus (status) {
     Template.currentData()
