@@ -22,6 +22,7 @@ Template.link.onCreated(function () {
     }
     Meteor.subscribe('postDelLink', link._id)
   })
+  ventanas.conf('path', `/l/${encodeURIComponent(this.data.link)}`)
 })
 
 Template.link.helpers({
@@ -180,5 +181,6 @@ Template.mostrarLink.events({
         link: link.url[0]
       })
     }
+    window.open(link.url[0], '_blank')
   }
 })
