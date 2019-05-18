@@ -161,6 +161,17 @@ Template.mostrarLink.helpers({
 })
 Template.mostrarLink.events({
   'click img' () {
+    if (this.clipUrl) {
+      ventanas.close('link')
+      ventanas.close('ranking')
+      ventanas.close('busqueda')
+      ventanas.insert({
+        _id: 'verClip',
+        url: this.clipUrl,
+        exclusive: true
+      })
+      return
+    }
     const link = localLinks.findOne(this.linkId)
     if (ventanas.findOne('verClip')) {
       ventanas.close('verClip')
@@ -169,12 +180,5 @@ Template.mostrarLink.events({
         link: link.url[0]
       })
     }
-    ventanas.close('link')
-    ventanas.close('ranking')
-    ventanas.close('busqueda')
-    ventanas.insert({
-      _id: 'verClip',
-      url: this.href
-    })
   }
 })
