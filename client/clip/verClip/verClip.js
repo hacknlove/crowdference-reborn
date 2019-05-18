@@ -86,12 +86,12 @@ Template.verClip.helpers({
 })
 
 Template.previaClip.onCreated(function () {
-  Meteor.subscribe('primerPost', this.data._id)
+  Meteor.subscribe('primerPost', this.data.clip._id)
 })
 Template.previaClip.helpers({
   linkId () {
     return (posts.findOne({
-      clipId: this._id
+      clipId: this.clip._id
     }, {
       sort: {
         timestamp: -1

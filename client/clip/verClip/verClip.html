@@ -38,25 +38,25 @@
         </div>
       {{/each}}
     </div>
+
   </div>
 </template>
 
 <template name="previaClip">
   <div class="ventana">
     <div class="cabecero">
-      <span>{{titulo}}</span>
-      {{fecha actualizacion}}
+      <span>{{clip.titulo}}</span>
+      {{fecha clip.actualizacion}}
     </div>
     <div class="cuerpo">
-      {{>mostrarLink linkId=linkId href=url}}
+      {{>mostrarLink linkId=linkId clipUrl=clip.url}}
     </div>
     <div class="botonera">
       <div class="status">
-        <div>
-          <i class="fas fa-paperclip"></i> {{posts}}
+        <div class="close openWindow" data-_id="verClip" data-url="{{clip.url}}">
+          <i class="fas fa-paperclip"></i> {{clip.posts}}
         </div>
       </div>
-      <button class="close openWindow" data-_id="verClip" data-url="{{url}}">{{_ 'Ver clip'}}</button>
     </div>
   </div>
 </template>

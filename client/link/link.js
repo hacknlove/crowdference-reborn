@@ -170,8 +170,11 @@ Template.mostrarLink.events({
       })
     }
     ventanas.close('link')
-    ventanas.close('link')
-    ventanas.close('link')
-    ventanas.close('link')
+    ventanas.close('ranking')
+    ventanas.close('busqueda')
+    ventanas.insert({
+      _id: 'verClip',
+      url: this.href
+    })
   }
 })
