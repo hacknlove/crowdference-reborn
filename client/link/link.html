@@ -11,6 +11,9 @@
         <div class="cuerpo">
           {{>mostrarLink linkId=linkId}}
         </div>
+        <div class="botonera">
+          <button>{{_ 'Crear clip'}}</button>
+        </div>
       </div>
       {{#each post in posts}}
         {{> vistafavoritos clipId=post.clipId}}
