@@ -31,7 +31,7 @@ const validaciones = {
 
 /** @description Comprueba que el post existe, el clip existe, y que la llave de administración es válida
  * @param {object} opciones contiene las id y el secreto
- * @returns {object} el clip
+ * @returns {array} [clip, post]
  * @throws 404 si no existe el clip, no existe el post, o no se tienen permisos
 */
 const testSecretoClip = function (opciones) {
@@ -39,7 +39,8 @@ const testSecretoClip = function (opciones) {
     _id: opciones.postId
   }, {
     fields: {
-      clipId: 1
+      clipId: 1,
+      status: 1
     }
   }) || salir(404, 'Post no encontrado')
 
@@ -47,18 +48,17 @@ const testSecretoClip = function (opciones) {
     _id: post.clipId
   }, {
     fields: {
-      secreto: 1,
-      status: 1
+      secreto: 1
     }
   }) || salir(404, 'Clip no encontrado', {
     donde: 'method establecerStatus'
   })
 
-  clip.seguridad === opciones.seguridad || salir(401, 'No tienes permiso para administrar el clip', {
+  clip.secreto === opciones.secreto || salir(401, 'No tienes permiso para administrar el clip', {
     donde: 'method establecerStatus'
   })
 
-  return clip
+  return [clip, post]
 }
 
 Meteor.methods({
@@ -101,21 +101,20 @@ Meteor.methods({
       data: opciones,
       schema: validaciones.establecerStatus
     })
-    const clip = testSecretoClip(opciones)
-
+    const [clip, post] = testSecretoClip(opciones)
     posts.update(opciones.postId, {
       $set: {
         status: opciones.status
       }
     })
-    if (clip.status !== 'VISIBLE' && opciones.status === 'VISIBLE') {
+    if (post.status !== 'VISIBLE' && opciones.status === 'VISIBLE') {
       return clips.update(clip._id, {
         $inc: {
           posts: 1
         }
       })
     }
-    if (clip.status === 'VISIBLE' && opciones.status !== 'VISIBLE') {
+    if (post.status === 'VISIBLE' && opciones.status !== 'VISIBLE') {
       return clips.update(clip._id, {
         $inc: {
           posts: -1
@@ -155,7 +154,7 @@ Meteor.publish('postsNoVisibles', function (opciones) {
     schema: validaciones.postsNoVisibles
   })
   const clip = clips.findOne({
-    url: opciones.url
+    _id: opciones.clipId
   }) || salir(404, 'Clip no encontrado')
 
   clip.secreto === opciones.secreto || salir(401, 'Clave de administración no válida')
