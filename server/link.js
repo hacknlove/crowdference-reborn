@@ -91,7 +91,6 @@ const actualizar = function actualizar (url) {
 }
 
 const insertar = function insertar (link) {
-  console.log('insertar')
   const l = links.findOne({
     url: {
       $in: link.url

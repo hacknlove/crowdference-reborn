@@ -17,7 +17,6 @@ Template.favoritos.helpers({
 })
 
 Template.vistafavoritos.onCreated(function () {
-  console.log(this.data.clipId)
   this.subscribe('clipId', this.data.clipId)
 })
 

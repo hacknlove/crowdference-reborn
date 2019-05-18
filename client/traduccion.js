@@ -21,7 +21,6 @@ export const traducir = function (key) {
 }
 
 export const traducirConVariables = function (key, ...variables) {
-  console.log(variables)
   var t = traducir(key)
   var i = 1
   while (variables[i]) {

@@ -9,7 +9,6 @@ const llaveRevocada = function llaveRevocada (e, url) {
   if (!e) {
     return
   }
-  console.log('llaveRevocada')
   if (e.error !== 401) {
     return ventanas.error(e)
   }
