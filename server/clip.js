@@ -1,35 +1,37 @@
 import { Meteor } from 'meteor/meteor'
 import { Random } from 'meteor/random'
-import { clips } from '/common/baseDeDatos'
-import { salirValidacion, salir } from '/server/comun'
+import { clips, posts } from '/common/baseDeDatos'
+import { salirValidacion, salir, validacionesComunes } from '/server/comun'
 import { tituloAUrl } from '/common/varios'
 
 import Joi from 'joi'
 
 const validaciones = {
   revocar: Joi.object().keys({
-    clipId: Joi.string().required(),
-    seguridad: Joi.string().required(),
-    llave: Joi.string().valid(['seguridad', 'secreto']).required()
+    clipId: validacionesComunes._id.required(),
+    seguridad: validacionesComunes.texto.required(),
+    llave: validacionesComunes.texto.valid(['seguridad', 'secreto']).required()
   }),
   obtenerSecreto: Joi.object().keys({
-    clipId: Joi.string().required(),
-    seguridad: Joi.string().required()
+    clipId: validacionesComunes._id.required(),
+    seguridad: validacionesComunes.texto.required()
   }),
   url: Joi.string().regex(/^[a-z-]+$/).required(),
   clipIdPublish: Joi.object().keys({
-    clipId: Joi.string().required(),
-    secreto: Joi.string().required()
+    clipId: validacionesComunes._id.required(),
+    secreto: validacionesComunes.texto.required()
   }),
-  titulo: Joi.string(),
-  _id: Joi.string()
+  crearClip: Joi.object().keys({
+    titulo: validacionesComunes.texto.required(),
+    linkId: validacionesComunes._id
+  })
 }
 
 Meteor.methods({
   clipIdToUrl (_id) {
     salirValidacion({
       data: _id,
-      schema: validaciones._id
+      schema: validacionesComunes._id
     })
     const clip = clips.findOne(_id, {
       fields: {
@@ -38,13 +40,13 @@ Meteor.methods({
     }) || salir(404, 'Clip no encontrado')
     return clip.url
   },
-  crearClip (titulo) {
+  crearClip (opciones) {
     salirValidacion({
-      data: titulo,
-      schema: validaciones.titulo
+      data: opciones,
+      schema: validaciones.crearClip
     })
 
-    const url = tituloAUrl(titulo)
+    const url = tituloAUrl(opciones.titulo)
     clips.find({
       url
     }, {
@@ -55,13 +57,21 @@ Meteor.methods({
     const seguridad = Random.secret()
     const clipId = clips.insert({
       actualizacion: new Date(),
-      titulo,
+      titulo: opciones.titulo,
       url,
       secreto,
       seguridad,
       posts: 0
     })
 
+    if (opciones.linkId) {
+      posts.insert({
+        clipId,
+        timestamp: new Date(),
+        linkId: opciones.linkId,
+        status: 'OCULTO'
+      })
+    }
     return {
       clipId,
       secreto,
@@ -71,14 +81,13 @@ Meteor.methods({
   testTitulo (titulo) {
     salirValidacion({
       data: titulo,
-      schema: validaciones.titulo
+      schema: validacionesComunes.texto
     })
     if (clips.find({
       titulo
     }, {
       limit: 1
     }).count()) {
-      console.log('titulo repetido')
       throw new Meteor.Error(400, 'titulo repetido')
     }
     const url = tituloAUrl(titulo)
@@ -154,7 +163,7 @@ Meteor.publish('clipUrl', function (url) {
 Meteor.publish('clipId', function (_id) {
   salirValidacion({
     data: _id,
-    schema: validaciones._id
+    schema: validacionesComunes._id
   })
 
   return clips.find({

@@ -73,7 +73,11 @@ Template.crearClip.events({
     const titulo = ventanas.conf('titulo')
     ventanas.wait('crearClip')
     template.$('form').validarFormulario()
-    Meteor.call('crearClip', titulo, (e, r) => {
+    Meteor.call('crearClip', {
+      titulo: titulo,
+      linkId: this.linkId
+    }, (e, r) => {
+      console.log(e, r)
       if (!e) {
         ventanas.close('crearClip')
         favoritos.insert({
