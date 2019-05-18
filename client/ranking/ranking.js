@@ -4,9 +4,9 @@ import { Meteor } from 'meteor/meteor'
 import { clips } from '/common/baseDeDatos'
 
 Template.ranking.onCreated(function () {
-  ventanas.conf('path', `/r/${this.data.pagina || 0}`)
+  ventanas.conf('path', `/r`)
   this.autorun(function () {
-    Meteor.subscribe('ranking', ventanas.findOne('ranking').pagina)
+    Meteor.subscribe('ranking')
   })
 })
 

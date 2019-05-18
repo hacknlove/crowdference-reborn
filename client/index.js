@@ -18,7 +18,7 @@ ventanas.use('/s/:busqueda', function (match, v) {
     busqueda: decodeURIComponent(match.busqueda)
   })
 })
-ventanas.use('/r/:pagina', function (match, v) {
+ventanas.use('/r', function (match, v) {
   return v.push({
     _id: 'ranking',
     pagina: match.pagina
