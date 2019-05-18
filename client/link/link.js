@@ -36,11 +36,7 @@ Template.link.helpers({
     return link._id
   },
   posts () {
-    return posts.find({
-      linkId: {
-        $exists: 0
-      }
-    }, {
+    return posts.find({}, {
       sort: {
         timestamp: -1
       }
