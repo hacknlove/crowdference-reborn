@@ -60,8 +60,7 @@ ventanas.use('/r', function (sink, match, v) {
     image: `${process.env.ROOT_URL}/logoletras.png`
   }, [
     {
-      _id: 'ranking',
-      pagina: match.pagina
+      _id: 'recents'
     }
   ])
 })

@@ -117,9 +117,9 @@ export const traducciones = {
     "en": "Priority",
     "es": "Prioridad"
   },
-  "Ranking": {
-    "en": "Ranking",
-    "es": "Ranking"
+  "Recient": {
+    "en": "Recient",
+    "es": "Recientes"
   },
   "Rechazar": {
     "en": "Refuse",
@@ -167,4 +167,3 @@ export const idiomas = {
   "en": 1,
   "es": 1
 }
-

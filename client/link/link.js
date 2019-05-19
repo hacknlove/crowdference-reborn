@@ -160,7 +160,7 @@ Template.mostrarLink.events({
   'click img' () {
     if (this.clipUrl) {
       ventanas.close('link')
-      ventanas.close('ranking')
+      ventanas.close('recents')
       ventanas.close('busqueda')
       ventanas.insert({
         _id: 'verClip',
