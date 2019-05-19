@@ -25,14 +25,3 @@ Template.portada.helpers({
     return ventanas.conf('buscar') ? 'visible' : 'oculto'
   }
 })
-
-ventanas.options.notFound = function (match, v) {
-  v.push({
-    _id: 'portada'
-  })
-  return v.push({
-    template: 'alerta',
-    titulo: 'No entrontrado',
-    contenido: 'La url que busca no se encuentra'
-  })
-}
