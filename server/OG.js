@@ -1,6 +1,5 @@
 import { ventanas } from 'meteor/hacknlove:ventanas'
-// import { Meteor } from 'meteor/meteor'
-// import { clips, links } from '/common/baseDeDatos'
+import { clips, posts, links } from '/common/baseDeDatos'
 
 const OG = function (sink, datos, ventanas) {
   sink.appendToHead(`
@@ -22,8 +21,8 @@ const OG = function (sink, datos, ventanas) {
 
 ventanas.use('/', function (sink, match, v) {
   OG(sink, {
-    title: 'crowdference-reborn',
-    description: 'Organize internet to fight fakenews and missinformation',
+    title: 'Crowdference',
+    description: 'Organize the society of mess-information',
     image: `${process.env.ROOT_URL}/logoletras.png`
   }, [
     {
@@ -33,7 +32,7 @@ ventanas.use('/', function (sink, match, v) {
 })
 ventanas.use('/f', function (sink, match, v) {
   OG(sink, {
-    title: 'Your favorite clips',
+    title: 'Crowdference - favorites',
     description: 'Here you keep your favorite clips',
     image: `${process.env.ROOT_URL}/logoletras.png`
   }, [
@@ -44,10 +43,9 @@ ventanas.use('/f', function (sink, match, v) {
 })
 ventanas.use('/s/:busqueda', function (sink, match, v) {
   OG(sink, {
-    title: '',
-    description: '',
-    image: '',
-    update: ''
+    title: 'Crowdference - Search',
+    description: `search "decodeURIComponent(match.busqueda)" in the clip's titles`,
+    image: `${process.env.ROOT_URL}/logoletras.png`
   }, [
     {
       _id: 'busqueda',
@@ -57,10 +55,9 @@ ventanas.use('/s/:busqueda', function (sink, match, v) {
 })
 ventanas.use('/r', function (sink, match, v) {
   OG(sink, {
-    title: '',
-    description: '',
-    image: '',
-    update: ''
+    title: 'Crowdference - Recent',
+    description: 'See the last updated clips',
+    image: `${process.env.ROOT_URL}/logoletras.png`
   }, [
     {
       _id: 'ranking',
@@ -69,11 +66,22 @@ ventanas.use('/r', function (sink, match, v) {
   ])
 })
 ventanas.use('/c/:url', function (sink, match, v) {
+  const clip = clips.findOne({
+    url: match.url
+  })
+  const post = posts.findOne({
+    clipId: clip._id
+  }, {
+    sort: {
+      timestamp: -1
+    }
+  })
+  const link = links.findOne(post.linkId)
   OG(sink, {
-    title: '',
-    description: '',
-    image: '',
-    update: ''
+    title: 'Crowdference - Clip',
+    description: `The clip titled "${clip.titulo}" contains ${clip.posts} link(s)`,
+    image: link.image,
+    update: clip.actualizacion
   }, [
     {
       _id: 'verClip',
@@ -82,11 +90,21 @@ ventanas.use('/c/:url', function (sink, match, v) {
   ])
 })
 ventanas.use('/k/:clipId/:secreto', function (sink, match, v) {
+  const clip = clips.findOne({
+    url: match.url
+  })
+  const post = posts.findOne(clip._id, {
+    sort: {
+      timestamp: -1
+    }
+  })
+  const link = links.findOne(post.linkId)
+
   OG(sink, {
-    title: '',
-    description: '',
-    image: '',
-    update: ''
+    title: 'Crowdferece - Admin key',
+    description: `This key allows you to moderate the clip titled "${clip.title}"`,
+    image: link.image,
+    update: clip.actualizacion
   }, [
     {
       _id: 'llaves',
@@ -96,11 +114,21 @@ ventanas.use('/k/:clipId/:secreto', function (sink, match, v) {
   ])
 })
 ventanas.use('/k/:clipId/:secreto/:seguridad', function (sink, match, v) {
+  const clip = clips.findOne({
+    url: match.url
+  })
+  const post = posts.findOne(clip._id, {
+    sort: {
+      timestamp: -1
+    }
+  })
+  const link = links.findOne(post.linkId)
+
   OG(sink, {
-    title: '',
-    description: '',
-    image: '',
-    update: ''
+    title: 'Crowdference - Safe key',
+    description: `This key allows you to revoke the administration key of the clip titled "${clip.title}"`,
+    image: link.image,
+    update: clip.actualizacion
   }, [
     {
       _id: 'llaves',
@@ -111,11 +139,15 @@ ventanas.use('/k/:clipId/:secreto/:seguridad', function (sink, match, v) {
   ])
 })
 ventanas.use('/l/:link', function (sink, match, v) {
+  const url = decodeURIComponent(match.link)
+  const link = links.findOne({
+    url
+  })
+
   OG(sink, {
-    title: '',
-    description: '',
-    image: '',
-    update: ''
+    title: `Crowdference - explore link`,
+    description: `See the clips that contains the link ${url}`,
+    image: link.image
   }, [
     {
       _id: 'link',
@@ -123,12 +155,23 @@ ventanas.use('/l/:link', function (sink, match, v) {
     }
   ])
 })
+
 ventanas.use('/c/:url', function (sink, match, v) {
+  const clip = clips.findOne({
+    url: match.url
+  })
+  const post = posts.findOne(clip._id, {
+    sort: {
+      timestamp: -1
+    }
+  })
+  const link = links.findOne(post.linkId)
+
   OG(sink, {
-    title: '',
-    description: '',
-    image: '',
-    update: ''
+    title: 'Crowdference - view clip',
+    description: clip.titulo,
+    image: link.image,
+    update: clip.actualizacion
   }, [
     {
       _id: 'verClip',
@@ -139,7 +182,7 @@ ventanas.use('/c/:url', function (sink, match, v) {
 
 ventanas.use(/(?:)/, function (sink) {
   OG(sink, {
-    title: 'Not found',
+    title: 'Crowdference - Not found',
     description: 'Check the url and try again',
     image: `${process.env.ROOT_URL}/logoletras.png`
   }, [
