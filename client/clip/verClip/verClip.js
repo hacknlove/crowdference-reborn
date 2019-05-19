@@ -86,7 +86,7 @@ Template.verClip.helpers({
 })
 
 Template.previaClip.onCreated(function () {
-  Meteor.subscribe('primerPost', this.data.clip._id)
+  this.subscribe('primerPost', this.data.clip._id)
 })
 Template.previaClip.helpers({
   linkId () {
