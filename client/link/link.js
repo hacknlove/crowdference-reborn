@@ -36,11 +36,11 @@ Template.link.helpers({
     return link._id
   },
   posts () {
-    return posts.find({}, {
+    return Array.from(new Set(posts.find({}, {
       sort: {
         timestamp: -1
       }
-    })
+    }).map(p => p.clipId)))
   }
 })
 

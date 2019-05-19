@@ -15,8 +15,8 @@
           <button class="close openWindow" data-_id="crearClip" data-link-id="{{linkId}}">{{_ 'Crear clip'}}</button>
         </div>
       </div>
-      {{#each post in posts}}
-        {{> vistafavoritos clipId=post.clipId}}
+      {{#each clipId in posts}}
+        {{> vistafavoritos clipId=clipId}}
       {{/each}}
     </div>
   </div>
