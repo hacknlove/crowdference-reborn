@@ -1,6 +1,6 @@
 import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Template } from 'meteor/templating'
-import { clips, posts, favoritos } from '/common/baseDeDatos'
+import { clips, posts, favoritos, localLinks } from '/common/baseDeDatos'
 import { Meteor } from 'meteor/meteor'
 
 Template.menuVerClip.helpers({
@@ -97,5 +97,73 @@ Template.previaClip.helpers({
         timestamp: -1
       }
     }) || {}).linkId
+  }
+})
+
+Template.agregarEnlace2.events({
+  'click .previsualizar' (event, template) {
+    const url = template.$('input').val().trim()
+    if (!url) {
+      return
+    }
+    var link = localLinks.findOne({
+      url
+    }, {
+      fields: {
+        _id: 1
+      }
+    })
+    if (link) {
+      return ventanas.update('verClip', {
+        $set: {
+          linkId: link._id
+        }
+      })
+    }
+    Meteor.call('link', url, (e, r) => {
+      if (e) {
+        return ventanas.error({
+          message: 'Error al obtener previsualización, inténtalo dentro de unos minutos.'
+        })
+      }
+      localLinks.insert(r)
+      ventanas.update('verClip', {
+        $set: {
+          linkId: r._id
+        }
+      })
+    })
+  },
+  'click .aceptar' () {
+    Meteor.call('agregarPost', {
+      clipId: ventanas.conf('clipId'),
+      linkId: this.linkId
+    }, (e, r) => {
+      if (e) {
+        return ventanas.error(e)
+      }
+      ventanas.insert({
+        template: 'alerta',
+        titulo: 'Enlace agregado',
+        contenido: 'El enlace ha sido agregado y será visible públicamente en cuanto sea aprobado.'
+      })
+      ventanas.update('verClip', {
+        $unset: {
+          linkId: 1
+        }
+      })
+    })
+
+  },
+  'click .cancelar' () {
+    ventanas.update('verClip', {
+      $unset: {
+        linkId: 1
+      }
+    })
+  },
+  'submit form' (event, template) {
+    event.preventDefault()
+    template.$('i').trigger('click')
   }
 })

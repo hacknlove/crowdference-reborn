@@ -11,7 +11,7 @@
       <div class="recordar"><i class="fas fa-paperclip"></i> {{_ 'Recordar'}}</div>
     {{/if}}
     <div class="compartir"><i class="fas fa-share-alt"></i> {{_ 'Compartir'}}</div>
-    <div class="close openWindow" data-_id="agregarEnlace"><i class="fas fa-plus"></i> {{_ 'Agregar enlace'}}</div>
+    <div class="openWindow" data-_id="menuIdiomas"><i class="fas fa-globe-americas"></i> {{_ 'Idioma'}}</div>
     <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="portada"><i class="fas fa-arrow-left"></i> {{_ 'Atrás'}}</div>
   </div>
 </template>
@@ -25,6 +25,7 @@
       {{>hamburguesa menu="menuVerClip" closeOther="verClip"}}
     </div>
     <div class="cuerpo">
+      {{> agregarEnlace2}}
       {{#each post in posts}}
         {{> verPost post}}
       {{else}}
@@ -39,6 +40,28 @@
       {{/each}}
     </div>
 
+  </div>
+</template>
+
+<template name="agregarEnlace2">
+  <div class="ventana">
+      {{#if linkId}}
+        <div class="cabecero">
+          {{_ 'Agregar'}}
+        <div class="iconera">
+          <div class="aceptar"><i class="fas fa-check"></i></div>
+          <div class="cancelar"><i class="fas fa-times"></i></div>
+        </div>
+        </div>
+        <div class="cuerpo">
+          {{> mostrarLink linkId=linkId}}
+        </div>
+      {{else}}
+      <form class="input">
+        <input type="search" placeholder="{{_ 'Agregar enlace'}}">
+        <i class="fas fa-plus previsualizar"></i>
+      </form>
+    {{/if}}
   </div>
 </template>
 

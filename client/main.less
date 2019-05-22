@@ -93,6 +93,36 @@ body {
   }
 }
 
+#ventanas .lista .cuerpo {
+    .ventana>form.input {
+    position: relative;
+    &>input {
+      padding-left: 20px;
+      padding-right: 30px;
+      margin: 0;
+      &::-webkit-input-placeholder,
+      &::-moz-placeholder,
+      &:-ms-input-placeholder,
+      &:-moz-placeholder {
+        text-align: center;
+      }
+    }
+    &>i{
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      color: var(--color-tinta-f2);
+      cursor: pointer;
+      &:hover {
+        color: var(--color-tinta);
+      }
+    }
+    &>input:focus + i {
+      color: var(--color-tinta);
+    }
+  }
+}
+
 .cabecero {
     .iconera {
     color: var(--color-basico);
