@@ -5,7 +5,7 @@ const OG = function (sink, datos, ventanas) {
   sink.appendToHead(`
   <meta property="og:title" content="${datos.title}"/>
   <meta property="og:description" content="${datos.description}"/>
-  <meta property="og:image" itemprop="image" content="${process.env.ROOT_URL}${datos.image}"/>
+  <meta property="og:image" itemprop="image" content="${datos.image}"/>
   <meta property="og:image:secure_url" itemprop="image" content="${datos.image}"/>
   <meta property="og:site_name" content="crowdference-reborn"/>
   ${datos.update ? `<meta property="og:updated_time" content="${datos.update}" />` : ''}
