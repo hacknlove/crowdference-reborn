@@ -165,6 +165,19 @@ ventanas.use('/l/:link', function (sink, match, v) {
   ])
 })
 
+ventanas.use('/m', function (sink) {
+  OG(sink, {
+    title: 'Crowdference - Create clip',
+    description: 'Here you can create a new clip',
+    image: `${process.env.ROOT_URL}logoletras.png`,
+    url: `${process.env.ROOT_URL}f`
+  }, [
+    {
+      _id: 'crearClip'
+    }
+  ])
+})
+
 ventanas.use(/(?:)/, function (sink) {
   OG(sink, {
     title: 'Crowdference - Not found',

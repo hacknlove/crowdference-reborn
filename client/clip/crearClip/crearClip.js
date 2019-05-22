@@ -5,6 +5,10 @@ import { Meteor } from 'meteor/meteor'
 import { tituloAUrl } from '/common/varios'
 import { favoritos } from '/common/baseDeDatos'
 
+Template.crearClip.onCreated(function () {
+  ventanas.conf('path', '/m')
+})
+
 Template.crearClip.testUrl = _.debounce(function testUrl (titulo) {
   if (!titulo) {
     return
