@@ -7,6 +7,7 @@ export const links = new Mongo.Collection('links')
 
 export var localLinks
 export var favoritos
+export var votos
 
 if (Meteor.isClient) {
   favoritos = new Mongo.Collection(null)
@@ -16,6 +17,10 @@ if (Meteor.isClient) {
   localLinks = new Mongo.Collection(null)
   /* eslint-disable-next-line */
   new PersistentMinimongo2(localLinks, 'localLinks')
+}
+
+if (Meteor.isServer) {
+  votos = new Mongo.Collection('votos')
 }
 
 if (Meteor.isDevelopment) {

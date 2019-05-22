@@ -5,60 +5,6 @@ import { Meteor } from 'meteor/meteor'
 import ClipboardJS from 'clipboard'
 import { ventanas } from 'meteor/hacknlove:ventanas'
 
-const llaveRevocada = function llaveRevocada (e, url) {
-  if (!e) {
-    return
-  }
-  if (e.error !== 401) {
-    return ventanas.error(e)
-  }
-  const miClip = favoritos.findOne({
-    url: url,
-    seguridad: {
-      $exists: 1
-    }
-  })
-
-  if (!miClip) {
-    ventanas.insert({
-      template: 'alerta',
-      titulo: 'Llave no válida',
-      contenido: 'Tú llave ha sido revocada'
-    })
-    return favoritos.update({
-      url
-    }, {
-      $unset: {
-        secreto: 1
-      }
-    })
-  }
-  Meteor.call('obtenerSecreto', {
-    clipId: miClip._id,
-    seguridad: miClip.seguridad
-  }, (e, r) => {
-    if (!e) {
-      return favoritos.update({
-        url
-      }, {
-        $set: {
-          secreto: r
-        }
-      })
-    }
-    if (e.error === 401) {
-      favoritos.update({
-        url
-      }, {
-        $unset: {
-          seguridad: 1
-        }
-      })
-    }
-    llaveRevocada(e, url)
-  })
-}
-
 Template.verPost.onCreated(function () {
   this.autorun(() => {
     const data = Template.currentData()
@@ -149,28 +95,5 @@ Template.verPost.helpers({
         $ne: this.clipId
       }
     }).count() + 1
-  }
-})
-
-Template.prioridad.helpers({
-  prioridad () {
-    return posts.findOne(this.postId).prioridad
-  }
-})
-
-Template.prioridad.events({
-  'click .aceptar' (event, template) {
-    const miClip = favoritos.findOne(ventanas.conf('clipId'))
-    ventanas.wait(this._id)
-    Meteor.call('cambiarPrioridad', {
-      secreto: miClip.secreto,
-      postId: this.postId,
-      prioridad: template.$('input').val() * 1
-    }, (e) => {
-      if (e) {
-        return ventanas.error(e)
-      }
-      ventanas.close(this)
-    })
   }
 })

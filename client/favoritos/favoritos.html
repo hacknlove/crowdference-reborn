@@ -7,15 +7,15 @@
       {{>hamburguesa menu="menu" closeOther="favoritos"}}
     </div>
     <div class="cuerpo">
-      {{#each clip in favoritos}}
-        {{> vistafavoritos clipId=clip._id}}
+      {{#each link in favoritos}}
+        {{> vistafavoritos linkId=link._id}}
       {{/each}}
     </div>
   </div>
 </template>
 
 <template name="vistafavoritos">
-  {{#if clip}}
-    {{> previaClip clip=clip}}
+  {{#if link}}
+    {{> previaLink link=link}}
   {{/if}}
 </template>

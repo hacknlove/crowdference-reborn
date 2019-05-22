@@ -3,14 +3,14 @@ import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Meteor } from 'meteor/meteor'
 import { clips } from '/common/baseDeDatos'
 
-Template.recents.onCreated(function () {
+Template.ranking.onCreated(function () {
   ventanas.conf('path', `/r`)
   this.autorun(function () {
-    Meteor.subscribe('recents')
+    Meteor.subscribe('ranking')
   })
 })
 
-Template.recents.helpers({
+Template.ranking.helpers({
   clips () {
     return clips.find({
       posts: {

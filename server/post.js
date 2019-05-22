@@ -1,64 +1,20 @@
 import { Meteor } from 'meteor/meteor'
-import { clips, posts } from '/common/baseDeDatos'
+import { links, posts, votos } from '/common/baseDeDatos'
 import { salirValidacion, salir, validacionesComunes } from '/server/comun'
 
 import Joi from 'joi'
 
 const validaciones = {
   agregarPost: Joi.object().keys({
-    clipId: validacionesComunes._id.required(),
-    linkId: validacionesComunes._id.required()
+    padreId: validacionesComunes._id.required(),
+    hijoId: validacionesComunes._id.required(),
+    fingerPrint: validacionesComunes.texto.required()
   }),
-  cambiarPrioridad: Joi.object().keys({
+  votarPost: Joi.object().keys({
     postId: validacionesComunes._id.required(),
-    secreto: Joi.string().required(),
-    prioridad: Joi.number().required()
+    fingerPrint: validacionesComunes.texto.required()
   }),
-  establecerStatus: Joi.object().keys({
-    postId: validacionesComunes._id.required(),
-    secreto: Joi.string().required(),
-    status: Joi.string().valid(['RECHAZADO', 'OCULTO', 'VISIBLE']).required()
-  }),
-  eliminarPost: Joi.object().keys({
-    postId: validacionesComunes._id.required(),
-    secreto: Joi.string().required()
-  }),
-  postsNoVisibles: Joi.object().keys({
-    clipId: validacionesComunes._id.required(),
-    secreto: Joi.string().required()
-  })
-}
-
-/** @description Comprueba que el post existe, el clip existe, y que la llave de administración es válida
- * @param {object} opciones contiene las id y el secreto
- * @returns {array} [clip, post]
- * @throws 404 si no existe el clip, no existe el post, o no se tienen permisos
-*/
-const testSecretoClip = function (opciones) {
-  const post = posts.findOne({
-    _id: opciones.postId
-  }, {
-    fields: {
-      clipId: 1,
-      status: 1
-    }
-  }) || salir(404, 'Post no encontrado')
-
-  const clip = clips.findOne({
-    _id: post.clipId
-  }, {
-    fields: {
-      secreto: 1
-    }
-  }) || salir(404, 'Clip no encontrado', {
-    donde: 'method establecerStatus'
-  })
-
-  clip.secreto === opciones.secreto || salir(401, 'No tienes permiso para administrar el clip', {
-    donde: 'method establecerStatus'
-  })
-
-  return [clip, post]
+  posts: validacionesComunes._id
 }
 
 Meteor.methods({
@@ -67,102 +23,119 @@ Meteor.methods({
       data: opciones,
       schema: validaciones.agregarPost
     })
-    clips.find({
-      _id: opciones.clipId
+    links.find({
+      _id: opciones.padreId
     }).count() || salir(404, 'Clip no encontrado')
 
-    if (posts.findOne(opciones)) {
+    var post = posts.findOne({
+      padreId: opciones.padreId,
+      hijoId: opciones.hijoId
+    }, {
+      fields: {
+        votos: 1
+      }
+    })
+
+    if (!post) {
+      post = posts.insert({
+        padreId: opciones.padreId,
+        hijoId: opciones.hijoId,
+        votos: 1
+      })
+      votos.insert({
+        objeto: post._id,
+        fingerPrint: opciones.fingerPrint
+      })
       return
     }
 
-    posts.insert({
-      clipId: opciones.clipId,
-      linkId: opciones.linkId,
-      timestamp: new Date(),
-      status: 'PENDIENTE',
-      prioridad: 0
-    })
-  },
-  cambiarPrioridad (opciones) {
-    salirValidacion({
-      data: opciones,
-      schema: validaciones.cambiarPrioridad
-    })
-    testSecretoClip(opciones)
-
-    posts.update(opciones.postId, {
-      $set: {
-        prioridad: opciones.prioridad
-      }
-    })
-  },
-  establecerStatus (opciones) {
-    salirValidacion({
-      data: opciones,
-      schema: validaciones.establecerStatus
-    })
-    const [clip, post] = testSecretoClip(opciones)
-    posts.update(opciones.postId, {
-      $set: {
-        status: opciones.status
-      }
-    })
-    if (post.status !== 'VISIBLE' && opciones.status === 'VISIBLE') {
-      return clips.update(clip._id, {
-        $inc: {
-          posts: 1
-        }
-      })
+    if (votos.findOne({
+      objeto: post._id
+    })) {
+      return
     }
-    if (post.status === 'VISIBLE' && opciones.status !== 'VISIBLE') {
-      return clips.update(clip._id, {
-        $inc: {
-          posts: -1
-        }
-      })
-    }
-  },
-  eliminarPost (opciones) {
-    salirValidacion({
-      data: opciones,
-      schema: validaciones.eliminarPost,
-      debug: {
-        donde: 'method establecerStatus'
+    votos.insert({
+      object: post._id,
+      fingerPrint: opciones.fingerPrint
+    })
+    posts.update(post._id, {
+      $inc: {
+        votos: 1
       }
     })
+    if (votos.findOne({
+      objeto: opciones.hijoId,
+      fingerPrint: opciones.fingerPrint
+    })) {
+      return
+    }
+    votos.insert({
+      objeto: opciones.hijoId,
+      fingerPrint: opciones.fingerPrint
+    })
+    links.update(opciones.hijoId, {
+      $inc: {
+        votos: 1
+      }
+    })
+  },
+  votarPost (opciones) {
+    salirValidacion({
+      data: opciones,
+      schema: validaciones.agregarPost
+    })
+    if (votos.findOne({
+      objeto: opciones.postId,
+      fingerPrint: opciones.fingerPrint
+    })) {
+      return
+    }
 
-    testSecretoClip(opciones)
+    var post = posts.findOne(opciones.postId, {
+      fields: {
+        hijoId: 1
+      }
+    }) || salir(404, 'No encontrado')
 
-    posts.remove(opciones.postId)
+    votos.insert({
+      object: post._id,
+      fingerPrint: opciones.fingerPrint
+    })
+    posts.update(post._id, {
+      $inc: {
+        votos: 1
+      }
+    })
+    if (votos.findOne({
+      objeto: post.hijoId,
+      fingerPrint: opciones.fingerPrint
+    })) {
+      return
+    }
+    votos.insert({
+      objeto: post.hijoId,
+      fingerPrint: opciones.fingerPrint
+    })
+    links.update(post.hijoId, {
+      $inc: {
+        votos: 1
+      }
+    })
   }
 })
 
-Meteor.publish('postsVisibles', function (clipId) {
+Meteor.publish('posts', function (padreId) {
   salirValidacion({
-    data: clipId,
-    schema: validacionesComunes._id
+    data: padreId,
+    schema: validaciones.posts
   })
 
   return posts.find({
-    clipId,
-    status: 'VISIBLE'
-  })
-})
-Meteor.publish('postsNoVisibles', function (opciones) {
-  salirValidacion({
-    data: opciones,
-    schema: validaciones.postsNoVisibles
-  })
-  const clip = clips.findOne({
-    _id: opciones.clipId
-  }) || salir(404, 'Clip no encontrado')
-
-  clip.secreto === opciones.secreto || salir(401, 'Clave de administración no válida')
-
-  return posts.find({
-    clipId: opciones.clipId,
-    status: {
-      $ne: 'VISIBLE'
-    }
+    padreId
+  }, {
+    sort: {
+      votos: -1
+    },
+    limit: 100
   })
 })

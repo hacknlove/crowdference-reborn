@@ -2,7 +2,7 @@
   <div class="fade lista">
     <div class="cabecero">
       <h2>
-        {{link}}
+        {{_ 'Crowdference'}}
       </h2>
       {{>hamburguesa menu="menu" closeOther="link"}}
     </div>
@@ -11,55 +11,38 @@
         <div class="cuerpo">
           {{>mostrarLink linkId=linkId}}
         </div>
-        <div class="botonera">
-          <button class="close openWindow" data-_id="crearClip" data-link-id="{{linkId}}">{{_ 'Crear clip'}}</button>
-        </div>
       </div>
-      {{#each clipId in posts}}
-        {{> vistafavoritos clipId=clipId}}
+      {{> agregarEnlace padreId=linkId hijoId=hijoId}}
+
+      {{#each postId in posts}}
+        {{> verPost postId=hijoId}}
       {{/each}}
     </div>
   </div>
 </template>
 
-<template name="enlace">
-  {{#if post}}
-  {{> verPost post}}
-  {{/if}}
+<template name="agregarEnlace">
+  <div class="ventana">
+    {{#if hijoId}}
+    <div class="cabecero">
+      {{_ 'Agregar'}}
+      <div class="iconera">
+        <div class="aceptar"><i class="fas fa-check"></i></div>
+        <div class="cancelar"><i class="fas fa-times"></i></div>
+      </div>
+    </div>
+    <div class="cuerpo">
+      {{> mostrarLink linkId=hijoId}}
+    </div>
+    {{else}}
+    <form class="input">
+      <input type="search" placeholder="{{_ 'Agregar enlace'}}">
+      <i class="fas fa-plus previsualizar"></i>
+    </form>
+    {{/if}}
+  </div>
 </template>
 
-<template name="agregarEnlace">
-  <div class="fondo fade close"></div>
-  <div class="ventana fade">
-    <div class="cabecero">
-      {{_ 'Agregar enlace'}}
-      <i class="fas fa-times close"></i>
-    </div>
-    <div class="cuerpo">
-      <input name="link" placeholder="https://enlace.a/agregar" value="{{link}}">
-    </div>
-    <div class="botonera">
-      <button class="close secundario">{{_ 'Cancelar'}}</button>
-      <button class="siguiente ocultable {{oculto}}">{{_ 'Siguiente'}}</button>
-    </div>
-  </div>
-</template>
-<template name="previsualizarEnlace">
-  <div class="fondo fade close"></div>
-  <div class="ventana fade scrollable">
-    <div class="cabecero">
-      {{_ 'Previsualizar'}}
-      <i class="fas fa-times close"></i>
-    </div>
-    <div class="cuerpo">
-      {{> mostrarLink linkId=linkId}}
-    </div>
-    <div class="botonera">
-      <button class="close secundario openWindow" data-_id="agregarEnlace">{{_ 'Atrás'}}</button>
-      <button class="siguiente">{{_ 'Agregar'}}</button>
-    </div>
-  </div>
-</template>
 
 <template name="mostrarLink">
   <div class="social">
@@ -76,3 +59,22 @@
     </p>
   </div>
 </template>
+
+<!-- <template name="menuVerClip">
+  <div class="fondo fondoDeMenu fade close"></div>
+  <div class="menu fade close">
+    {{#if miClip}}
+    {{#if llaves}}
+    <div class="openWindow" data-_id="llaves"><i class="fas fa-key"></i> {{_ 'Llaves'}}</div>
+    {{else}}
+    <div class="olvidar"><i class="fas fa-unlink"></i> {{_ 'Olvidar'}}</div>
+    {{/if}}
+    {{else}}
+    <div class="recordar"><i class="fas fa-paperclip"></i> {{_ 'Recordar'}}</div>
+    {{/if}}
+    <div class="compartir"><i class="fas fa-share-alt"></i> {{_ 'Compartir'}}</div>
+    <div class="openWindow" data-_id="menuIdiomas"><i class="fas fa-globe-americas"></i> {{_ 'Idioma'}}</div>
+    <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="portada"><i class="fas fa-arrow-left"></i>
+      {{_ 'Atrás'}}</div>
+  </div>
+</template> -->

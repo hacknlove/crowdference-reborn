@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating'
 import { ventanas } from 'meteor/hacknlove:ventanas'
-import { favoritos, clips } from '/common/baseDeDatos'
+import { favoritos, links } from '/common/baseDeDatos'
 
 Template.favoritos.onCreated(function () {
   ventanas.conf('path', `/f`)
@@ -17,11 +17,11 @@ Template.favoritos.helpers({
 })
 
 Template.vistafavoritos.onCreated(function () {
-  this.subscribe('clipId', this.data.clipId)
+  this.subscribe('linkId', this.data.linkId)
 })
 
 Template.vistafavoritos.helpers({
-  clip () {
-    return clips.findOne(this.clipId)
+  link () {
+    return links.findOne(this.linkId)
   }
 })

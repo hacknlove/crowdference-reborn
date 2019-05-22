@@ -8,20 +8,24 @@ Template.portada.onDestroyed(function () {
   ventanas.close('menuPortada')
 })
 Template.portada.events({
-  'input input' (event) {
-    ventanas.conf('buscar', event.currentTarget.value)
+  'click .buscar' (event, template) {
+    template.$('form').submit()
   },
-  'submit form' (event) {
+  'submit form' (event, template) {
     event.preventDefault()
+    const link = template.$('input').val().trim()
+    if (!link) {
+      return
+    }
+
+    if (!link.match(/^http(s?):\/\/[-0-9a-z.]+\.[-0-9a-z.]/i)) {
+      return
+    }
+
     ventanas.close('portada')
     ventanas.insert({
-      _id: 'busqueda',
-      busqueda: ventanas.conf('buscar')
+      _id: 'link',
+      link
     })
-  }
-})
-Template.portada.helpers({
-  oculto () {
-    return ventanas.conf('buscar') ? 'visible' : 'oculto'
   }
 })

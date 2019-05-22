@@ -3,7 +3,8 @@ import Joi from 'joi'
 
 export const validacionesComunes = {
   _id: Joi.string(),
-  texto: Joi.string()
+  texto: Joi.string(),
+  href: Joi.string().regex(/^http(s?):\/\/[-0-9a-z.]+\.[-0-9a-z.]/i)
 }
 
 export const salir = function salir (codigo, mensaje, debug) {

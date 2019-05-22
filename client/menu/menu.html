@@ -6,12 +6,6 @@
 <template name="menu">
   <div class="fondo fondoDeMenu fade close"></div>
   <div class="menu fade close">
-    {{#unless activo 'recents'}}
-      <div class="close-other openWindow ocultable" data-other="{{closeOther}}" data-_id="recents"><i class="fas fa-sort-numeric-down"></i> {{_ 'Recient'}}</div>
-    {{/unless}}
-    {{#unless activo 'crearClip'}}
-      <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="crearClip"><i class="fas fa-paperclip"></i> {{_ 'Crear'}}</div>
-    {{/unless}}
     <div class="openWindow" data-_id="menuIdiomas"><i class="fas fa-globe-americas"></i> {{_ 'Idioma'}}</div>
     {{#unless activo 'favoritos'}}
       {{#if tengoClips}}

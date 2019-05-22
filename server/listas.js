@@ -8,7 +8,7 @@ const validaciones = {
   link: Joi.string()
 }
 
-Meteor.publish('recents', function () {
+Meteor.publish('ranking', function () {
   return clips.find({
     posts: {
       $gt: 0

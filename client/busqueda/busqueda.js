@@ -1,24 +1,21 @@
 import { Template } from 'meteor/templating'
 import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Meteor } from 'meteor/meteor'
-import { clips } from '/common/baseDeDatos'
+import { links } from '/common/baseDeDatos'
 
 Template.busqueda.onCreated(function () {
   ventanas.conf('path', `/s/${encodeURIComponent(this.data.busqueda)}`)
   this.autorun(function () {
-    Meteor.subscribe('busqueda', ventanas.findOne('busqueda').busqueda)
+    const data = Template.currentData()
+    Meteor.subscribe('busqueda', data.busqueda)
   })
 })
 
 Template.busqueda.helpers({
-  clips () {
-    return clips.find({
-      posts: {
-        $gt: 0
-      }
-    }, {
+  links () {
+    return links.find({}, {
       sort: {
-        actualizacion: -1
+        votos: -1
       }
     })
   }

@@ -1,14 +1,9 @@
 import { HTTP } from 'meteor/http'
 import { Meteor } from 'meteor/meteor'
 import { links } from '/common/baseDeDatos'
-import { salirValidacion } from '/server/comun'
+import { salirValidacion, validacionesComunes } from '/server/comun'
 
 import ogs from 'open-graph-scraper'
-import Joi from 'joi'
-
-const validaciones = {
-  string: Joi.string()
-}
 
 const meteorOGS = Meteor.wrapAsync(function (opciones, callback) {
   ogs(opciones, function (e, r) {
@@ -41,7 +36,7 @@ const siteNameFromUrl = function siteNameFromUrl (url) {
   return url[2]
 }
 siteNameFromUrl.regex = /^http(?:s?):\/\/([0-9a-z-]*\.)?([0-9a-z-]+\.[0-9a-z-]+)(?:\/|$)/
-const actualizar = function actualizar (url) {
+export const actualizar = function actualizar (url) {
   var response
   var opciones
 
@@ -90,7 +85,7 @@ const actualizar = function actualizar (url) {
   return response
 }
 
-const insertar = function insertar (link) {
+export const insertar = function insertar (link) {
   const l = links.findOne({
     url: {
       $in: link.url
@@ -116,7 +111,7 @@ Meteor.methods({
   link (url) {
     salirValidacion({
       data: url,
-      schema: validaciones.string
+      schema: validacionesComunes.href
     })
 
     return links.findOne({
@@ -126,9 +121,18 @@ Meteor.methods({
   linkId (_id) {
     salirValidacion({
       data: _id,
-      schema: validaciones.string
+      schema: validacionesComunes._id
     })
 
     return links.findOne(_id)
   }
+})
+
+Meteor.publish('linkId', function (_id) {
+  salirValidacion({
+    data: _id,
+    schema: validacionesComunes._id
+  })
+
+  return links.find(_id)
 })

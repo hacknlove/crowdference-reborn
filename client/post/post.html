@@ -53,24 +53,3 @@
     </div>
   </div>
 </template>
-
-<template name="prioridad">
-  <div class="fondo fade"></div>
-  <div class="ventana fade scrollable">
-    <div class="cabecero">
-      {{_ 'Prioridad'}}
-      <i class="fas fa-times close"></i>
-    </div>
-    <div class="cuerpo">
-      <div class="informacion">
-          {{_ 'Los enlaces se ordenan por su prioridad, de mayor a menor, y por la fecha en la que han sido agregados.'}}
-      </div>
-      <br>
-      <input type="number" name="prioridad" value="{{prioridad}}">
-    </div>
-    <div class="botonera">
-      <button class="secundario close">{{_ 'Cancelar'}}</button>
-      <button class="aceptar">{{_ 'Aceptar'}}</button>
-    </div>
-  </div>
-</template>
