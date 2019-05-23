@@ -6,14 +6,12 @@
     "deploy": "ssh root@online2.hacknlove.org cat /var/www/cimeteor/local.sh | bash"
   },
   "dependencies": {
-    "@babel/runtime": "^7.3.4",
+    "@babel/runtime": "^7.4.5",
     "cheerio": "^1.0.0-rc.3",
     "clipboard": "^2.0.4",
     "fingerprintjs2": "^2.1.0",
-    "i": "^0.3.6",
     "joi": "^14.3.1",
     "meteor-node-stubs": "^0.4.1",
-    "moment": "^2.24.0",
     "npm": "^6.9.0",
     "open-graph-scraper": "^3.6.1"
   },
