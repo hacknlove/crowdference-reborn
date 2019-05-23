@@ -80,7 +80,7 @@ Template.previaLink.events({
       _id: 'link',
       link: this.link
     })
-    ventanas.close('busqueda')
+    ventanas.close(this.closeOther)
   }
 })
 

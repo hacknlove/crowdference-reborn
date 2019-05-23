@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating'
 import { ventanas } from 'meteor/hacknlove:ventanas'
 import { Meteor } from 'meteor/meteor'
-import { clips } from '/common/baseDeDatos'
+import { links } from '/common/baseDeDatos'
 
 Template.ranking.onCreated(function () {
   ventanas.conf('path', `/r`)
@@ -11,14 +11,10 @@ Template.ranking.onCreated(function () {
 })
 
 Template.ranking.helpers({
-  clips () {
-    return clips.find({
-      posts: {
-        $gt: 0
-      }
-    }, {
+  links () {
+    return links.find({}, {
       sort: {
-        actualizacion: -1
+        votos: -1
       }
     })
   }

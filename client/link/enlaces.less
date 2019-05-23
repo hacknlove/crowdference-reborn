@@ -48,22 +48,38 @@
 #ventanas {
   .ventana.previaLink {
     .cabecero {
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      overflow: hidden;
-      .titulo, a {
-        max-width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        cursor: pointer;
+      .votos {
+        flex-shrink: 0;
+        background: var(--color-basico);
+        position: relative;
+        align-self: flex-start;
+        justify-self: flex-start;
+        bottom: ~"calc(var(--margin)/2)";
+        left: ~"calc(var(--margin))";
+        padding: ~"calc(var(--margin)/2)";
+        border-top-right-radius: var(--border-radius);
+        border-bottom-left-radius: var(--border-radius);
       }
-      a {
-        text-transform: none;
-        font-family: var(--etiquetas);
-        font-size: 80%;
-        color: var(--color-basico);
+      .titulo {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        overflow: hidden;
+        span, a {
+          max-width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          cursor: pointer;
+        }
+        a {
+          text-transform: none;
+          font-family: var(--etiquetas);
+          font-size: 80%;
+          color: var(--color-basico);
+        }
       }
     }
     -webkit-user-select: text;  /* Chrome all / Safari all */
@@ -76,21 +92,29 @@
       div.prevImagen {
         cursor: pointer;
         border-radius: var(--border-radius);
-        width: 40%;
+        width: 30%;
         flex-grow: 0;
         flex-shrink: 0;
         background-size: cover;
         background-position: center;
       }
       div.prevImagen+div.prevTexto {
-        width: 60%;
+        width: 70%;
         padding-left: var(--margin);
       }
       div.prevTexto {
+        width: 100%;
         flex-grow: 0;
         box-sizing: border-box;
         hyphens: auto;
       }
+    }
+    .iconera {
+      margin-top: ~"calc(var(--margin)/2)";
+      padding-left: var(--margin);
+      display: flex;
+      justify-content: space-evenly;
+      color: var(--color-tinta-f2);
     }
   }
 }

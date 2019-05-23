@@ -1,14 +1,12 @@
 <template name="ranking">
   <div class="fade lista">
     <div class="cabecero">
-      <h2>
-        {{_ 'Recient'}}
-      </h2>
+      {{> busquedaCabecero busqueda=(_ 'Ranking') closeOther="ranking"}}
       {{>hamburguesa menu="menu" closeOther="ranking"}}
     </div>
     <div class="cuerpo">
-      {{#each clip in clips}}
-        {{> previaClip clip=clip}}
+      {{#each link in links}}
+        {{> previaLink link=link closeOther="ranking"}}
       {{/each}}
     </div>
   </div>

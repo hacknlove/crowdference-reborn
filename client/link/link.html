@@ -64,10 +64,12 @@
 <template name="previaLink">
   <div class="ventana previaLink">
     <div class="cabecero">
-      <span class="titulo ir">
-        {{link.title}}
-      </span>
-      <a href="{{link.url.[0]}}" target="_blank">{{link.url.[0]}}</a>
+      <div class="titulo">
+        <span class="ir">
+          {{link.title}}
+        </span>
+        <a href="{{link.url.[0]}}" target="_blank">{{link.url.[0]}}</a>
+      </div>
     </div>
     <div class="cuerpo">
       {{#if link.image}}
@@ -76,6 +78,11 @@
       <div class="prevTexto">
         {{link.description}}
       </div>
+    </div>
+    <div class="iconera">
+      <div class="ir"><i class="fas fa-user-check"></i> {{link.votos}} {{_ 'votos'}}</div>
+      <div class="ir"><i class="fas fa-paperclip"></i> {{link.links}} {{_ 'enlaces'}}</div>
+      <div class="ir"><i class="fas fa-exchange-alt"></i> {{link.linked}} {{_ 'enlazado'}}</div>
     </div>
   </div>
 </template>
