@@ -6,8 +6,6 @@ import { links } from '/common/baseDeDatos'
 Template.busqueda.onCreated(function () {
   this.autorun(function () {
     const data = Template.currentData()
-    console.log(data.busqueda)
-    console.log(encodeURIComponent(data.busqueda))
     Meteor.subscribe('busqueda', data.busqueda)
     ventanas.conf('path', `/s/${encodeURIComponent(data.busqueda)}`)
   })
@@ -17,7 +15,7 @@ Template.busqueda.helpers({
   links () {
     return links.find({}, {
       sort: {
-        votos: -1
+        score: -1
       }
     })
   }
