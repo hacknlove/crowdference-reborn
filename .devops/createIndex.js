@@ -2,7 +2,7 @@
 
 db.links.createIndex({
   title: 'text',
-  desccription: 'text',
+  description: 'text',
   url: 'text'
 })
 
