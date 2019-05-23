@@ -1,15 +1,13 @@
 <template name="link">
   <div class="fade lista">
     <div class="cabecero">
-      <h2>
-        {{_ 'Crowdference'}}
-      </h2>
+      {{> busquedaCabecero closeOther="link" busqueda=link.url.[0]}}
       {{>hamburguesa menu="menu" closeOther="link"}}
     </div>
     <div class="cuerpo">
       <div class="ventana">
         <div class="cuerpo">
-          {{>mostrarLink linkId=linkId}}
+          {{>mostrarLink link=link}}
         </div>
       </div>
       {{> agregarEnlace padreId=linkId hijoId=hijoId}}

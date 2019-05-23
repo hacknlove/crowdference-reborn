@@ -5,9 +5,20 @@ import { Template } from 'meteor/templating'
 import { fingerprint } from '/client/fingerprint'
 
 Template.link.onCreated(function () {
-  this.subscribe('linkId', this.data.linkId)
-  this.subscribe('posts', this.data.linkId)
-  ventanas.conf('path', `/l/${encodeURIComponent(this.data.link)}`)
+  this.subscribe('linkId', this.data.link._id)
+  this.autorun(() => {
+    const link = links.findOne(this.data.link._id)
+    if (!link) {
+      return
+    }
+    ventanas.update('link', {
+      $set: {
+        link
+      }
+    })
+  })
+  this.subscribe('posts', this.data.link._id)
+  ventanas.conf('path', `/l/${encodeURIComponent(this.data.link.url[0])}`)
 })
 
 Template.link.helpers({
@@ -19,12 +30,6 @@ Template.link.helpers({
         votos: -1
       }
     })
-  }
-})
-
-Template.mostrarLink.helpers({
-  link () {
-    return links.findOne(this.linkId)
   }
 })
 

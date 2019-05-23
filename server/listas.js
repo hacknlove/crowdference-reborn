@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import { clips, posts } from '/common/baseDeDatos'
+import { links } from '/common/baseDeDatos'
 import { salirValidacion, validacionesComunes } from '/server/comun'
 import Joi from 'joi'
 

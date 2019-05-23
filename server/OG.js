@@ -92,8 +92,7 @@ ventanas.use('/l/:link', function (sink, match, v) {
   }, [
     {
       _id: 'link',
-      link: decodeURIComponent(match.link),
-      linkId: link._id
+      link
     }
   ])
 })

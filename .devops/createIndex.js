@@ -1,32 +1,24 @@
 /* global db */
 
-db.clips.createIndex({
-  url: 1
-}, {
-  unique: true,
-  collation: {
-    locale: 'es',
-    strength: 1
-  }
-})
-
-db.clips.createIndex({
-  titulo: 'text'
+db.links.createIndex({
+  title: 'text',
+  desccription: 'text',
+  url: 'text'
 })
 
 db.posts.createIndex({
-  linkId: 1
+  padreId: 1,
 })
 db.posts.createIndex({
-  clipId: 1
+  hijoId: 1
 })
 db.posts.createIndex({
-  status: 1
+  votos: 1
 })
 
 db.links.createIndex({
   url: 1
 })
 db.links.createIndex({
-  actualizado: 1
+  votos: 1
 })

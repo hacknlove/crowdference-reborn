@@ -1,15 +1,29 @@
 <template name="busqueda">
   <div class="fade lista">
     <div class="cabecero">
-      <h2>
-        {{_ 'Busqueda:'}} {{busqueda}}
-      </h2>
+      {{> busquedaCabecero closeOther="busqueda" busqueda=busqueda}}
       {{>hamburguesa menu="menu" closeOther="busqueda"}}
     </div>
     <div class="cuerpo">
       {{#each link in links}}
         {{> previaLink link=link}}
+      {{else}}
+        <div class="ventana">
+          <div class="cabecero">
+            {{_ 'Prueba con otra búsqueda'}}
+          </div>
+          <div class="cuerpo">
+            {{_ 'Ningún enlace contiene los términos de la búsqueda en su url, su título o su descripción.'}}
+          </div>
+        </div>
       {{/each}}
     </div>
   </div>
+</template>
+
+<template name="busquedaCabecero">
+  <form class="input buscar">
+    <input type="search" value="{{busqueda}}" placeholder="{{_ 'Buscar link'}}">
+    <i class="fas fa-search"></i>
+  </form>
 </template>
