@@ -1,4 +1,4 @@
-import Fingerprint2 from 'fingerprintjs2'
+import fingerprint2 from 'fingerprintjs2'
 import { Meteor } from 'meteor/meteor'
 import crypto from 'crypto'
 export var fingerprint
@@ -6,11 +6,11 @@ export var fingerprint
 Meteor.startup(function () {
   if (window.requestIdleCallback) {
     window.requestIdleCallback(function () {
-      Fingerprint2.get(guardar)
+      fingerprint2.get(guardar)
     })
   } else {
     setTimeout(function () {
-      Fingerprint2.get(guardar)
+      fingerprint2.get(guardar)
     }, 500)
   }
 

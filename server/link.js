@@ -103,6 +103,7 @@ export const insertar = function insertar (link) {
     return l
   }
   link.actualizado = new Date()
+  link.votos = 0
   link._id = links.insert(link)
   return link
 }
@@ -129,6 +130,7 @@ Meteor.methods({
 })
 
 Meteor.publish('linkId', function (_id) {
+  console.log(_id)
   salirValidacion({
     data: _id,
     schema: validacionesComunes._id

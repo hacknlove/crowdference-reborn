@@ -10,10 +10,10 @@
           {{>mostrarLink link=link}}
         </div>
       </div>
-      {{> agregarEnlace padreId=linkId hijoId=hijoId}}
+      {{> agregarEnlace padreId=link._id hijoLink=hijoLink}}
 
-      {{#each postId in posts}}
-        {{> verPost postId=hijoId}}
+      {{#each post in posts}}
+        {{> verPost post=post}}
       {{/each}}
     </div>
   </div>
@@ -21,7 +21,7 @@
 
 <template name="agregarEnlace">
   <div class="ventana">
-    {{#if hijoId}}
+    {{#if hijoLink}}
     <div class="cabecero">
       {{_ 'Agregar'}}
       <div class="iconera">
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="cuerpo">
-      {{> mostrarLink linkId=hijoId}}
+      {{> mostrarLink link=hijoLink}}
     </div>
     {{else}}
     <form class="input">
@@ -44,19 +44,41 @@
 
 <template name="mostrarLink">
   <div class="social">
-    <img src="{{link.image}}">
+    {{#if link.image}}
+      <img src="{{link.image}}">
+    {{/if}}
     <h3>
       <span class="titulo">
         {{link.title}}
       </span>
     </h3>
     <a href="{{link.url.[0]}}" target="_blank">{{link.url.[0]}}</a>
-    <p>
-      {{link.description}}
-    </p>
+    {{#if link.description}}
+      <p>
+        {{link.description}}
+      </p>
+    {{/if}}
   </div>
 </template>
 
+<template name="previaLink">
+  <div class="ventana previaLink">
+    <div class="cabecero">
+      <span class="titulo ir">
+        {{link.title}}
+      </span>
+      <a href="{{link.url.[0]}}" target="_blank">{{link.url.[0]}}</a>
+    </div>
+    <div class="cuerpo">
+      {{#if link.image}}
+        <div class="prevImagen ir" style="background-image: url({{link.image}})"></div>
+      {{/if}}
+      <div class="prevTexto">
+        {{link.description}}
+      </div>
+    </div>
+  </div>
+</template>
 <!-- <template name="menuVerClip">
   <div class="fondo fondoDeMenu fade close"></div>
   <div class="menu fade close">

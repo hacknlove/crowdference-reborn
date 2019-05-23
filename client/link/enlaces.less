@@ -82,11 +82,14 @@
         background-size: cover;
         background-position: center;
       }
-      div.prevTexto {
-        flex-grow: 0;
+      div.prevImagen+div.prevTexto {
         width: 60%;
         padding-left: var(--margin);
+      }
+      div.prevTexto {
+        flex-grow: 0;
         box-sizing: border-box;
+        hyphens: auto;
       }
     }
   }

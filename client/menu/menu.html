@@ -7,13 +7,13 @@
   <div class="fondo fondoDeMenu fade close"></div>
   <div class="menu fade close">
     <div class="openWindow" data-_id="menuIdiomas"><i class="fas fa-globe-americas"></i> {{_ 'Idioma'}}</div>
+    {{#unless activo 'ranking'}}
+      <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="ranking"><i class="fas fa-sort"></i> {{_ 'Ranking'}}</div>
+    {{/unless}}
     {{#unless activo 'favoritos'}}
       {{#if tengoClips}}
           <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="favoritos"><i class="fas fa-heart"></i> {{_ 'Favoritos'}}</div>
       {{/if}}
-    {{/unless}}
-    {{#unless activo 'portada'}}
-      <div class="close-other openWindow" data-other="{{closeOther}}" data-_id="portada"><i class="fas fa-arrow-left"></i> {{_ 'Atrás'}}</div>
     {{/unless}}
   </div>
 </template>

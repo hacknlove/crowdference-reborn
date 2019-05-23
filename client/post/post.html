@@ -1,5 +1,20 @@
 <template name="verPost">
-  <div class="ventana">
+  <div class="ventana previaLink">
+    <div class="cabecero">
+      <span class="titulo ir">
+        {{link.title}}
+      </span>
+      <a href="{{link.url.[0]}}" target="_blank">{{link.url.[0]}}</a>
+    </div>
+    <div class="cuerpo">
+      {{#if link.image}}<div class="prevImagen ir" style="background-image: url({{link.image}})">
+      </div>{{/if}}
+      <div class="prevTexto">
+        {{link.description}}
+      </div>
+    </div>
+  </div>
+  <!-- <div class="ventana">
     <div class="cabecero">
       <div>
         {{#if admin}}
@@ -17,7 +32,6 @@
           {{/if}}
         {{/if}}
 
-        {{fecha timestamp}}
       </div>
       <div class="iconera">
 
@@ -49,7 +63,7 @@
       </div>
     </div>
     <div class="cuerpo">
-      {{>mostrarLink linkId=linkId}}
+      {{>previaLink link=link}}
     </div>
-  </div>
+  </div> -->
 </template>

@@ -1,8 +1,14 @@
 /* global localStorage */
+import { $ } from 'meteor/jquery'
 import { Template } from 'meteor/templating'
 import { ventanas } from 'meteor/hacknlove:ventanas'
 import { idiomas } from '/common/traducciones'
 import { traducir } from '/client/traduccion'
+import { Tracker } from 'meteor/tracker'
+
+Tracker.autorun(function () {
+  $('body').attr('lang', ventanas.conf('lang'))
+})
 
 Template.menuIdiomas.helpers({
   languages: Object.keys(idiomas),

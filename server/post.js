@@ -8,11 +8,11 @@ const validaciones = {
   agregarPost: Joi.object().keys({
     padreId: validacionesComunes._id.required(),
     hijoId: validacionesComunes._id.required(),
-    fingerPrint: validacionesComunes.texto.required()
+    fingerprint: validacionesComunes.texto.required()
   }),
   votarPost: Joi.object().keys({
     postId: validacionesComunes._id.required(),
-    fingerPrint: validacionesComunes.texto.required()
+    fingerprint: validacionesComunes.texto.required()
   }),
   posts: validacionesComunes._id
 }
@@ -44,7 +44,7 @@ Meteor.methods({
       })
       votos.insert({
         objeto: post._id,
-        fingerPrint: opciones.fingerPrint
+        fingerprint: opciones.fingerprint
       })
       return
     }
@@ -56,7 +56,7 @@ Meteor.methods({
     }
     votos.insert({
       object: post._id,
-      fingerPrint: opciones.fingerPrint
+      fingerprint: opciones.fingerprint
     })
     posts.update(post._id, {
       $inc: {
@@ -65,13 +65,13 @@ Meteor.methods({
     })
     if (votos.findOne({
       objeto: opciones.hijoId,
-      fingerPrint: opciones.fingerPrint
+      fingerprint: opciones.fingerprint
     })) {
       return
     }
     votos.insert({
       objeto: opciones.hijoId,
-      fingerPrint: opciones.fingerPrint
+      fingerprint: opciones.fingerprint
     })
     links.update(opciones.hijoId, {
       $inc: {
@@ -86,7 +86,7 @@ Meteor.methods({
     })
     if (votos.findOne({
       objeto: opciones.postId,
-      fingerPrint: opciones.fingerPrint
+      fingerprint: opciones.fingerprint
     })) {
       return
     }
@@ -99,7 +99,7 @@ Meteor.methods({
 
     votos.insert({
       object: post._id,
-      fingerPrint: opciones.fingerPrint
+      fingerprint: opciones.fingerprint
     })
     posts.update(post._id, {
       $inc: {
@@ -108,13 +108,13 @@ Meteor.methods({
     })
     if (votos.findOne({
       objeto: post.hijoId,
-      fingerPrint: opciones.fingerPrint
+      fingerprint: opciones.fingerprint
     })) {
       return
     }
     votos.insert({
       objeto: post.hijoId,
-      fingerPrint: opciones.fingerPrint
+      fingerprint: opciones.fingerprint
     })
     links.update(post.hijoId, {
       $inc: {
