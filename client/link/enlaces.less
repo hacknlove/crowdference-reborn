@@ -48,18 +48,7 @@
 #ventanas {
   .ventana.previaLink {
     .cabecero {
-      .votos {
-        flex-shrink: 0;
-        background: var(--color-basico);
-        position: relative;
-        align-self: flex-start;
-        justify-self: flex-start;
-        bottom: ~"calc(var(--margin)/2)";
-        left: ~"calc(var(--margin))";
-        padding: ~"calc(var(--margin)/2)";
-        border-top-right-radius: var(--border-radius);
-        border-bottom-left-radius: var(--border-radius);
-      }
+
       .titulo {
         flex-grow: 1;
         display: flex;
@@ -115,6 +104,9 @@
       display: flex;
       justify-content: space-evenly;
       color: var(--color-tinta-f2);
+      div {
+        cursor: pointer;
+      }
     }
   }
 }
